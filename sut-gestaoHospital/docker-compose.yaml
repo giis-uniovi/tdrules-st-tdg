@@ -1,0 +1,16 @@
+version: '3'
+services:
+    mongodb:
+        container_name: mongodb
+        image: mongo
+        #Only default port is defined: https://www.mongodb.com/docs/v3.4/reference/default-mongodb-port/
+        ports:
+            - 8086:27017
+    gestaohospital:
+        container_name: gestaohospital
+        image: gestaohospital
+        depends_on:
+            - mongodb
+        build: .
+        ports:
+            - 8085:8080

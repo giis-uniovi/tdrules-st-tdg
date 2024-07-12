@@ -1,0 +1,3 @@
+"pet":{"id":1,"category":{"id":3,"name":"Dogs"},"name":"2","photoUrls":[],"tags":[],"status":"available"}
+"pet":{"id":101,"category":{"id":103,"name":"1"},"name":"102","photoUrls":[],"tags":[],"status":"available"}
+"pet":{"id":201,"category":{"id":203,"name":"Dogs"},"name":"202","photoUrls":[],"tags":[],"status":"sold"}

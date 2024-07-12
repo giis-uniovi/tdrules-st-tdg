@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlfpc>
+<version>0.0.0<development/></version>
+<sql>tds ProductDTO,HospitalDTO where ProductDTO.productType='COMMON' and ProductDTO.quantity&gt;0</sql>
+<parsedsql>SELECT *
+   FROM ProductDTO
+     INNER JOIN HospitalDTO ON ProductDTO.hospitalDTOId = HospitalDTO.id
+   WHERE ProductDTO.productType = 'COMMON' AND ProductDTO.quantity &gt; 0</parsedsql>
+<fpcrules>
+  <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[ProductDTO.productType = 'COMMON']</location>
+    <sql>SELECT *
+   FROM ProductDTO
+     INNER JOIN HospitalDTO ON ProductDTO.hospitalDTOId = HospitalDTO.id
+   WHERE (ProductDTO.productType = 'COMMON') AND (ProductDTO.quantity &gt; 0)</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(T) ProductDTO.productType = 'COMMON' is TRUE
+  --(T) ProductDTO.quantity &gt; 0 is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>2</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.1.[ProductDTO.productType = 'COMMON']</location>
+    <sql>SELECT *
+   FROM ProductDTO
+     INNER JOIN HospitalDTO ON ProductDTO.hospitalDTOId = HospitalDTO.id
+   WHERE NOT(ProductDTO.productType = 'COMMON') AND (ProductDTO.quantity &gt; 0)</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(F) ProductDTO.productType = 'COMMON' is FALSE
+  --(T) ProductDTO.quantity &gt; 0 is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>3</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.2.[ProductDTO.quantity &gt; 0]</location>
+    <sql>SELECT *
+   FROM ProductDTO
+     INNER JOIN HospitalDTO ON ProductDTO.hospitalDTOId = HospitalDTO.id
+   WHERE NOT(ProductDTO.quantity &gt; 0) AND (ProductDTO.productType = 'COMMON')</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(F) ProductDTO.quantity &gt; 0 is FALSE
+  --(T) ProductDTO.productType = 'COMMON' is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>4</id><category>J</category><type>R</type><subtype>O</subtype><location>1.j.1.[INNER JOIN]</location>
+    <sql>SELECT *
+   FROM ProductDTO
+     RIGHT JOIN HospitalDTO ON ProductDTO.hospitalDTOId = HospitalDTO.id
+   WHERE (ProductDTO.hospitalDTOId IS NULL) AND (HospitalDTO.id IS NOT NULL)</sql>
+    <description>
+--The JOIN tables fulfill:
+--COMMENT: Reduced conditions: [ProductDTO.productType = 'COMMON'] ; [ProductDTO.quantity &gt; 0] ; 
+  --summary: [ProductDTO] right [HospitalDTO] ON ProductDTO.hospitalDTOId = HospitalDTO.id
+  --There exist some row in table HospitalDTO
+  --which does not join to any table in ProductDTO</description>
+  </fpcrule>
+</fpcrules>
+</sqlfpc>

@@ -1,0 +1,5 @@
+"category":{"id":1,"name":"2"}
+"category":{"id":2,"name":"102"}
+"pet":{"id":1,"category":{"id":1,"name":"2"},"name":"802","photoUrls":["URL","1"],"tags":[{"id":503,"name":"kitty"},{"id":603,"name":"1"}],"status":"available"}
+"pet":{"id":2,"category":{"id":1,"name":"2"},"name":"902","photoUrls":["URL"],"tags":[],"status":"pending"}
+"pet":{"id":3,"category":{"id":1,"name":"2"},"name":"1002","photoUrls":[],"tags":[{"id":703,"name":"kitty"}],"status":"sold"}

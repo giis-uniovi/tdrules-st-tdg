@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>giis</groupId>
+	<artifactId>swagger-petstore-eval</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<tdrules.version>4.3.0</tdrules.version>
+		<qagrow.version>1.4.266</qagrow.version>
+
+		<!--
+        <swagger-parser-version>2.0.27</swagger-parser-version>
+        <swagger-core-version>2.1.10</swagger-core-version>
+		<swagger-inflector-version>2.0.5</swagger-inflector-version>
+		-->
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.github.giis-uniovi</groupId>
+			<artifactId>tdrules-client</artifactId>
+			<version>${tdrules.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.github.giis-uniovi</groupId>
+			<artifactId>tdrules-client-oa</artifactId>
+			<version>${tdrules.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.github.giis-uniovi</groupId>
+			<artifactId>tdrules-store-loader</artifactId>
+			<version>${tdrules.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>giis</groupId>
+			<artifactId>qagrow</artifactId>
+			<version>${qagrow.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.36</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.13</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.github.javiertuya</groupId>
+			<artifactId>visual-assert</artifactId>
+			<version>2.4.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.34</version>
+			<scope>provided</scope>
+		</dependency>
+
+        <!--
+        Not latest versions, but we would needto compile the petstore files.
+        To avoid conficts with dependencies we drop these dependencies and:
+        only use the model and data folders from the petstore sources
+        and create some dummy annotation classes to allow compile the model.
+
+		<dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2</artifactId>
+            <version>${swagger-core-version}</version>
+        </dependency>
+         <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-inflector</artifactId>
+            <version>${swagger-inflector-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.parser.v3</groupId>
+            <artifactId>swagger-parser</artifactId>
+            <version>${swagger-parser-version}</version>
+        </dependency>
+        -->
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- With build helper plugin we include the sources from the petstore project
+			and the compiler plugin exclude everything but model and data-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.6.0</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>
+									../swagger-petstore-main-fork/src/main/java
+								</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.13.0</version>
+				<configuration>
+					<excludes>
+						<exclude>**/io/swagger/petstore/controller/**</exclude>
+						<exclude>**/io/swagger/petstore/exception/**</exclude>
+						<exclude>**/io/swagger/petstore/utils/**</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- Run with: mvn test-compile
+				org.pitest:pitest-maven:mutationCoverage -->
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.16.1</version>
+				<configuration>
+					<targetClasses>
+						<param>io.swagger.petstore.data.Pet*</param>
+						<param>io.swagger.petstore.data.Order*</param>
+					</targetClasses>
+					<!--
+					<excludedMethods>
+						<param>io.swagger.petstore.data.PetData.deleteAll*</param>
+						<param>io.swagger.petstore.data.PetData.createPet*</param>
+						<param>io.swagger.petstore.data.PetData.addPet*</param>
+					</excludedMethods>
+					-->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>giis</id>
+			<url>https://in2test.lsi.uniovi.es/xlib/maven/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>giis-snapshots</id>
+			<url>https://in2test.lsi.uniovi.es/xlib/maven-snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+		<!-- Repositorios de snapshots en GitHub -->
+		<repository>
+			<id>github-giis-uniovi</id>
+			<url>https://maven.pkg.github.com/giis-uniovi/*</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
+</project>

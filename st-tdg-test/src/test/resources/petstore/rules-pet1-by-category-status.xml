@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlfpc>
+<version>0.0.0<development/></version>
+<sql>tds Pet1 where Pet1.category::name='Dogs' and Pet1.status='available'</sql>
+<parsedsql>SELECT *
+   FROM Pet1
+     LEFT JOIN Category Pet1_category_xref ON Pet1.category::id = Pet1_category_xref.id
+   WHERE Pet1.category::name = 'Dogs' AND Pet1.status = 'available'</parsedsql>
+<fpcrules>
+  <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[Pet1.category::name = 'Dogs']</location>
+    <sql>SELECT *
+   FROM Pet1
+     INNER JOIN Category Pet1_category_xref ON Pet1.category::id = Pet1_category_xref.id
+   WHERE (Pet1.category::name = 'Dogs') AND (Pet1.status = 'available')</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(T) Pet1.category::name = 'Dogs' is TRUE
+  --(T) Pet1.status = 'available' is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>2</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.1.[Pet1.category::name = 'Dogs']</location>
+    <sql>SELECT *
+   FROM Pet1
+     INNER JOIN Category Pet1_category_xref ON Pet1.category::id = Pet1_category_xref.id
+   WHERE NOT(Pet1.category::name = 'Dogs') AND (Pet1.status = 'available')</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(F) Pet1.category::name = 'Dogs' is FALSE
+  --(T) Pet1.status = 'available' is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>3</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.2.[Pet1.status = 'available']</location>
+    <sql>SELECT *
+   FROM Pet1
+     INNER JOIN Category Pet1_category_xref ON Pet1.category::id = Pet1_category_xref.id
+   WHERE NOT(Pet1.status = 'available') AND (Pet1.category::name = 'Dogs')</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(F) Pet1.status = 'available' is FALSE
+  --(T) Pet1.category::name = 'Dogs' is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>4</id><category>J</category><type>R</type><subtype>O</subtype><location>1.j.1.[LEFT JOIN]</location>
+    <sql>SELECT *
+   FROM Pet1
+     RIGHT JOIN Category Pet1_category_xref ON Pet1.category::id = Pet1_category_xref.id
+   WHERE (Pet1.category::id IS NULL) AND (Pet1_category_xref.id IS NOT NULL)</sql>
+    <description>
+--The JOIN tables fulfill:
+--COMMENT: Reduced conditions: [Pet1.category::name = 'Dogs'] ; [Pet1.status = 'available'] ; 
+  --summary: [Pet1] right [Category Pet1_category_xref] ON Pet1.category::id = Pet1_category_xref.id
+  --There exist some row in table Category Pet1_category_xref
+  --which does not join to any table in Pet1</description>
+  </fpcrule>
+</fpcrules>
+</sqlfpc>

@@ -1,0 +1,4 @@
+"HospitalDTO":{"id":"0","address":"2","availableBeds":3,"beds":4,"latitude":"5","longitude":"6","name":"7"}
+"ProductDTO":{"id":"0","hospitalDTOId":"0","description":"103","name":"104","productName":"105","productType":"COMMON","quantity":1}
+"ProductDTO":{"id":"1","hospitalDTOId":"0","description":"203","name":"204","productName":"205","productType":"BLOOD","quantity":1}
+"ProductDTO":{"id":"2","hospitalDTOId":"0","description":"303","name":"304","productName":"305","productType":"COMMON","quantity":0}

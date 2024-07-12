@@ -1,0 +1,122 @@
+<schema dbms="openapi">
+<table name="CartDTO" type="table">
+<column name="user" type="string" key="true" notnull="true" fk="UserDTOReq.email" fkname="fk_CartDTO_user" />
+<column name="deliveryCost" type="int32" notnull="true" />
+<column name="deliveryIncluded" type="boolean" notnull="true" />
+<column name="empty" type="boolean" notnull="true" />
+<column name="productsCost" type="double" notnull="true" />
+<column name="totalCost" type="double" notnull="true" />
+<column name="totalItems" type="int32" notnull="true" />
+</table>
+<table name="CartItemDTOReq" type="table">
+<column name="user" type="string" key="true" notnull="true" fk="CartDTO.user" fkname="fk_CartItemDTOReq_user" />
+<column name="productId" type="int64" key="true" notnull="true" fk="ProductDTOReq.productId" fkname="fk_CartItemDTOReq_productId" />
+<column name="quantity" type="int32" notnull="true" />
+<ddl command="put">/customer/cart</ddl>
+</table>
+<table name="CartItemDTORes" type="table">
+<column name="productId" type="int64" key="true" notnull="true" fk="ProductDTORes.productId" fkname="fk_CartItemDTORes_productId" />
+<column name="user" type="string" key="true" notnull="true" fk="CartDTO.user" fkname="fk_CartItemDTORes_user" />
+<column name="quantity" type="int32" notnull="true" />
+</table>
+<table name="ContactsDTOReq" type="table">
+<column name="user" type="string" notnull="true" fk="UserDTOReq.email" fkname="fk_ContactsDTOReq_user" />
+<column name="address" type="string" size="100" notnull="true" />
+<column name="phone" type="string" size="20" notnull="true" />
+<ddl command="put">/customer/contacts</ddl>
+</table>
+<table name="ContactsDTORes" type="table">
+<column name="user" type="string" notnull="true" fk="UserDTORes.email" fkname="fk_ContactsDTORes_user" />
+<column name="address" type="string" size="100" notnull="true" />
+<column name="phone" type="string" size="20" notnull="true" />
+</table>
+<table name="CreditCardDTO" type="table">
+<column name="ccNumber" type="string" notnull="true" />
+<ddl command="post">/customer/cart/pay</ddl>
+</table>
+<table name="DistilleryDTOReq" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="region" type="string" notnull="true" fk="RegionDTOReq.name" fkname="fk_DistilleryDTOReq_region" />
+<column name="description" type="string" notnull="true" />
+<column name="title" type="string" notnull="true" />
+<ddl command="post">/distillerydto</ddl>
+</table>
+<table name="DistilleryDTORes" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="region" type="string" notnull="true" fk="RegionDTORes.name" fkname="fk_DistilleryDTORes_region" />
+<column name="description" type="string" notnull="true" />
+<column name="title" type="string" notnull="true" />
+</table>
+<table name="OrderDTO" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="ccNumber" type="string" notnull="true" fk="CreditCardDTO.ccNumber" fkname="fk_OrderDTO_ccNumber" />
+<column name="userAccount" type="string" notnull="true" fk="UserDTOReq.email" fkname="fk_OrderDTO_userAccount" />
+<column name="billNumber" type="int32" notnull="true" />
+<column name="dateCreated" type="date-time" notnull="true" />
+<column name="deliveryCost" type="int32" notnull="true" />
+<column name="deliveryIncluded" type="boolean" notnull="true" />
+<column name="executed" type="boolean" notnull="true" />
+<column name="payed" type="boolean" notnull="true" />
+<column name="productsCost" type="double" notnull="true" />
+<column name="totalCost" type="double" notnull="true" />
+</table>
+<table name="ProductDTOReq" type="table">
+<column name="productId" type="int64" key="true" notnull="true" />
+<column name="distillery" type="string" notnull="true" fk="DistilleryDTOReq.title" fkname="fk_ProductDTOReq_distillery" />
+<column name="age" type="int32" notnull="true" />
+<column name="alcohol" type="float" notnull="true" />
+<column name="available" type="boolean" notnull="true" />
+<column name="description" type="string" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<column name="price" type="double" notnull="true" />
+<column name="volume" type="int32" notnull="true" />
+<check column="age">age&lt;=2E+3</check>
+<check column="alcohol">alcohol&gt;=1</check>
+<check column="alcohol">alcohol&lt;=96</check>
+<ddl command="post">/products/productdto</ddl>
+</table>
+<table name="ProductDTORes" type="table">
+<column name="productId" type="int64" key="true" notnull="true" />
+<column name="distillery" type="string" notnull="true" fk="DistilleryDTORes.title" fkname="fk_ProductDTORes_distillery" />
+<column name="age" type="int32" notnull="true" />
+<column name="alcohol" type="float" notnull="true" />
+<column name="available" type="boolean" notnull="true" />
+<column name="description" type="string" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<column name="price" type="double" notnull="true" />
+<column name="volume" type="int32" notnull="true" />
+<check column="age">age&lt;=2E+3</check>
+<check column="alcohol">alcohol&gt;=1</check>
+<check column="alcohol">alcohol&lt;=96</check>
+</table>
+<table name="RegionDTOReq" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="color" type="string" notnull="true" />
+<column name="description" type="string" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<column name="subtitle" type="string" notnull="true" />
+<ddl command="post">/regiondto</ddl>
+</table>
+<table name="RegionDTORes" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="color" type="string" notnull="true" />
+<column name="description" type="string" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<column name="subtitle" type="string" notnull="true" />
+</table>
+<table name="UserDTOReq" type="table">
+<column name="email" type="string" size="50" key="true" notnull="true" />
+<column name="address" type="string" size="100" notnull="true" />
+<column name="name" type="string" size="50" notnull="true" />
+<column name="password" type="string" size="50" notnull="true" />
+<column name="phone" type="string" size="20" notnull="true" />
+<ddl command="post">/register</ddl>
+</table>
+<table name="UserDTORes" type="table">
+<column name="email" type="string" size="50" key="true" notnull="true" />
+<column name="address" type="string" size="100" notnull="true" />
+<column name="name" type="string" size="50" notnull="true" />
+<column name="password" type="string" size="50" notnull="true" />
+<column name="phone" type="string" size="20" notnull="true" />
+</table>
+</schema>

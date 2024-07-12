@@ -1,0 +1,14 @@
+"category":{"id":1,"name":"Tiger"}
+"category":{"id":2,"name":"Lion"}
+"pet":{"id":1,"category":{"id":1,"name":"Tiger"},"name":"Max","photoUrls":["http://localhost/photos/000203.jpg"],"tags":[{"id":503,"name":"Puppy"}],"status":"available"}
+"pet":{"id":2,"category":{"id":1,"name":"Tiger"},"name":"Luna","photoUrls":["http://localhost/photos/000303.jpg"],"tags":[{"id":603,"name":"Young"}],"status":"pending"}
+"pet":{"id":3,"category":{"id":1,"name":"Tiger"},"name":"Charlie","photoUrls":["http://localhost/photos/000403.jpg"],"tags":[],"status":"sold"}
+"pet":{"id":4,"category":{"id":1,"name":"Tiger"},"name":"Bella","photoUrls":[],"tags":[{"id":703,"name":"Old"}],"status":"available"}
+"order":{"id":1,"petId":1,"customerId":1,"quantity":1804,"shipDate":"2007-01-23T00:00:00.000+00:00","status":"placed","complete":true}
+"order":{"id":2,"petId":1,"customerId":1,"quantity":1904,"shipDate":"2007-01-24T00:00:00.000+00:00","status":"approved","complete":false}
+"order":{"id":3,"petId":1,"customerId":2,"quantity":2004,"shipDate":"2007-01-25T00:00:00.000+00:00","status":"placed","complete":true}
+"order":{"id":4,"petId":3,"customerId":1,"quantity":2104,"shipDate":"2007-01-26T00:00:00.000+00:00","status":"placed","complete":false}
+"order":{"id":5,"petId":4,"customerId":1,"quantity":2204,"shipDate":"2007-01-27T00:00:00.000+00:00","status":"placed","complete":true}
+"customer":{"id":1,"username":"James Smith","address":[{"street":"Main St","city":"Springfield","state":"California","zip":"99999"},{"street":"Broadway","city":"Franklin","state":"Texas","zip":"000001"}]}
+"customer":{"id":2,"username":"Mary Johnson","address":[]}
+"customer":{"id":3,"username":"Robert Williams","address":[{"street":"Park Ave","city":"Greenville","state":"Florida","zip":"99999"}]}

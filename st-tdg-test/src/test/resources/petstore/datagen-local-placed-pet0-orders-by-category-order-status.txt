@@ -1,0 +1,8 @@
+"Customer0":{"id":1,"username":"2"}
+"Pet0":{"id":1,"name":"102","category":{"id":103,"name":"Dogs"},"status":"available"}
+"Order0":{"id":1,"petId":1,"customerId":1,"quantity":204,"shipDate":"2007-01-07","status":"placed","complete":true}
+"Pet0":{"id":2,"name":"302","category":{"id":303,"name":"1"},"status":"sold"}
+"Order0":{"id":2,"petId":2,"customerId":1,"quantity":404,"shipDate":"2007-01-09","status":"placed","complete":true}
+"Order0":{"id":3,"petId":1,"customerId":1,"quantity":504,"shipDate":"2007-01-10","status":"delivered","complete":false}
+"Customer0":{"id":2,"username":"602"}
+"Pet0":{"id":3,"name":"702","category":{"id":703,"name":"Dogs"},"status":"available"}

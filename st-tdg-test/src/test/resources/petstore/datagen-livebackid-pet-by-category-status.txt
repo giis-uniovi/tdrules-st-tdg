@@ -1,0 +1,8 @@
+"category":{"id":10,"name":"Dogs"}
+"category":{"id":20,"name":"1"}
+"category":{"id":30,"name":"1102"}
+"pet":{"id":1000,"category":{"id":10,"name":"Dogs"},"name":"302","photoUrls":["203"],"tags":[{"id":103,"name":"104"}],"status":"available"}
+"pet":{"id":2000,"category":{"id":10,"name":"Dogs"},"name":"602","photoUrls":["503"],"tags":[{"id":403,"name":"404"}],"status":"sold"}
+"pet":{"id":3000,"category":{"id":20,"name":"1"},"name":"1002","photoUrls":["903"],"tags":[{"id":803,"name":"804"}],"status":"available"}
+"pet":{"id":4000,"category":{"id":10,"name":"Dogs"},"name":"1302","photoUrls":["1203"],"tags":[],"status":"available"}
+"pet":{"id":5000,"category":{"id":10,"name":"Dogs"},"name":"1502","photoUrls":[],"tags":[{"id":1403,"name":"1404"}],"status":"available"}

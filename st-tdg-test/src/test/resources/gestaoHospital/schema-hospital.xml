@@ -1,0 +1,123 @@
+<schema dbms="openapi">
+<table name="HospitalDTO" type="table">
+<column name="id" type="string" key="true" notnull="true" />
+<column name="address" type="string" notnull="true" />
+<column name="availableBeds" type="int32" notnull="true" />
+<column name="beds" type="int32" notnull="true" />
+<column name="latitude" type="string" notnull="true" />
+<column name="longitude" type="string" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<ddl command="post">/v1/hospitais/</ddl>
+<ddl command="put">/v1/hospitais/{hospital_id}</ddl>
+</table>
+<table name="GeoJsonPoint_coordinates_xa" type="array">
+<column name="pk_xa" type="integer" key="true" notnull="true" />
+<column name="fk_xa" type="string" notnull="true" fk="GeoJsonPoint.id" />
+<column name="coordinates" type="double" notnull="true" />
+</table>
+<table name="Location_location_xt_coordinates_xa" type="array">
+<column name="pk_xa" type="integer" key="true" notnull="true" />
+<column name="fk_xa" type="string" notnull="true" fk="Location_location_xt.id" />
+<column name="coordinates" type="double" notnull="true" />
+</table>
+<table name="Location_location_xt" type="type" subtype="GeoJsonPoint">
+<column name="id" type="string" notnull="true" fk="GeoJsonPoint.id" />
+<column name="coordinates" type="Location_location_xt_coordinates_xa" compositetype="array" subtype="number" notnull="true" />
+<column name="type" type="string" notnull="true" />
+<column name="x" type="double" notnull="true" />
+<column name="y" type="double" notnull="true" />
+</table>
+<table name="Location_position_xt_coordinates_xa" type="array">
+<column name="pk_xa" type="integer" key="true" notnull="true" />
+<column name="fk_xa" type="string" notnull="true" fk="Location_position_xt.id" />
+<column name="coordinates" type="double" notnull="true" />
+</table>
+<table name="Location_position_xt" type="type" subtype="GeoJsonPoint">
+<column name="id" type="string" notnull="true" fk="GeoJsonPoint.id" />
+<column name="coordinates" type="Location_position_xt_coordinates_xa" compositetype="array" subtype="number" notnull="true" />
+<column name="type" type="string" notnull="true" />
+<column name="x" type="double" notnull="true" />
+<column name="y" type="double" notnull="true" />
+</table>
+<table name="Patient_location_xt_location_xt_coordinates_xa" type="array">
+<column name="pk_xa" type="integer" key="true" notnull="true" />
+<column name="fk_xa" type="string" notnull="true" fk="Patient_location_xt_location_xt.id" />
+<column name="coordinates" type="double" notnull="true" />
+</table>
+<table name="Patient_location_xt_location_xt" type="type" subtype="GeoJsonPoint">
+<column name="id" type="string" notnull="true" fk="GeoJsonPoint.id" />
+<column name="coordinates" type="Patient_location_xt_location_xt_coordinates_xa" compositetype="array" subtype="number" notnull="true" />
+<column name="type" type="string" notnull="true" />
+<column name="x" type="double" notnull="true" />
+<column name="y" type="double" notnull="true" />
+</table>
+<table name="Patient_location_xt_position_xt_coordinates_xa" type="array">
+<column name="pk_xa" type="integer" key="true" notnull="true" />
+<column name="fk_xa" type="string" notnull="true" fk="Patient_location_xt_position_xt.id" />
+<column name="coordinates" type="double" notnull="true" />
+</table>
+<table name="Patient_location_xt_position_xt" type="type" subtype="GeoJsonPoint">
+<column name="id" type="string" notnull="true" fk="GeoJsonPoint.id" />
+<column name="coordinates" type="Patient_location_xt_position_xt_coordinates_xa" compositetype="array" subtype="number" notnull="true" />
+<column name="type" type="string" notnull="true" />
+<column name="x" type="double" notnull="true" />
+<column name="y" type="double" notnull="true" />
+</table>
+<table name="Patient_location_xt" type="type" subtype="Location">
+<column name="id" type="string" notnull="true" fk="Location.id" />
+<column name="location" type="Patient_location_xt_location_xt" compositetype="type" notnull="true" />
+<column name="locationCategory" type="string" notnull="true" checkin="HOSPITAL,PATIENT" />
+<column name="name" type="string" notnull="true" />
+<column name="position" type="Patient_location_xt_position_xt" compositetype="type" notnull="true" />
+<column name="referenceId_X" type="string" notnull="true" />
+</table>
+<table name="Patient" type="table">
+<column name="id" type="string" key="true" notnull="true" />
+<column name="hospitalDTOId" type="string" notnull="true" fk="HospitalDTO.id" fkname="fk_Patient_hospitalDTOId" />
+<column name="active" type="boolean" notnull="true" />
+<column name="birthDate" type="date-time" notnull="true" />
+<column name="cpf" type="string" notnull="true" />
+<column name="entryDate" type="date-time" notnull="true" />
+<column name="exitDate" type="date-time" notnull="true" />
+<column name="gender" type="string" notnull="true" />
+<column name="location" type="Patient_location_xt" compositetype="type" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<ddl command="post">/v1/hospitais/{hospital_id}/pacientes/checkin</ddl>
+<ddl command="put">/v1/hospitais/{hospital_id}/pacientes/{patientId}</ddl>
+</table>
+<table name="GeoJsonPoint" type="table">
+<column name="id" type="string" key="true" notnull="true" />
+<column name="coordinates" type="GeoJsonPoint_coordinates_xa" compositetype="array" subtype="number" notnull="true" />
+<column name="type" type="string" notnull="true" />
+<column name="x" type="double" notnull="true" />
+<column name="y" type="double" notnull="true" />
+</table>
+<table name="LocationDTO" type="table">
+<column name="id" type="string" key="true" notnull="true" />
+<column name="category" type="string" notnull="true" />
+<column name="latitude" type="string" notnull="true" />
+<column name="longitude" type="string" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<column name="referenceId_X" type="string" notnull="true" />
+</table>
+<table name="ProductDTO" type="table">
+<column name="id" type="string" key="true" notnull="true" />
+<column name="hospitalDTOId" type="string" notnull="true" fk="HospitalDTO.id" fkname="fk_ProductDTO_hospitalDTOId" />
+<column name="description" type="string" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<column name="productName" type="string" notnull="true" />
+<column name="productType" type="string" notnull="true" checkin="COMMON,BLOOD" />
+<column name="quantity" type="int32" notnull="true" />
+<ddl command="post">/v1/hospitais/estoque</ddl>
+<ddl command="post">/v1/hospitais/{hospital_id}/estoque</ddl>
+<ddl command="put">/v1/hospitais/{hospital_id}/estoque/{produto_id}</ddl>
+</table>
+<table name="Location" type="table">
+<column name="id" type="string" key="true" notnull="true" />
+<column name="location" type="Location_location_xt" compositetype="type" notnull="true" />
+<column name="locationCategory" type="string" notnull="true" checkin="HOSPITAL,PATIENT" />
+<column name="name" type="string" notnull="true" />
+<column name="position" type="Location_position_xt" compositetype="type" notnull="true" />
+<column name="referenceId_X" type="string" notnull="true" />
+</table>
+</schema>

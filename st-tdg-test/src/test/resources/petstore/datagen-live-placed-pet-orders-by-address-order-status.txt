@@ -1,0 +1,4 @@
+"category":{"id":1,"name":"Dogs"}
+"pet":{"id":1,"category":{"id":1,"name":"Dogs"},"name":"302","photoUrls":["103"],"tags":[{"id":3,"name":"4"}],"status":"available"}
+"order":{"id":1,"petId":1,"customerId":1,"quantity":604,"shipDate":"2007-01-11T00:00:00.000+00:00","status":"delivered","complete":true}
+"customer":{"id":1,"username":"502","address":[{"street":"403","city":"404","state":"405","zip":"406"}]}

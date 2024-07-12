@@ -1,0 +1,6 @@
+"cart":{"id":1,"userAccount":{"id":1,"email":"us01@email.com","name":"Lucia","active":true,"roles":[]},"cartItems":[],"deliveryIncluded":true,"itemsCost":0.0,"itemsCount":0,"empty":true}
+"cart":{"id":2,"userAccount":{"id":2,"email":"lucia@email.com","name":"Sofia","active":true,"roles":[]},"cartItems":[],"deliveryIncluded":true,"itemsCost":0.0,"itemsCount":0,"empty":true}
+"contacts":{"id":1,"userAccount":{"id":1,"email":"us01@email.com","name":"Lucia","active":true,"roles":[]},"phone":"+12123456789","address":"2","cityAndRegion":null}
+"contacts":{"id":2,"userAccount":{"id":2,"email":"lucia@email.com","name":"Sofia","active":true,"roles":[]},"phone":"+12112345678","address":"102","cityAndRegion":null}
+"userAccount":{"id":1,"email":"us01@email.com","name":"Lucia","active":true,"roles":[]}
+"userAccount":{"id":2,"email":"lucia@email.com","name":"Sofia","active":true,"roles":[]}
