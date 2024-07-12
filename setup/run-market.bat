@@ -1,5 +1,5 @@
 @echo on
-SET MARKET_DIR=%~dp0%\..\swagger-market-fork
+SET MARKET_DIR=%~dp0%\..\sut-market
 cd %MARKET_DIR%
 cmd /c mvn package -DskipTests=true
 docker build -t market-web --build-arg module=market-web .

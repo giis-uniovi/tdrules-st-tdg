@@ -18,7 +18,7 @@ jobs:
     if: (github.event_name != 'pull_request' && ! github.event.pull_request.head.repo.fork) || (github.event_name == 'pull_request' && (github.event.pull_request.head.repo.fork || startsWith(github.head_ref, 'dependabot/')))
     strategy:
       matrix:
-        scope: [Petstore]
+        scope: [Petstore, Market]
       fail-fast: false
       
     steps:
@@ -38,6 +38,17 @@ jobs:
           docker run -d -p 8081:8080 --name swagger-petstore swagger-petstore
           chmod u+x ../setup/wait-container-ready.sh
           ../setup/wait-container-ready.sh swagger-petstore "public ResponseContext findPetsByCategoryAndStatus"
+      - name: Launch Market
+        if: ${{ matrix.scope == 'Market' }}
+        working-directory: ./sut-market
+        run: |
+          mvn package -DskipTests=true -ntp
+          docker build -t market-rest --build-arg module=market-rest .
+          docker build -t market-web --build-arg module=market-web .
+          docker-compose -f docker-compose.yaml up -d
+          chmod u+x ../setup/wait-container-ready.sh
+          ../setup/wait-container-ready.sh db "ready for start up"
+          ../setup/wait-container-ready.sh market-rest "Started RestApplication"
       - run: docker ps
 
       - name: Rules cache
@@ -55,6 +66,10 @@ jobs:
 
       - if: ${{ matrix.scope == 'Petstore' }}
         run: docker logs swagger-petstore > st-tdg-test/target/docker-petstore-server.log
+      - if: ${{ matrix.scope == 'Market' }}
+        run: |
+          docker logs market-rest > st-tdg-test/target/docker-market-server.log
+          docker logs db          > st-tdg-test/target/docker-market-db.log
 
       - name: Generate report checks
         if: always()
