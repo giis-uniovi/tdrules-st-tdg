@@ -18,7 +18,7 @@ jobs:
     if: (github.event_name != 'pull_request' && ! github.event.pull_request.head.repo.fork) || (github.event_name == 'pull_request' && (github.event.pull_request.head.repo.fork || startsWith(github.head_ref, 'dependabot/')))
     strategy:
       matrix:
-        scope: [Petstore, Market]
+        scope: [Petstore, Market, GestaoHospital]
       fail-fast: false
       
     steps:
@@ -49,6 +49,15 @@ jobs:
           chmod u+x ../setup/wait-container-ready.sh
           ../setup/wait-container-ready.sh db "ready for start up"
           ../setup/wait-container-ready.sh market-rest "Started RestApplication"
+      - name: Launch GestaoHospital
+        if: ${{ matrix.scope == 'GestaoHospital' }}
+        working-directory: ./sut-gestaoHospital
+        run: |
+          mvn package -DskipTests=true -ntp
+          docker-compose up -d --force-recreate --build
+          chmod u+x ../setup/wait-container-ready.sh
+          ../setup/wait-container-ready.sh mongodb "HospitalDB.product_collection"
+          ../setup/wait-container-ready.sh gestaohospital "Started GestaohospitalarApplication"
       - run: docker ps
 
       - name: Rules cache
@@ -70,6 +79,10 @@ jobs:
         run: |
           docker logs market-rest > st-tdg-test/target/docker-market-server.log
           docker logs db          > st-tdg-test/target/docker-market-db.log
+      - if: ${{ matrix.scope == 'GestaoHospital' }}
+        run: |
+          docker logs gestaohospital > st-tdg-test/target/docker-gestaoHospital-server.log
+          docker logs mongodb        > st-tdg-test/target/docker-gestaoHospital-db.log
 
       - name: Generate report checks
         if: always()

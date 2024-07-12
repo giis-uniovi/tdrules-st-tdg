@@ -1,5 +1,5 @@
 @echo on
-SET GESTAOHOSPITAL_DIR=%~dp0%\..\swagger-gestaoHospital-fork
+SET GESTAOHOSPITAL_DIR=%~dp0%\..\sut-gestaoHospital
 cd %GESTAOHOSPITAL_DIR%
 cmd /c mvn package -DskipTests=true
 docker-compose down
