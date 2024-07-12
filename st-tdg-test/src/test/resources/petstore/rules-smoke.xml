@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sqlfpc>
 <version>0.0.0<development/></version>
-<sql>select * from Category where name='Dogs'</sql>
+<sql>tds Category where name='Dogs'</sql>
 <parsedsql>SELECT *
  FROM Category
  WHERE name = 'Dogs'</parsedsql>

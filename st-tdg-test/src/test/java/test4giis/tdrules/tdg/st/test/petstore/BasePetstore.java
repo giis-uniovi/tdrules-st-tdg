@@ -7,8 +7,24 @@ import giis.tdrules.store.loader.IAttrGen;
 import giis.tdrules.store.loader.gen.DictionaryAttrGen;
 import test4giis.tdrules.tdg.st.test.BaseAll;
 
+/**
+ * Common configuration and customization for all Swagger Petstore tests.
+ * 
+ * There are two different set of test clases:
+ * 
+ * - Classes containing Petstore0 in the name: It is an initial 
+ *   proof of concept of of TDG using simplified entities (Pet0, Pet1...)
+ *   from the Swagger Petstore.
+ * - Classes containing Petstore in the name: They use the real
+ *   entities in the petstore OpenApi model.
+ *   
+ * The former tests (Petstore0) also serve to illustrate using examples the main 
+ * transformations performed on the model and the coverage rules.
+ * 
+ * Documentation is more exhaustive in TestPetstore0DatagenLocal and TestPetstore0DatagenLocal
+ * The others are the different flavour variants to include data generation and a live SUT
+ */
 public class BasePetstore  extends BaseAll{
-	//Para la generacion "live" arrancar antes el container de petstore con docker-run (asegurar tener el puerto 8081 libre)
 	protected static final String PETSTORE_SCHEMA_LOCAL = "../sut-petstore/src/main/resources/openapi.yaml";
 	protected static final String PETSTORE_SCHEMA_LIVE = "http://localhost:8081/api/v3/openapi.json";
 	private static final String PETSTORE_URL_LIVE = "http://localhost:8081/api/v3";
@@ -35,10 +51,10 @@ public class BasePetstore  extends BaseAll{
 
 	@Override
 	protected TdSchema getSchema() {
-		// Configure the schema id resolver to use id attribute as uid, but there are exceptions:
+		// Configures the schema id resolver to use id attribute as uid, but there are exceptions:
 		// - Tag has an id, but looking at the source code, a post inserts unconditionally,
 		//   allowing repeated id values. Considers this id as no uid
-		// - Order0 has been artificially created for some tests, it does not follow strictely
+		// - Order0 has been created for some tests, it does not follow strictely
 		//   the conventions (attribute petId references Pet0.id)
 		OaSchemaApi api = new OaSchemaApi(PETSTORE_SCHEMA_LOCAL)
 				.setIdResolver(new OaSchemaIdResolver().setIdName("id")
@@ -47,8 +63,7 @@ public class BasePetstore  extends BaseAll{
 	}
 
 	/**
-	 * Instancia un generador de datos configurado con un diccionario para que los datos
-	 * generados no sean solo numeros, sino valores procedentes de un diccionario o mascaras
+	 * Dictionary to load more user friendly petstore data, includes values enumertions for strings and masks
 	 */
 	protected IAttrGen getDictionaryAttrGen() {
 		return new DictionaryAttrGen()

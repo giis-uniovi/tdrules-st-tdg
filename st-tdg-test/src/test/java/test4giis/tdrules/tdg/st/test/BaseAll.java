@@ -32,29 +32,29 @@ import giis.visualassert.VisualAssert;
 import in2test.application.qagrow.QAGrowApiProcess;
 
 /**
- * This is a base class for all system and integration tests that
- * defines basic configurations to manage the different items involved in the tests:
+ * This is the base class for all system and integration tests to
+ * define basic configurations to manage the different items involved in the tests:
  * 
  * - Abstract methods to configure main test parameters
  * - Methods to configure the main test objects (can be overriden for fine tuning)
  * - Test utilities (making assertions, serialization, etc.)
  *
- * The two main configuration methods are getSubjectName (to identify the SUT) and
- * isLiveBackend to indicate whether the test generates and sends data to a live backend
- * or everything is performed in local (no SUT needed).
+ * The two main configurations for every test are getSubjectName() (to identify the SUT) and
+ * isLiveBackend() to indicate whether the test generates and sends data to a live backend
+ * or everything is performed in local (no running SUT needed).
  * These values in combination with the test inheritance, allow creating four
  * different flavours of the tests:
  * 
- * - datagen-local: a simulation of the data generation that manually specifies
+ * - datagen-local: the test simulates the data generation by specifying
  *   the commands sent to the Data Loader and gets the data that would be loaded.
  * - datagen-live: manually specifies the commands sent to the Data Loader,
- *   but loads the data in a live SUT backend
+ *   but loads the data in a running (live) SUT backend.
  * - qagrow-local: Automatically generates the test data, but working in local
- * - qagrow-live: Automatically generates the test data and loads the data
+ * - qagrow-live: Automatically generates and loads the test data
  *   in a live SUT backend.
  *   
  * The last is the true system test that integrates all main components:
- * data loader, qagrow generator, fpc rule generator and the SUT backend
+ * data loader, qagrow data generator, fpc rule generator and the SUT backend.
  */
 public abstract class BaseAll {
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
@@ -75,8 +75,10 @@ public abstract class BaseAll {
 	}
 
 	/**
-	 * Returns a string to identify the test subject (e.g. petstore, market)
+	 * Returns a string to identify the SUT (e.g. petstore, market)
 	 * to allow identify separate the expected and actual outputs
+	 * (must be overriden by all test methods, usually in a base 
+	 * class for this SUT)
 	 */
 	protected abstract String getSutName();
 	
@@ -89,23 +91,23 @@ public abstract class BaseAll {
 	}
 	
 	/**
-	 * Returns the url of the backend
+	 * Returns the url of the SUT backend
 	 */
 	protected abstract String getServerUrl();
 	
 	/**
-	 * Returns the endpoint to get all data from the backend 
+	 * Returns the endpoint to get all data from the SUT backend 
 	 */
 	protected abstract String getAllDataLiveEndpoint();
 
 	/**
-	 * Returns the endpoint to reset all data in the backend 
+	 * Returns the endpoint to reset all data in the SUT backend 
 	 */
 	protected abstract String getDeleteAllDataLiveEndpoint();
 
 	/**
 	 * Returns the data schema for each test.
-	 * Each base test should configure the appropriate IdResolver and location of the OpenApi specification
+	 * Each SUT base test should configure the appropriate IdResolver and location of the OpenApi specification
 	 */
 	protected abstract TdSchema getSchema();
 	
@@ -117,14 +119,13 @@ public abstract class BaseAll {
 	}
 	
 	/**
-	 * Gets the TdRules model for a given query, and reprocess the version numbers
+	 * Gets the TdRules model for a given query and reprocess the version numbers
 	 * to allow comparison of expected test results
 	 */
 	protected TdRules getRules(String query) {
 		TdRules rules = getRulesApi()
 				.getRules(getSchema(), query, "noboundaries gettransformedquery formatquery clientname=" + getSutName());
-		// remove version to allow result comparison
-		return filterRulesVersion(rules);
+		return filterRulesVersion(rules); // remove version to allow result comparison
 	}
 	
 	/**
@@ -132,8 +133,9 @@ public abstract class BaseAll {
 	 * - In local tests uses the default OaLocalAdapter.
 	 * - In live tests uses the default OaLiveAdapter and the default OaPathResolver
 	 *   configured to resolve paths from the schema model.
-	 * If a custom path resolver is needed the test must override the getLiveDataLoader()
-	 * method with the appropriate configuration. Calling getDataLoader() will invoke
+	 *   
+	 * If a custom path resolver is needed, the test must override the getLiveDataLoader()
+	 * method with the appropriate configuration so that calling getDataLoader() will invoke
 	 * the overriden method.
 	 */
 	protected DataLoader getDataLoader() {
@@ -173,14 +175,14 @@ public abstract class BaseAll {
 	
 	
 	/**
-	 * Gets all data from the backend 
+	 * Gets all data stored in the SUT backend 
 	 */
 	protected String getAllLiveData() {
 		ApiWriter api=new ApiWriter();
 		return api.get(getAllDataLiveEndpoint()).getBody();
 	}
 	/**
-	 * Resets all data in the backend 
+	 * Resets all data stored in the SUT backend 
 	 */
 	protected String deleteAllLiveData() {
 		ApiWriter api=new ApiWriter();
@@ -188,7 +190,7 @@ public abstract class BaseAll {
 	}
 
 	/**
-	 * General assert on the content of a model (as string) against the expected.
+	 * General assert on a model (as string) against the expected.
 	 * Actual outputs are saved and then comparison is made between the content of
 	 * the expected and actual files.
 	 */
@@ -210,12 +212,6 @@ public abstract class BaseAll {
 	 * or if it has been loaded to a live backend (in this case
 	 * a call to get the data content is made before comparison)
 	 */
-	/**
-	 * Gets a data loader according to the current configuration.
-	 * The actual output data is obtanied as indicated:
-	 * - In local uses the output produced by the data adapter.
-	 * - In live tests queries the backend to get all stored data.
-	 */
 	protected void assertData(String fileName, DataLoader dg) {
 		if (isLiveBackend())
 			assertLiveData(fileName, dg);
@@ -226,8 +222,8 @@ public abstract class BaseAll {
 		assertModel(fileName, dg.getDataAdapter().getAllAsString());
 	}
 	protected void assertLiveData(String fileName, DataLoader dg) {
-		// Gets the data from the backend and
-		// uses a more compact presentation for easier comparison (an object per line)
+		// Gets the data from the backend and transforms into
+		// a more compact presentation for easier comparison (an object per line)
 		String payload=getAllLiveData();
 		payload=reserializeStoredData(payload);
 		log.info("Actual data stored in the backend\n{}", reserializeStoredData(payload));
@@ -237,7 +233,7 @@ public abstract class BaseAll {
 
 	/**
 	 * Removes the version number of the FPC rules to allow repeatable comparisons
-	 * (saves the version in target to use during debugging)
+	 * (saves the renamed version in target to use during debugging)
 	 */
 	protected TdRules filterRulesVersion(TdRules rules) {
 		String version=rules.getVersion();
@@ -248,19 +244,16 @@ public abstract class BaseAll {
 	}
 	
 	/**
-	 * Serializa un objeto cualquiera a json mostrando los atributos vacios o nulos
+	 * General purpose serialization of an object to use in test comparison
 	 */
 	protected String serialize(TdSchema model) {
 		return new ModelJsonSerializer().serialize(model, true);
 	}
 
 	/**
-	 * Serializa el contenido de toda la base de datos como:
-	 * - un objeto cuyos items son el contenido de cada una de las tablas
-	 * - cada item es un objeto de clave nombre de tabla y valor un array 
-	 *   con el contenido de cada fila de la tabla
-	 * Devuelve un string donde cada linea es un objeto de clave
-	 * nombre de tabla y valor el objeto con los valores de la fila
+	 * Given a serialized json string that represents the data stored in a SUT,
+	 * transforms the json to get a compact representation of the data
+	 * (a line for each object) suitable for display and test comparison
 	 */
 	protected String reserializeStoredData(String payload) {
 		return new Reserializer().reserializeData(payload);

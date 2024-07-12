@@ -14,7 +14,8 @@ import giis.tdrules.model.transform.SchemaSorter;
 import giis.tdrules.openapi.model.TdSchema;
 
 /**
- * Genera el esquema a partir de la especificacion (leida de archivo) y lo comprueba en formato json y xml
+ * Checks the transformation of the OpenApi specification into the TdSchema model
+ * as well as utilities to serialization and generation of Mermaid graphs.
  */
 public class TestPetstoreSchemaLocal extends BasePetstore {
 
