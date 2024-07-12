@@ -4,7 +4,7 @@ services:
         container_name: db
         image: postgres:9.6
         ports:
-            - 8084:5432
+            - 8087:5432
         environment:
             - POSTGRES_DB=market
             - POSTGRES_USER=market
