@@ -1,0 +1,3 @@
+"ProductDTO":{"id":"1","hospitalDTOId":"2","description":"3","name":"4","productName":"5","productType":"COMMON","quantity":1}
+"ProductDTO":{"id":"101","hospitalDTOId":"102","description":"103","name":"104","productName":"105","productType":"BLOOD","quantity":1}
+"ProductDTO":{"id":"201","hospitalDTOId":"202","description":"203","name":"204","productName":"205","productType":"COMMON","quantity":0}

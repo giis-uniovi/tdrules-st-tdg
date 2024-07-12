@@ -1,0 +1,480 @@
+{
+  "storetype" : "openapi",
+  "entities" : [ {
+    "name" : "CartDTO",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "user",
+      "datatype" : "string",
+      "uid" : "true",
+      "notnull" : "true",
+      "rid" : "UserDTOReq.email",
+      "ridname" : "fk_CartDTO_user"
+    }, {
+      "name" : "deliveryCost",
+      "datatype" : "int32",
+      "notnull" : "true"
+    }, {
+      "name" : "deliveryIncluded",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "empty",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "productsCost",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "totalCost",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "totalItems",
+      "datatype" : "int32",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "CartItemDTOReq",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "user",
+      "datatype" : "string",
+      "uid" : "true",
+      "notnull" : "true",
+      "rid" : "CartDTO.user",
+      "ridname" : "fk_CartItemDTOReq_user"
+    }, {
+      "name" : "productId",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true",
+      "rid" : "ProductDTOReq.productId",
+      "ridname" : "fk_CartItemDTOReq_productId"
+    }, {
+      "name" : "quantity",
+      "datatype" : "int32",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "put",
+      "query" : "/customer/cart"
+    } ]
+  }, {
+    "name" : "CartItemDTORes",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "productId",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true",
+      "rid" : "ProductDTORes.productId",
+      "ridname" : "fk_CartItemDTORes_productId"
+    }, {
+      "name" : "user",
+      "datatype" : "string",
+      "uid" : "true",
+      "notnull" : "true",
+      "rid" : "CartDTO.user",
+      "ridname" : "fk_CartItemDTORes_user"
+    }, {
+      "name" : "quantity",
+      "datatype" : "int32",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "ContactsDTOReq",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "user",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "UserDTOReq.email",
+      "ridname" : "fk_ContactsDTOReq_user"
+    }, {
+      "name" : "address",
+      "datatype" : "string",
+      "size" : "100",
+      "notnull" : "true"
+    }, {
+      "name" : "phone",
+      "datatype" : "string",
+      "size" : "20",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "put",
+      "query" : "/customer/contacts"
+    } ]
+  }, {
+    "name" : "ContactsDTORes",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "user",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "UserDTORes.email",
+      "ridname" : "fk_ContactsDTORes_user"
+    }, {
+      "name" : "address",
+      "datatype" : "string",
+      "size" : "100",
+      "notnull" : "true"
+    }, {
+      "name" : "phone",
+      "datatype" : "string",
+      "size" : "20",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "CreditCardDTO",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "ccNumber",
+      "datatype" : "string",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/customer/cart/pay"
+    } ]
+  }, {
+    "name" : "DistilleryDTOReq",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "region",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "RegionDTOReq.name",
+      "ridname" : "fk_DistilleryDTOReq_region"
+    }, {
+      "name" : "description",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "title",
+      "datatype" : "string",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/distillerydto"
+    } ]
+  }, {
+    "name" : "DistilleryDTORes",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "region",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "RegionDTORes.name",
+      "ridname" : "fk_DistilleryDTORes_region"
+    }, {
+      "name" : "description",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "title",
+      "datatype" : "string",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "OrderDTO",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "ccNumber",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "CreditCardDTO.ccNumber",
+      "ridname" : "fk_OrderDTO_ccNumber"
+    }, {
+      "name" : "userAccount",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "UserDTOReq.email",
+      "ridname" : "fk_OrderDTO_userAccount"
+    }, {
+      "name" : "billNumber",
+      "datatype" : "int32",
+      "notnull" : "true"
+    }, {
+      "name" : "dateCreated",
+      "datatype" : "date-time",
+      "notnull" : "true"
+    }, {
+      "name" : "deliveryCost",
+      "datatype" : "int32",
+      "notnull" : "true"
+    }, {
+      "name" : "deliveryIncluded",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "executed",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "payed",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "productsCost",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "totalCost",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "ProductDTOReq",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "productId",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "distillery",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "DistilleryDTOReq.title",
+      "ridname" : "fk_ProductDTOReq_distillery"
+    }, {
+      "name" : "age",
+      "datatype" : "int32",
+      "notnull" : "true"
+    }, {
+      "name" : "alcohol",
+      "datatype" : "float",
+      "notnull" : "true"
+    }, {
+      "name" : "available",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "description",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "price",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "volume",
+      "datatype" : "int32",
+      "notnull" : "true"
+    } ],
+    "checks" : [ {
+      "attribute" : "age",
+      "name" : "chkmax_ProductDTOReq_age",
+      "constraint" : "age<=2E+3"
+    }, {
+      "attribute" : "alcohol",
+      "name" : "chkmin_ProductDTOReq_alcohol",
+      "constraint" : "alcohol>=1"
+    }, {
+      "attribute" : "alcohol",
+      "name" : "chkmax_ProductDTOReq_alcohol",
+      "constraint" : "alcohol<=96"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/products/productdto"
+    } ]
+  }, {
+    "name" : "ProductDTORes",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "productId",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "distillery",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "DistilleryDTORes.title",
+      "ridname" : "fk_ProductDTORes_distillery"
+    }, {
+      "name" : "age",
+      "datatype" : "int32",
+      "notnull" : "true"
+    }, {
+      "name" : "alcohol",
+      "datatype" : "float",
+      "notnull" : "true"
+    }, {
+      "name" : "available",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "description",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "price",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "volume",
+      "datatype" : "int32",
+      "notnull" : "true"
+    } ],
+    "checks" : [ {
+      "attribute" : "age",
+      "name" : "chkmax_ProductDTORes_age",
+      "constraint" : "age<=2E+3"
+    }, {
+      "attribute" : "alcohol",
+      "name" : "chkmin_ProductDTORes_alcohol",
+      "constraint" : "alcohol>=1"
+    }, {
+      "attribute" : "alcohol",
+      "name" : "chkmax_ProductDTORes_alcohol",
+      "constraint" : "alcohol<=96"
+    } ]
+  }, {
+    "name" : "RegionDTOReq",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "color",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "description",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "subtitle",
+      "datatype" : "string",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/regiondto"
+    } ]
+  }, {
+    "name" : "RegionDTORes",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "color",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "description",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "subtitle",
+      "datatype" : "string",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "UserDTOReq",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "email",
+      "datatype" : "string",
+      "size" : "50",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "address",
+      "datatype" : "string",
+      "size" : "100",
+      "notnull" : "true"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "size" : "50",
+      "notnull" : "true"
+    }, {
+      "name" : "password",
+      "datatype" : "string",
+      "size" : "50",
+      "notnull" : "true"
+    }, {
+      "name" : "phone",
+      "datatype" : "string",
+      "size" : "20",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/register"
+    } ]
+  }, {
+    "name" : "UserDTORes",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "email",
+      "datatype" : "string",
+      "size" : "50",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "address",
+      "datatype" : "string",
+      "size" : "100",
+      "notnull" : "true"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "size" : "50",
+      "notnull" : "true"
+    }, {
+      "name" : "password",
+      "datatype" : "string",
+      "size" : "50",
+      "notnull" : "true"
+    }, {
+      "name" : "phone",
+      "datatype" : "string",
+      "size" : "20",
+      "notnull" : "true"
+    } ]
+  } ]
+}

@@ -1,0 +1,40 @@
+version: '3'
+services:
+    db:
+        container_name: swagger-market-db
+        image: postgres:9.6
+        #ports:
+        #    - 8384:5432
+        environment:
+            - POSTGRES_DB=market
+            - POSTGRES_USER=market
+            - POSTGRES_PASSWORD=market
+            - WORKSPACE
+        volumes:
+            # No se puede usar la variable de entorno del workspace, ver docker-compose-jenkins-workspace.sh
+            #- ${WORKSPACE}/swagger-market-fork/market-core/src/main/resources/schema.sql:/docker-entrypoint-initdb.d/1_schema.sql
+            #- ${WORKSPACE}/swagger-market-fork/market-core/src/main/resources/data.sql:/docker-entrypoint-initdb.d/2_data.sql
+            - /t2/cdat/jenkins-slave-xa/workspace/WORKSPACE_FOLDER/swagger-market-fork/market-core/src/main/resources/schema.sql:/docker-entrypoint-initdb.d/1_schema.sql
+            - /t2/cdat/jenkins-slave-xa/workspace/WORKSPACE_FOLDER/swagger-market-fork/market-core/src/main/resources/data.sql:/docker-entrypoint-initdb.d/2_data.sql
+            - postgres-data:/var/lib/postgresql/data
+        networks:
+            - net-swagger-test
+    market-rest:
+        container_name: swagger-market-rest
+        image: swagger-market-rest
+        depends_on:
+            - db
+        ports:
+            - 8383:8081
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - DB_HOST=db
+        networks:
+            - net-swagger-test
+volumes:
+    postgres-data:
+        driver: local
+networks:
+    # all containers are in this network, same as the dedicated jenkins agent
+    net-swagger-test:
+        external: true

@@ -1,0 +1,14 @@
+"Category":{"id":1,"name":"2"}
+"Category":{"id":2,"name":"102"}
+"Pet":{"id":1,"name":"802","category":{"id":1,"name":"2"},"photoUrls":["203"],"tags":[{"id":503,"name":"504"}],"status":"available"}
+"Pet":{"id":2,"name":"902","category":{"id":1,"name":"2"},"photoUrls":["303"],"tags":[{"id":603,"name":"604"}],"status":"pending"}
+"Pet":{"id":3,"name":"1002","category":{"id":1,"name":"2"},"photoUrls":["403"],"tags":[],"status":"sold"}
+"Pet":{"id":4,"name":"1102","category":{"id":1,"name":"2"},"photoUrls":[],"tags":[{"id":703,"name":"704"}],"status":"available"}
+"Customer":{"id":1,"username":"1502","address":[{"street":"1203","city":"1204","state":"1205","zip":"99999"},{"street":"1303","city":"1304","state":"1305","zip":"1"}]}
+"Customer":{"id":2,"username":"1602","address":[]}
+"Customer":{"id":3,"username":"1702","address":[{"street":"1403","city":"1404","state":"1405","zip":"99999"}]}
+"Order":{"id":1,"petId":1,"customerId":1,"quantity":1804,"shipDate":"2007-01-23","status":"placed","complete":true}
+"Order":{"id":2,"petId":1,"customerId":1,"quantity":1904,"shipDate":"2007-01-24","status":"approved","complete":false}
+"Order":{"id":3,"petId":1,"customerId":2,"quantity":2004,"shipDate":"2007-01-25","status":"placed","complete":true}
+"Order":{"id":4,"petId":3,"customerId":1,"quantity":2104,"shipDate":"2007-01-26","status":"placed","complete":false}
+"Order":{"id":5,"petId":4,"customerId":1,"quantity":2204,"shipDate":"2007-01-27","status":"placed","complete":true}

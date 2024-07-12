@@ -1,0 +1,8 @@
+"Category":{"id":1,"name":"Dogs"}
+"Category":{"id":2,"name":"Tiger"}
+"Category":{"id":3,"name":"Lion"}
+"Pet":{"id":1,"name":"Max","category":{"id":1,"name":"Dogs"},"photoUrls":["http://localhost/photos/000303.jpg"],"tags":[{"id":703,"name":"Puppy"}],"status":"available"}
+"Pet":{"id":2,"name":"Luna","category":{"id":2,"name":"Tiger"},"photoUrls":["http://localhost/photos/000403.jpg"],"tags":[{"id":803,"name":"Young"}],"status":"available"}
+"Pet":{"id":3,"name":"Charlie","category":{"id":1,"name":"Dogs"},"photoUrls":["http://localhost/photos/000503.jpg"],"tags":[{"id":903,"name":"Old"}],"status":"pending"}
+"Pet":{"id":4,"name":"Bella","category":{"id":1,"name":"Dogs"},"photoUrls":["http://localhost/photos/000603.jpg"],"tags":[],"status":"available"}
+"Pet":{"id":5,"name":"Cooper","category":{"id":1,"name":"Dogs"},"photoUrls":[],"tags":[{"id":1003,"name":"Puppy-1"}],"status":"available"}

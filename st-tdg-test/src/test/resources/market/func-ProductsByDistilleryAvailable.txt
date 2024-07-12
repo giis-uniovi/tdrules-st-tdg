@@ -1,0 +1,6 @@
+"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"105","description":"103","color":"102"},"description":"203"}
+"distillery":{"id":2,"title":"Balvenie","region":{"id":1,"name":"Campbeltown","subtitle":"105","description":"103","color":"102"},"description":"303"}
+"product":{"id":1,"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"105","description":"103","color":"102"},"description":"203"},"name":"407","price":40.8,"description":"406","volume":409,"alcohol":40.4,"age":403,"available":true}
+"product":{"id":2,"distillery":{"id":2,"title":"Balvenie","region":{"id":1,"name":"Campbeltown","subtitle":"105","description":"103","color":"102"},"description":"303"},"name":"507","price":50.8,"description":"506","volume":509,"alcohol":50.4,"age":503,"available":true}
+"product":{"id":3,"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"105","description":"103","color":"102"},"description":"203"},"name":"607","price":60.8,"description":"606","volume":609,"alcohol":60.4,"age":603,"available":false}
+"region":{"id":1,"name":"Campbeltown","subtitle":"105","description":"103","color":"102"}

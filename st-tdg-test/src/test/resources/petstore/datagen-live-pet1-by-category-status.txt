@@ -1,0 +1,6 @@
+"category":{"id":1,"name":"Dogs"}
+"category":{"id":2,"name":"1"}
+"category":{"id":3,"name":"502"}
+"pet":{"id":1,"category":{"id":1,"name":"Dogs"},"name":"102","photoUrls":[],"tags":[],"status":"available"}
+"pet":{"id":2,"category":{"id":1,"name":"Dogs"},"name":"202","photoUrls":[],"tags":[],"status":"sold"}
+"pet":{"id":3,"category":{"id":2,"name":"1"},"name":"402","photoUrls":[],"tags":[],"status":"available"}

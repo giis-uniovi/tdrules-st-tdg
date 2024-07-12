@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlfpc>
+<version>0.0.0<development/></version>
+<sql>tds Pet0 where Pet0.category::name='Dogs' and Pet0.status='available'</sql>
+<parsedsql>SELECT *
+   FROM Pet0
+   WHERE Pet0.category::name = 'Dogs' AND Pet0.status = 'available'</parsedsql>
+<fpcrules>
+  <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[Pet0.category::name = 'Dogs']</location>
+    <sql>SELECT *
+   FROM Pet0
+   WHERE (Pet0.category::name = 'Dogs') AND (Pet0.status = 'available')</sql>
+    <description>--Some row in the table such that:
+--The WHERE condition fulfills:
+  --(T) Pet0.category::name = 'Dogs' is TRUE
+  --(T) Pet0.status = 'available' is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>2</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.1.[Pet0.category::name = 'Dogs']</location>
+    <sql>SELECT *
+   FROM Pet0
+   WHERE NOT(Pet0.category::name = 'Dogs') AND (Pet0.status = 'available')</sql>
+    <description>--Some row in the table such that:
+--The WHERE condition fulfills:
+  --(F) Pet0.category::name = 'Dogs' is FALSE
+  --(T) Pet0.status = 'available' is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>3</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.2.[Pet0.status = 'available']</location>
+    <sql>SELECT *
+   FROM Pet0
+   WHERE NOT(Pet0.status = 'available') AND (Pet0.category::name = 'Dogs')</sql>
+    <description>--Some row in the table such that:
+--The WHERE condition fulfills:
+  --(F) Pet0.status = 'available' is FALSE
+  --(T) Pet0.category::name = 'Dogs' is TRUE</description>
+  </fpcrule>
+</fpcrules>
+</sqlfpc>

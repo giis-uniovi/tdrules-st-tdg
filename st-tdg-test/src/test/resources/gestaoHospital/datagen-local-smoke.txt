@@ -1,0 +1,2 @@
+"HospitalDTO":{"id":"1","address":"2","availableBeds":10,"beds":4,"latitude":"5","longitude":"6","name":"7"}
+"HospitalDTO":{"id":"101","address":"102","availableBeds":1,"beds":104,"latitude":"105","longitude":"106","name":"107"}

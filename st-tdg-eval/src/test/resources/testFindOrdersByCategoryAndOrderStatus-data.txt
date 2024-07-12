@@ -1,0 +1,17 @@
+"category":{"id":1,"name":"Dogs"}
+"category":{"id":2,"name":"Tiger"}
+"category":{"id":3,"name":"Lion"}
+"pet":{"id":1,"category":{"id":1,"name":"Dogs"},"name":"Max","photoUrls":["http://localhost/photos/000303.jpg"],"tags":[{"id":703,"name":"Puppy"}],"status":"available"}
+"pet":{"id":2,"category":{"id":2,"name":"Tiger"},"name":"Luna","photoUrls":["http://localhost/photos/000403.jpg"],"tags":[{"id":803,"name":"Young"}],"status":"pending"}
+"pet":{"id":3,"category":{"id":1,"name":"Dogs"},"name":"Charlie","photoUrls":["http://localhost/photos/000503.jpg"],"tags":[{"id":903,"name":"Old"}],"status":"sold"}
+"pet":{"id":4,"category":{"id":1,"name":"Dogs"},"name":"Bella","photoUrls":["http://localhost/photos/000603.jpg"],"status":"available"}
+"pet":{"id":5,"category":{"id":1,"name":"Dogs"},"name":"Cooper","tags":[{"id":1003,"name":"Puppy-1"}],"status":"pending"}
+"order":{"id":1,"petId":1,"customerId":1,"quantity":11,"shipDate":"2024-01-26","status":"placed","complete":false}
+"order":{"id":2,"petId":2,"customerId":1,"quantity":7,"shipDate":"2024-01-27","status":"placed","complete":true}
+"order":{"id":3,"petId":1,"customerId":1,"quantity":3,"shipDate":"2024-01-28","status":"approved","complete":false}
+"order":{"id":4,"petId":1,"customerId":2,"quantity":12,"shipDate":"2024-01-29","status":"placed","complete":true}
+"order":{"id":5,"petId":4,"customerId":1,"quantity":8,"shipDate":"2024-01-30","status":"placed","complete":false}
+"order":{"id":6,"petId":5,"customerId":1,"quantity":4,"shipDate":"2024-02-01","status":"placed","complete":true}
+"customer":{"id":1,"username":"James Smith","address":[{"street":"Main St","city":"Springfield","state":"California","zip":"001606"}]}
+"customer":{"id":2,"username":"Mary Johnson"}
+"customer":{"id":3,"username":"Robert Williams","address":[{"street":"Broadway","city":"Franklin","state":"Texas","zip":"001706"}]}

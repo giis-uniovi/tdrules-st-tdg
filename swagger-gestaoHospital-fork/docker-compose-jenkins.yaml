@@ -1,0 +1,23 @@
+version: '3'
+services:
+    mongodb:
+        container_name: swagger-gestaohospital-mongodb
+        image: mongo
+        #ports:
+        #    - 8386:27017
+        networks:
+            - net-swagger-test
+    gestaohospital:
+        container_name: swagger-gestaohospital-rest
+        image: gestaohospital
+        depends_on:
+            - mongodb
+        build: .
+        ports:
+            - 8385:8080
+        networks:
+            - net-swagger-test
+networks:
+    # all containers are in this network, same as the dedicated jenkins agent
+    net-swagger-test:
+        external: true

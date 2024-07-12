@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlfpc>
+<version>0.0.0<development/></version>
+<sql>tds Customer0 c, "Order0" o, Pet0 where category::name='Dogs' and o.status='placed'</sql>
+<parsedsql>SELECT *
+   FROM Customer0 c
+     INNER JOIN "Order0" o ON c.id = o.customerId
+     INNER JOIN Pet0 ON o.petId = Pet0.id
+   WHERE Pet0.category::name = 'Dogs' AND o.status = 'placed'</parsedsql>
+<fpcrules>
+  <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[Pet0.category::name = 'Dogs']</location>
+    <sql>SELECT *
+   FROM Customer0 c
+     INNER JOIN "Order0" o ON c.id = o.customerId
+     INNER JOIN Pet0 ON o.petId = Pet0.id
+   WHERE (Pet0.category::name = 'Dogs') AND (o.status = 'placed')</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(T) Pet0.category::name = 'Dogs' is TRUE
+  --(T) o.status = 'placed' is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>2</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.1.[Pet0.category::name = 'Dogs']</location>
+    <sql>SELECT *
+   FROM Customer0 c
+     INNER JOIN "Order0" o ON c.id = o.customerId
+     INNER JOIN Pet0 ON o.petId = Pet0.id
+   WHERE NOT(Pet0.category::name = 'Dogs') AND (o.status = 'placed')</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(F) Pet0.category::name = 'Dogs' is FALSE
+  --(T) o.status = 'placed' is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>3</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.2.[o.status = 'placed']</location>
+    <sql>SELECT *
+   FROM Customer0 c
+     INNER JOIN "Order0" o ON c.id = o.customerId
+     INNER JOIN Pet0 ON o.petId = Pet0.id
+   WHERE NOT(o.status = 'placed') AND (Pet0.category::name = 'Dogs')</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(F) o.status = 'placed' is FALSE
+  --(T) Pet0.category::name = 'Dogs' is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>4</id><category>J</category><type>L</type><subtype>O</subtype><location>1.j.1.[INNER JOIN]</location>
+    <sql>SELECT *
+   FROM Customer0 c
+     LEFT JOIN "Order0" o ON c.id = o.customerId
+     LEFT JOIN Pet0 ON o.petId = Pet0.id
+   WHERE (o.customerId IS NULL) AND (c.id IS NOT NULL)</sql>
+    <description>
+--The JOIN tables fulfill:
+--COMMENT: Reduced conditions: [Pet0.category::name = 'Dogs'] ; [o.status = 'placed'] ; 
+  --summary: [Customer0 c] left [Order0 o] ON c.id = o.customerId
+  --There exist some row in table Customer0 c
+  --which does not join to any table in Order0 o</description>
+  </fpcrule>
+  <fpcrule><id>5</id><category>J</category><type>R</type><subtype>O</subtype><location>1.j.2.[INNER JOIN]</location>
+    <sql>SELECT *
+   FROM Customer0 c
+     RIGHT JOIN "Order0" o ON c.id = o.customerId
+     RIGHT JOIN Pet0 ON o.petId = Pet0.id
+   WHERE ((o.petId IS NULL) AND (Pet0.id IS NOT NULL))
+     AND (Pet0.category::name = 'Dogs')</sql>
+    <description>
+--The JOIN tables fulfill:
+--COMMENT: Reduced conditions: [o.status = 'placed'] ; 
+  --summary: [Order0 o] right [Pet0] ON o.petId = Pet0.id
+  --There exist some row in table Pet0
+  --which does not join to any table in Order0 o
+--The following condition in the WHERE holds:
+  --WHERE Pet0.category::name = 'Dogs'</description>
+  </fpcrule>
+</fpcrules>
+</sqlfpc>

@@ -1,0 +1,6 @@
+"Category":{"id":1,"name":"Dogs"}
+"Pet1":{"id":1,"name":"102","category":{"id":1,"name":"Dogs"},"status":"available"}
+"Pet1":{"id":2,"name":"202","category":{"id":1,"name":"Dogs"},"status":"sold"}
+"Category":{"id":2,"name":"1"}
+"Pet1":{"id":3,"name":"402","category":{"id":2,"name":"1"},"status":"available"}
+"Category":{"id":3,"name":"502"}

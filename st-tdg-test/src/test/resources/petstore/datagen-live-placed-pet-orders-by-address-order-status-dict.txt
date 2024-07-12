@@ -1,0 +1,4 @@
+"category":{"id":1,"name":"Dogs"}
+"pet":{"id":1,"category":{"id":1,"name":"Dogs"},"name":"Max","photoUrls":["http://localhost/photos/000103.jpg"],"tags":[{"id":3,"name":"Puppy"}],"status":"available"}
+"order":{"id":1,"petId":1,"customerId":1,"quantity":604,"shipDate":"2007-01-11T00:00:00.000+00:00","status":"delivered","complete":true}
+"customer":{"id":1,"username":"James Smith","address":[{"street":"Main St","city":"Springfield","state":"California","zip":"000406"}]}

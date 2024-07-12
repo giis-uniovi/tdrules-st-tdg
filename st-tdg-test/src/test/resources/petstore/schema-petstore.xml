@@ -1,0 +1,122 @@
+<schema dbms="openapi">
+<table name="Order" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="petId" type="int64" notnull="true" fk="Pet.id" fkname="fk_Order_petId" />
+<column name="customerId" type="int64" notnull="true" fk="Customer.id" fkname="fk_Order_customerId" />
+<column name="quantity" type="int32" notnull="true" />
+<column name="shipDate" type="date-time" notnull="true" />
+<column name="status" type="string" notnull="true" checkin="placed,approved,delivered" />
+<column name="complete" type="boolean" notnull="true" />
+<ddl command="post">/store/order</ddl>
+</table>
+<table name="Customer_address_xa" type="array" subtype="Address">
+<column name="pk_xa" type="integer" key="true" notnull="true" />
+<column name="fk_xa" type="int64" notnull="true" fk="Customer.id" />
+<column name="street" type="string" notnull="true" />
+<column name="city" type="string" notnull="true" />
+<column name="state" type="string" notnull="true" />
+<column name="zip" type="string" notnull="true" />
+</table>
+<table name="Customer" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="username" type="string" notnull="true" />
+<column name="address" type="Customer_address_xa" compositetype="array" subtype="object" notnull="true" />
+<ddl command="post">/store/customer</ddl>
+</table>
+<table name="Address" type="table">
+<column name="street" type="string" notnull="true" />
+<column name="city" type="string" notnull="true" />
+<column name="state" type="string" notnull="true" />
+<column name="zip" type="string" notnull="true" />
+</table>
+<table name="Category" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<ddl command="post">/category</ddl>
+<ddl command="post">/backid/category</ddl>
+</table>
+<table name="User" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="username" type="string" notnull="true" />
+<column name="firstName" type="string" notnull="true" />
+<column name="lastName" type="string" notnull="true" />
+<column name="email" type="string" notnull="true" />
+<column name="password" type="string" notnull="true" />
+<column name="phone" type="string" notnull="true" />
+<column name="userStatus" type="int32" notnull="true" />
+<ddl command="post">/user</ddl>
+<ddl command="put">/user/{username}</ddl>
+</table>
+<table name="Tag" type="table">
+<column name="id" type="int64" notnull="true" />
+<column name="name" type="string" notnull="true" />
+</table>
+<table name="Pet_category_xt" type="type" subtype="Category">
+<column name="id" type="int64" notnull="true" fk="Category.id" />
+<column name="name" type="string" notnull="true" />
+</table>
+<table name="Pet_photoUrls_xa" type="array">
+<column name="pk_xa" type="integer" key="true" notnull="true" />
+<column name="fk_xa" type="int64" notnull="true" fk="Pet.id" />
+<column name="photoUrls" type="string" notnull="true" />
+</table>
+<table name="Pet_tags_xa" type="array" subtype="Tag">
+<column name="pk_xa" type="integer" key="true" notnull="true" />
+<column name="fk_xa" type="int64" notnull="true" fk="Pet.id" />
+<column name="id" type="int64" notnull="true" />
+<column name="name" type="string" notnull="true" />
+</table>
+<table name="Pet" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<column name="category" type="Pet_category_xt" compositetype="type" notnull="true" />
+<column name="photoUrls" type="Pet_photoUrls_xa" compositetype="array" subtype="string" notnull="true" />
+<column name="tags" type="Pet_tags_xa" compositetype="array" subtype="object" notnull="true" />
+<column name="status" type="string" notnull="true" checkin="available,pending,sold" />
+<ddl command="post">/pet</ddl>
+<ddl command="put">/pet</ddl>
+<ddl command="post">/backid/pet</ddl>
+</table>
+<table name="Customer0" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="username" type="string" notnull="true" />
+<ddl command="post">/store/customer0</ddl>
+</table>
+<table name="Order0" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="petId" type="int64" notnull="true" fk="Pet0.id" fkname="fk_Order0_petId" />
+<column name="customerId" type="int64" notnull="true" fk="Customer0.id" fkname="fk_Order0_customerId" />
+<column name="quantity" type="int32" notnull="true" />
+<column name="shipDate" type="date-time" notnull="true" />
+<column name="status" type="string" notnull="true" checkin="placed,approved,delivered" />
+<column name="complete" type="boolean" notnull="true" />
+<ddl command="post">/store/order0</ddl>
+</table>
+<table name="Pet0_category_xt" type="type">
+<column name="id" type="int64" notnull="true" />
+<column name="name" type="string" notnull="true" />
+</table>
+<table name="Pet0" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<column name="category" type="Pet0_category_xt" compositetype="type" notnull="true" />
+<column name="status" type="string" notnull="true" checkin="available,pending,sold" />
+<ddl command="post">/pet0</ddl>
+</table>
+<table name="Pet1_category_xt" type="type" subtype="Category">
+<column name="id" type="int64" notnull="true" fk="Category.id" />
+<column name="name" type="string" notnull="true" />
+</table>
+<table name="Pet1" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="name" type="string" notnull="true" />
+<column name="category" type="Pet1_category_xt" compositetype="type" notnull="true" />
+<column name="status" type="string" notnull="true" checkin="available,pending,sold" />
+<ddl command="post">/pet1</ddl>
+</table>
+<table name="ApiResponse" type="table">
+<column name="code" type="int32" notnull="true" />
+<column name="type" type="string" notnull="true" />
+<column name="message" type="string" notnull="true" />
+</table>
+</schema>

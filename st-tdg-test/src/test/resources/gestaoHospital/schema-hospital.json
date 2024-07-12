@@ -1,0 +1,468 @@
+{
+  "storetype" : "openapi",
+  "entities" : [ {
+    "name" : "HospitalDTO",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "string",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "address",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "availableBeds",
+      "datatype" : "int32",
+      "notnull" : "true"
+    }, {
+      "name" : "beds",
+      "datatype" : "int32",
+      "notnull" : "true"
+    }, {
+      "name" : "latitude",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "longitude",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/v1/hospitais/"
+    }, {
+      "command" : "put",
+      "query" : "/v1/hospitais/{hospital_id}"
+    } ]
+  }, {
+    "name" : "GeoJsonPoint_coordinates_xa",
+    "entitytype" : "array",
+    "attributes" : [ {
+      "name" : "pk_xa",
+      "datatype" : "integer",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "fk_xa",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "GeoJsonPoint.id"
+    }, {
+      "name" : "coordinates",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "Location_location_xt_coordinates_xa",
+    "entitytype" : "array",
+    "attributes" : [ {
+      "name" : "pk_xa",
+      "datatype" : "integer",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "fk_xa",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "Location_location_xt.id"
+    }, {
+      "name" : "coordinates",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "Location_location_xt",
+    "entitytype" : "type",
+    "subtype" : "GeoJsonPoint",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "GeoJsonPoint.id"
+    }, {
+      "name" : "coordinates",
+      "datatype" : "Location_location_xt_coordinates_xa",
+      "compositetype" : "array",
+      "subtype" : "number",
+      "notnull" : "true"
+    }, {
+      "name" : "type",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "x",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "y",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "Location_position_xt_coordinates_xa",
+    "entitytype" : "array",
+    "attributes" : [ {
+      "name" : "pk_xa",
+      "datatype" : "integer",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "fk_xa",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "Location_position_xt.id"
+    }, {
+      "name" : "coordinates",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "Location_position_xt",
+    "entitytype" : "type",
+    "subtype" : "GeoJsonPoint",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "GeoJsonPoint.id"
+    }, {
+      "name" : "coordinates",
+      "datatype" : "Location_position_xt_coordinates_xa",
+      "compositetype" : "array",
+      "subtype" : "number",
+      "notnull" : "true"
+    }, {
+      "name" : "type",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "x",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "y",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "Patient_location_xt_location_xt_coordinates_xa",
+    "entitytype" : "array",
+    "attributes" : [ {
+      "name" : "pk_xa",
+      "datatype" : "integer",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "fk_xa",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "Patient_location_xt_location_xt.id"
+    }, {
+      "name" : "coordinates",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "Patient_location_xt_location_xt",
+    "entitytype" : "type",
+    "subtype" : "GeoJsonPoint",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "GeoJsonPoint.id"
+    }, {
+      "name" : "coordinates",
+      "datatype" : "Patient_location_xt_location_xt_coordinates_xa",
+      "compositetype" : "array",
+      "subtype" : "number",
+      "notnull" : "true"
+    }, {
+      "name" : "type",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "x",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "y",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "Patient_location_xt_position_xt_coordinates_xa",
+    "entitytype" : "array",
+    "attributes" : [ {
+      "name" : "pk_xa",
+      "datatype" : "integer",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "fk_xa",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "Patient_location_xt_position_xt.id"
+    }, {
+      "name" : "coordinates",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "Patient_location_xt_position_xt",
+    "entitytype" : "type",
+    "subtype" : "GeoJsonPoint",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "GeoJsonPoint.id"
+    }, {
+      "name" : "coordinates",
+      "datatype" : "Patient_location_xt_position_xt_coordinates_xa",
+      "compositetype" : "array",
+      "subtype" : "number",
+      "notnull" : "true"
+    }, {
+      "name" : "type",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "x",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "y",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "Patient_location_xt",
+    "entitytype" : "type",
+    "subtype" : "Location",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "Location.id"
+    }, {
+      "name" : "location",
+      "datatype" : "Patient_location_xt_location_xt",
+      "compositetype" : "type",
+      "notnull" : "true"
+    }, {
+      "name" : "locationCategory",
+      "datatype" : "string",
+      "notnull" : "true",
+      "checkin" : "HOSPITAL,PATIENT"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "position",
+      "datatype" : "Patient_location_xt_position_xt",
+      "compositetype" : "type",
+      "notnull" : "true"
+    }, {
+      "name" : "referenceId_X",
+      "datatype" : "string",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "Patient",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "string",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "hospitalDTOId",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "HospitalDTO.id",
+      "ridname" : "fk_Patient_hospitalDTOId"
+    }, {
+      "name" : "active",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "birthDate",
+      "datatype" : "date-time",
+      "notnull" : "true"
+    }, {
+      "name" : "cpf",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "entryDate",
+      "datatype" : "date-time",
+      "notnull" : "true"
+    }, {
+      "name" : "exitDate",
+      "datatype" : "date-time",
+      "notnull" : "true"
+    }, {
+      "name" : "gender",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "location",
+      "datatype" : "Patient_location_xt",
+      "compositetype" : "type",
+      "notnull" : "true"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/v1/hospitais/{hospital_id}/pacientes/checkin"
+    }, {
+      "command" : "put",
+      "query" : "/v1/hospitais/{hospital_id}/pacientes/{patientId}"
+    } ]
+  }, {
+    "name" : "GeoJsonPoint",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "string",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "coordinates",
+      "datatype" : "GeoJsonPoint_coordinates_xa",
+      "compositetype" : "array",
+      "subtype" : "number",
+      "notnull" : "true"
+    }, {
+      "name" : "type",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "x",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "y",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "LocationDTO",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "string",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "category",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "latitude",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "longitude",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "referenceId_X",
+      "datatype" : "string",
+      "notnull" : "true"
+    } ]
+  }, {
+    "name" : "ProductDTO",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "string",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "hospitalDTOId",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "HospitalDTO.id",
+      "ridname" : "fk_ProductDTO_hospitalDTOId"
+    }, {
+      "name" : "description",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "productName",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "productType",
+      "datatype" : "string",
+      "notnull" : "true",
+      "checkin" : "COMMON,BLOOD"
+    }, {
+      "name" : "quantity",
+      "datatype" : "int32",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/v1/hospitais/estoque"
+    }, {
+      "command" : "post",
+      "query" : "/v1/hospitais/{hospital_id}/estoque"
+    }, {
+      "command" : "put",
+      "query" : "/v1/hospitais/{hospital_id}/estoque/{produto_id}"
+    } ]
+  }, {
+    "name" : "Location",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "string",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "location",
+      "datatype" : "Location_location_xt",
+      "compositetype" : "type",
+      "notnull" : "true"
+    }, {
+      "name" : "locationCategory",
+      "datatype" : "string",
+      "notnull" : "true",
+      "checkin" : "HOSPITAL,PATIENT"
+    }, {
+      "name" : "name",
+      "datatype" : "string",
+      "notnull" : "true"
+    }, {
+      "name" : "position",
+      "datatype" : "Location_position_xt",
+      "compositetype" : "type",
+      "notnull" : "true"
+    }, {
+      "name" : "referenceId_X",
+      "datatype" : "string",
+      "notnull" : "true"
+    } ]
+  } ]
+}

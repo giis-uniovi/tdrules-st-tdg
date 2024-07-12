@@ -1,0 +1,3 @@
+{"id":2,"category":{"id":1,"name":"Tiger"},"name":"Luna","photoUrls":["http://localhost/photos/000303.jpg"],"tags":[{"id":603,"name":"Young"}],"status":"available"}
+{"id":3,"category":{"id":1,"name":"Tiger"},"name":"Charlie","photoUrls":["http://localhost/photos/000403.jpg"],"status":"available"}
+{"id":4,"category":{"id":1,"name":"Tiger"},"name":"Bella","tags":[{"id":703,"name":"Old"}],"status":"available"}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlfpc>
+<version>0.0.0<development/></version>
+<sql>tds ProductDTO where ProductDTO.productType='COMMON' and ProductDTO.quantity&gt;0</sql>
+<parsedsql>SELECT *
+   FROM ProductDTO
+   WHERE ProductDTO.productType = 'COMMON' AND ProductDTO.quantity &gt; 0</parsedsql>
+<fpcrules>
+  <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[ProductDTO.productType = 'COMMON']</location>
+    <sql>SELECT *
+   FROM ProductDTO
+   WHERE (ProductDTO.productType = 'COMMON') AND (ProductDTO.quantity &gt; 0)</sql>
+    <description>--Some row in the table such that:
+--The WHERE condition fulfills:
+  --(T) ProductDTO.productType = 'COMMON' is TRUE
+  --(T) ProductDTO.quantity &gt; 0 is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>2</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.1.[ProductDTO.productType = 'COMMON']</location>
+    <sql>SELECT *
+   FROM ProductDTO
+   WHERE NOT(ProductDTO.productType = 'COMMON') AND (ProductDTO.quantity &gt; 0)</sql>
+    <description>--Some row in the table such that:
+--The WHERE condition fulfills:
+  --(F) ProductDTO.productType = 'COMMON' is FALSE
+  --(T) ProductDTO.quantity &gt; 0 is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>3</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.2.[ProductDTO.quantity &gt; 0]</location>
+    <sql>SELECT *
+   FROM ProductDTO
+   WHERE NOT(ProductDTO.quantity &gt; 0) AND (ProductDTO.productType = 'COMMON')</sql>
+    <description>--Some row in the table such that:
+--The WHERE condition fulfills:
+  --(F) ProductDTO.quantity &gt; 0 is FALSE
+  --(T) ProductDTO.productType = 'COMMON' is TRUE</description>
+  </fpcrule>
+</fpcrules>
+</sqlfpc>

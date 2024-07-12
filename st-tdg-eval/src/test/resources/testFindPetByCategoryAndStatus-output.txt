@@ -1,0 +1,3 @@
+{"id":1,"category":{"id":1,"name":"Cats"},"name":"Max","photoUrls":["http://localhost/photos/000303.jpg"],"tags":[{"id":703,"name":"Puppy"}],"status":"available"}
+{"id":4,"category":{"id":1,"name":"Cats"},"name":"Bella","photoUrls":["http://localhost/photos/000603.jpg"],"status":"available"}
+{"id":5,"category":{"id":1,"name":"Cats"},"name":"Cooper","tags":[{"id":1003,"name":"Puppy-1"}],"status":"available"}
