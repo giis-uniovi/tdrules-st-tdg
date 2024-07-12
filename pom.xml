@@ -20,7 +20,7 @@
 
 		<surefire.version>3.3.0</surefire.version>
 		<tdrules.version>4.3.0</tdrules.version>
-		<qagrow.version>1.4.266</qagrow.version>
+		<qagrow.version>1.4.267</qagrow.version>
 	</properties>
 
 	<modules>
@@ -53,12 +53,12 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>1.7.36</version>
+				<version>2.0.13</version>
 			</dependency>
 			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-classic</artifactId>
-				<version>1.2.13</version>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-slf4j2-impl</artifactId>
+				<version>2.23.1</version>
 				<scope>test</scope>
 			</dependency>
 
