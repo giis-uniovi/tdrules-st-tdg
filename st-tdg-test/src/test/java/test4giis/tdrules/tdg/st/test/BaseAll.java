@@ -113,7 +113,7 @@ public abstract class BaseAll {
 	 * Gets the TdRules client used to obtain the FPC coverage rules
 	 */
 	protected TdRulesApi getRulesApi() {
-		return new TdRulesApi();
+		return new TdRulesApi().setCache("../.tdrules-cache");
 	}
 	
 	/**

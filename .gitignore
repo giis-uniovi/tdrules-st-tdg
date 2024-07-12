@@ -1,3 +1,4 @@
 target
 .sonar
+.tdrules-cache
 TESTS-TestSuites.xml
