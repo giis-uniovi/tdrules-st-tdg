@@ -9,7 +9,7 @@ import test4giis.tdrules.tdg.st.test.BaseAll;
 
 public class BasePetstore  extends BaseAll{
 	//Para la generacion "live" arrancar antes el container de petstore con docker-run (asegurar tener el puerto 8081 libre)
-	protected static final String PETSTORE_SCHEMA_LOCAL = "swagger-petstore-main-fork/src/main/resources/openapi.yaml";
+	protected static final String PETSTORE_SCHEMA_LOCAL = "../sut-petstore/src/main/resources/openapi.yaml";
 	protected static final String PETSTORE_SCHEMA_LIVE = "http://localhost:8081/api/v3/openapi.json";
 	private static final String PETSTORE_URL_LIVE = "http://localhost:8081/api/v3";
 	

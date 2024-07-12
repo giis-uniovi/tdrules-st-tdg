@@ -9,7 +9,7 @@ import test4giis.tdrules.tdg.st.test.BaseAll;
 
 public class BaseGestaoHospital extends BaseAll{
 
-	protected static final String GESTAOHOSPITAL_SCHEMA_LOCAL = "swagger-gestaoHospital-fork/src/main/resources/gestaohospital-rest.json";
+	protected static final String GESTAOHOSPITAL_SCHEMA_LOCAL = "../sut-gestaoHospital/src/main/resources/gestaohospital-rest.json";
 	protected static final String GESTAOHOSPITAL_SCHEMA_LIVE = "http://localhost:8085/v2/api-docs";
 	private static final String GESTAOHOSPITAL_URL_LIVE = "http://localhost:8085";
 	

@@ -21,7 +21,7 @@ import giis.tdrules.store.loader.oa.OaPathResolver;
 import test4giis.tdrules.tdg.st.test.BaseAll;
 
 public class BaseMarket extends BaseAll {
-	protected static final String MARKET_SCHEMA_LOCAL = "swagger-market-fork/src/main/resources/marketWithoutArrays.json";
+	protected static final String MARKET_SCHEMA_LOCAL = "../sut-market/src/main/resources/marketWithoutArrays.json";
 	private static final String MARKET_URL_LIVE = "http://localhost:8083";
 	
 	private static final String[] FILTERED_ATTRS = {"password", "dateCreated","number"};
