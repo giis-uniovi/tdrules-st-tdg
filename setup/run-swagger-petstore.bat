@@ -1,5 +1,5 @@
 @echo on
-SET PETSTORE_DIR=%~dp0%\..\swagger-petstore-main-fork
+SET PETSTORE_DIR=%~dp0%\..\sut-petstore
 cd %PETSTORE_DIR%
 cmd /c mvn package -DskipTests=true
 docker build -t swagger-petstore .
