@@ -1,4 +1,4 @@
-package test4giis.tdrules.market;
+package test4giis.tdrules.tdg.st.test.market;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -18,7 +18,7 @@ import giis.tdrules.store.loader.oa.OaBasicAuthStore;
 import giis.tdrules.store.loader.oa.OaLiveAdapter;
 import giis.tdrules.store.loader.oa.OaLiveUidGen;
 import giis.tdrules.store.loader.oa.OaPathResolver;
-import test4giis.tdrules.BaseAll;
+import test4giis.tdrules.tdg.st.test.BaseAll;
 
 public class BaseMarket extends BaseAll {
 	protected static final String MARKET_SCHEMA_LOCAL = "swagger-market-fork/src/main/resources/marketWithoutArrays.json";

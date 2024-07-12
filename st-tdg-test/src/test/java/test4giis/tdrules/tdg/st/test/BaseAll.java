@@ -1,4 +1,4 @@
-package test4giis.tdrules;
+package test4giis.tdrules.tdg.st.test;
 
 import static org.junit.Assert.assertEquals;
 

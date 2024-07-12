@@ -1,4 +1,4 @@
-package test4giis.tdrules.eval.petstore;
+package test4giis.tdrules.tdg.st.eval.petstore;
 
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;

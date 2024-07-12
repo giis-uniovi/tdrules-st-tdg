@@ -1,4 +1,4 @@
-package test4giis.tdrules.market;
+package test4giis.tdrules.tdg.st.test.market;
 
 import org.junit.Test;
 

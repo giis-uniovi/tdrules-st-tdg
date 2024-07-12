@@ -1,4 +1,4 @@
-package test4giis.tdrules.gestaohospital;
+package test4giis.tdrules.tdg.st.test.gestaohospital;
 
 import org.junit.Test;
 

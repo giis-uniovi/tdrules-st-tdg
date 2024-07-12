@@ -1,11 +1,11 @@
-package test4giis.tdrules.gestaohospital;
+package test4giis.tdrules.tdg.st.test.gestaohospital;
 
 import giis.tdrules.client.oa.OaSchemaApi;
 import giis.tdrules.client.oa.OaSchemaIdResolver;
 import giis.tdrules.openapi.model.TdSchema;
 import giis.tdrules.store.loader.IAttrGen;
 import giis.tdrules.store.loader.gen.DictionaryAttrGen;
-import test4giis.tdrules.BaseAll;
+import test4giis.tdrules.tdg.st.test.BaseAll;
 
 public class BaseGestaoHospital extends BaseAll{
 

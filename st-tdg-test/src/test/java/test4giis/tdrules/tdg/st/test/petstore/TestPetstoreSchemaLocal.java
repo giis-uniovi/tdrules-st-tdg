@@ -1,4 +1,4 @@
-package test4giis.tdrules.petstore;
+package test4giis.tdrules.tdg.st.test.petstore;
 
 import static org.junit.Assert.assertEquals;
 

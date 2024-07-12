@@ -1,11 +1,11 @@
-package test4giis.tdrules.petstore;
+package test4giis.tdrules.tdg.st.test.petstore;
 
 import giis.tdrules.client.oa.OaSchemaApi;
 import giis.tdrules.client.oa.OaSchemaIdResolver;
 import giis.tdrules.openapi.model.TdSchema;
 import giis.tdrules.store.loader.IAttrGen;
 import giis.tdrules.store.loader.gen.DictionaryAttrGen;
-import test4giis.tdrules.BaseAll;
+import test4giis.tdrules.tdg.st.test.BaseAll;
 
 public class BasePetstore  extends BaseAll{
 	//Para la generacion "live" arrancar antes el container de petstore con docker-run (asegurar tener el puerto 8081 libre)
