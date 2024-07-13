@@ -18,7 +18,7 @@ jobs:
     if: (github.event_name != 'pull_request' && ! github.event.pull_request.head.repo.fork) || (github.event_name == 'pull_request' && (github.event.pull_request.head.repo.fork || startsWith(github.head_ref, 'dependabot/')))
     strategy:
       matrix:
-        scope: [Petstore, Market, GestaoHospital]
+        scope: [Petstore, Market, GestaoHospital, Eval]
       fail-fast: false
       
     steps:
@@ -68,18 +68,27 @@ jobs:
           key: cache-${{ matrix.scope }}-v1-${{ github.run_id }}
           restore-keys: cache-${{ matrix.scope }}-v1-
 
-      - name: Test All
+      - name: Test All SUTs
+        if: ${{ matrix.scope != 'Eval' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn test -pl st-tdg-test -Dtest=**/*${{ matrix.scope }}* -Dmaven.test.failure.ignore=true -U --no-transfer-progress
 
-      - if: ${{ matrix.scope == 'Petstore' }}
+      - name: Evaluate Mutation Score
+        if: ${{ matrix.scope == 'Eval' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mvn -pl st-tdg-eval test -Dmaven.test.failure.ignore=true -U --no-transfer-progress
+          mvn -pl st-tdg-eval test-compile org.pitest:pitest-maven:mutationCoverage
+
+      - if: ${{ always() && matrix.scope == 'Petstore' }}
         run: docker logs swagger-petstore > st-tdg-test/target/docker-petstore-server.log
-      - if: ${{ matrix.scope == 'Market' }}
+      - if: ${{ always() && matrix.scope == 'Market' }}
         run: |
           docker logs market-rest > st-tdg-test/target/docker-market-server.log
           docker logs db          > st-tdg-test/target/docker-market-db.log
-      - if: ${{ matrix.scope == 'GestaoHospital' }}
+      - if: ${{ always() && matrix.scope == 'GestaoHospital' }}
         run: |
           docker logs gestaohospital > st-tdg-test/target/docker-gestaoHospital-server.log
           docker logs mongodb        > st-tdg-test/target/docker-gestaoHospital-db.log
@@ -100,5 +109,6 @@ jobs:
           path: |
             **/target/site
             **/target/surefire-reports
+            **/target/pit-reports
             **/target/*.html
             **/target/*.log
