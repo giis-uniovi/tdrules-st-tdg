@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class Base {
-	protected static final String PETSTORE_SCHEMA_LOCAL = "../swagger-petstore-main-fork/src/main/resources/openapi.yaml";
+	protected static final String PETSTORE_SCHEMA_LOCAL = "../sut-petstore/src/main/resources/openapi.yaml";
 
 	protected static TdSchema model; // readonly, created before all tests
 
@@ -62,14 +62,12 @@ public class Base {
 
 		// Generation and loading: Each test first delete all data previous to the generation and load
 		writer.delete("/test/deleteAll");
-		QAGrowApiProcess qagrow = new QAGrowApiProcess(model, new TdRulesApi(), loader);
+		QAGrowApiProcess qagrow = new QAGrowApiProcess(model, new TdRulesApi().setCache("../.tdrules-cache"), loader);
 		qagrow.genData4ApiQuery(query);
 	}
 
 	/**
-	 * Instancia un generador de datos configurado con un diccionario para que los
-	 * datos generados no sean solo numeros, sino valores procedentes de un
-	 * diccionario o mascaras
+	 * Dictionary to load more user friendly petstore data, includes values enumertions for strings and masks
 	 */
 	protected IAttrGen getPetstoreDictionary() {
 		return new DictionaryAttrGen()

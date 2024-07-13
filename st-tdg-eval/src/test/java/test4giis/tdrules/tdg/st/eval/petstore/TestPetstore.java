@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  * (TDG), containing a subset of the main project's tests. To evaluate the
  * mutation score of the business processes run this command fron maven:
  * 
- * mvn test-compile org.pitest:pitest-maven:mutationCoverage
+ * mvn -pl st-tdg-eval test-compile org.pitest:pitest-maven:mutationCoverage
  * 
  * As Pitest runs in the same process of the tested methods, the controller is
  * mocked. Note that petstore does not use Spring, so that MockMvc can be used.
@@ -64,7 +64,6 @@ public class TestPetstore extends Base {
 			load(mvc, "tds Customer, \"Order\", Pet where Pet.category::name='Dogs' and \"Order\".status='placed'");
 			testFindOrdersByCategoryAndOrderStatusLoaded = true;
 		}
-		// Por que si anyado and \"Order\".complete=true, excepcion en qagrow, pero si pongo 1 en vez de true no.
 		ApiResponse pets = mvc.get("/store/findOrdersByCategoryAndOrderStatus?category=Dogs&status=placed");
 		assertReadResults(pets);
 	}
@@ -79,10 +78,6 @@ public class TestPetstore extends Base {
 					+ " group by Customer.address[]::zip");
 			testTotalPetsToDeliverByAddressLoaded = true;
 		}
-		// Por que si  uso select Customer.address[]::zip, sum(\"Order\".quantity) from
-		// quantity da varios valores cero, incluso al poner un minimo de uno en el diccionario?
-		// y si solo pongo tds no?
-		// por que zip no tiene mascara aplicada?
 		ApiResponse pets = mvc.get("/store/totalPetsToDeliverByAddress");
 		assertReadResults(pets);
 	}

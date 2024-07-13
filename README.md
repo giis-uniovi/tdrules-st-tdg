@@ -2,16 +2,16 @@
 
 This project contains the system and integration tests of *Test Data Generation for APIs* (TDG).
 Includes the required test classes, result files and the SUT projects,
-along with an additional project (to convert into module) to evaluate the mutation
+along with an additional module to evaluate the mutation
 score of the tests for one of the SUTs.
 
 ## Systems Under Test (SUTs)
 
-- Swagger Petstore (`swagger-petstore-main-fork`).
+- Swagger Petstore (`sut-petstore` folder).
   This is a detached fork of https://github.com/swagger-api/swagger-petstore at v1.0.17 (2022-09-30) with some additions
-- Market (`swagger-market-fork`).
+- Market (`sut-market` folder).
   This is a detached fork of https://github.com/aleksey-lukyanets/market (2022-02-07) with some additions
-- Gestao Hospital (`swagger-gestaoHospital-fork`). 
+- Gestao Hospital (`sut-gestaoHospital` folder). 
   This is a detached fork of https://github.com/ValchanOficial/GestaoHospital (2023-07-05) with some additions
 
 ## Structure of this project
@@ -19,20 +19,25 @@ score of the tests for one of the SUTs.
 - Module `st-tdg-test`:
   - Java tests (`src/test/java`) for each SUT.
   - Files for test result comparison (`src/test/resources`)
-- A folder for each of the SUTs that are evaluated in this replication package.
-- A folder `setup` with scripts to execute each SUT (backend and databases).
+  - Clasess `*Petstore0*` contain some commented examples to illustrate
+    some details of the TDG approach.
+  - There is a common base class for all tests (`BaseAll`) and 
+    Each namespace has an additional base class
+    with the particular configuration of each SUT.
+- A folder for each of the SUTs that are tested in this projects.
+- A folder `setup` with scripts to run each SUT (backend and databases).
 - Module `st-tdg-eval`: To evaluate the effectiveness of the test data my measuring
-  the mutation score of the tests using PIT (pitest.org).
+  the mutation score of the tests using PIT (https://pitest.org/).
 
 ## How to execute the System Tests
 
-All experiments are enclosed in the Java tests. 
+The tests are in the `st-tdg-test` module.
 
 To run the tests of a SUT in your local development environment:
-  - Ensure that the port that uses the SUT is not used by other SUT
+  - Ensure that the port bindings of each SUT are not used by other application
   - Run the server from the `setup` folder and wait until it is up
-  - Execute the tests in the namespace that corresponds with the project
-  - To execute from maven (e.g. for the petstore): `mvn -pl st-tdg-test` 
+  - Execute the tests in the namespace that corresponds with the SUT
+  - To execute this module from maven: `mvn -pl st-tdg-test test` 
 
 Port reservation and endpoints: To avoid conflicts when running in local,
 different host port are reserved for each SUT.
@@ -41,7 +46,7 @@ Below are the ports and the main endpoint urls to check that SUTs are working:
     [api example](http://localhost:8081/api/v3/pet/findByStatus?status=available) |
     [swagger-ui](http://localhost:8081/) |
     [api-docs](http://localhost:8081/api/v3/openapi.json)
-  - Market: 8082 (web), 8083 (api), 8084 (db)
+  - Market: 8082 (web), 8083 (api), 8087 (db)
     [api example](http://localhost:8083/products) |
     [swagger-ui](http://localhost:8083/swagger-ui/index.html) |
     [api-docs](http://localhost:8083/v2/api-docs)
@@ -51,14 +56,16 @@ Below are the ports and the main endpoint urls to check that SUTs are working:
 
 The whole sequence of tests for all SUTs is run when executed in CI
 
-## How to evaluate the mutation score
+## How to evaluate the Mutation Score
 
-At `st-tdg-eval` run this maven command:
+The tests are located in the `st-tdg-eval` module.
+Run this maven command:
 ```
-mvn test-compile org.pitest:pitest-maven:mutationCoverage
+mvn -pl st-tdg-eval test-compile org.pitest:pitest-maven:mutationCoverage
 ```
 
-Test results are in the `target` folder, and mutation report in `target/pit-reports`
+Test results of the module are in the `target` folder, 
+and the mutation report in `target/pit-reports`
 
 ## Graphical TDM models
 

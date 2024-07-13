@@ -25,6 +25,7 @@
 
 	<modules>
 		<module>st-tdg-test</module>
+		<module>st-tdg-eval</module>
 	</modules>
 
 	<dependencyManagement>
@@ -87,20 +88,6 @@
 					<configuration>
 						<source>1.8</source>
 						<target>1.8</target>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${surefire.version}</version>
-					<configuration>
-						<testFailureIgnore>true</testFailureIgnore>
-						<!-- Sets the VM argument line used when unit tests are run under JaCoCo -->
-						<argLine>${surefireArgLine}</argLine>
-						<redirectTestOutputToFile>true</redirectTestOutputToFile>
-						<!-- evita fallo con jenkins slave linux y openjdk: https://stackoverflow.com/questions/23260057/the-forked-vm-terminated-without-saying-properly-goodbye-vm-crash-or-system-exi/53070605 -->
-						<useSystemClassLoader>false</useSystemClassLoader>
-						<skipTests>${skipTests}</skipTests>
 					</configuration>
 				</plugin>
 				<plugin>
