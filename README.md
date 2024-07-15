@@ -1,3 +1,6 @@
+[![Status](https://github.com/giis-uniovi/tdrules-st-tdg/actions/workflows/test.yml/badge.svg)](https://github.com/giis-uniovi/tdrules-st-tdg/actions)
+[![Test Reports](https://img.shields.io/badge/%20-Test_Reports-orange)](https://giis-uniovi.github.io/tdrules-st-tdg)
+
 # Test Data Generation for APIs - System Tests
 
 This project contains the system and integration tests of *Test Data Generation for APIs* (TDG).

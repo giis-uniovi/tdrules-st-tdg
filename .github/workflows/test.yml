@@ -110,5 +110,87 @@ jobs:
             **/target/site
             **/target/surefire-reports
             **/target/pit-reports
+            **/target/out
             **/target/*.html
             **/target/*.log
+
+  test-report:
+    needs: [test]
+    #if: ${{ false }}  # disable for now
+    #avoid publishing to Github pages PRs and dependabot branches
+    if: ${{ always() && github.event_name != 'pull_request' && !contains('/head/refs/dependabot/', github.ref) && !contains('/head/refs/dashgit/combined/', github.ref) }}
+    runs-on: ubuntu-latest
+    # Configuration to deploy at github pages
+    permissions:
+      contents: read  
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # Downloads all artifacts with test report files
+      - uses: actions/download-artifact@v4.1.8
+        if: always()
+        with:
+          path: .
+      - run: ls -la
+          
+      # Generates and uploads the html reports and the individual surefire reports for further reference
+      # Includes the options to add links to Visual Assert diff files
+      - name: Aggregated junit html report
+        if: always()
+        uses: javiertuya/junit-report-action@v1.3.0
+        with:
+          surefire-files: "**/target/surefire-reports/TEST-*.xml"
+          report-dir: reports
+          report-title: "Test Report: ALL - Branch: ${{ github.ref_name }} - Run #${{ github.run_number }}"
+          diff-links-enabled: true
+          #diff-links-prefix: "target/"
+          diff-links-reports: "reports/junit-*/**/*.html"
+          #diff-links-files: "/**/target/*.html"
+
+      - name: Copy pit reports
+        run: cp -r test-report-files-Eval/st-tdg-eval/target/pit-reports reports/pit-reports
+      - name: Index file to html reports
+        if: always()
+        run: |
+          echo "<html><head><title>Latest Test Reports</title></head><body>"  > index.html
+          echo "<h2>Latest Test Reports - Branch: ${{ github.ref_name }} - Run #${{ github.run_number }}</h2>"          >> index.html
+          echo "<p><a href=\"reports/junit-noframes/junit-noframes.html\">JUnit test report - Single page</a></p>"      >> index.html
+          echo "<p><a href=\"reports/junit-frames/index.html\">JUnit test report - Multiple page with frames</a></p>"   >> index.html
+          echo "<p><a href=\"reports/pit-reports/index.html\">PIT test report</a></p>"                                  >> index.html
+          echo "</body></html>"                                              >> index.html
+          ls -la reports
+      - name: Publish test report files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: "test-report-ALL"
+          path: |
+            index.html
+            reports
+            **/target/surefire-reports
+            **/target/out
+            **/target/*.html
+            **/target/*.log
+            
+      # Deploy to GitHub Pages
+      # Some files (e.g. junit reports) have 600 permissions.
+      # As of upload-pages-artifact@v1.0.9, permissions must be set explicitly
+      # to 0755 (as indicated in warnings produced by v1.0.8)
+      - name: Fix permissions to actions/upload-pages-artifact@v3.0.1
+        if: always()
+        run: sudo chmod -c -R 0755 reports
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: "."
+      - name: Deploy to GitHub Pages
+        if: always()
+        id: deployment
+        uses: actions/deploy-pages@v4.0.5
