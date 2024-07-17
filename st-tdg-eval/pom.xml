@@ -120,8 +120,7 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<!-- Run with: mvn test-compile
-				org.pitest:pitest-maven:mutationCoverage -->
+				<!-- Run with: mvn test-compile org.pitest:pitest-maven:mutationCoverage -->
 				<groupId>org.pitest</groupId>
 				<artifactId>pitest-maven</artifactId>
 				<version>1.16.1</version>
@@ -130,13 +129,15 @@
 						<param>io.swagger.petstore.data.Pet*</param>
 						<param>io.swagger.petstore.data.Order*</param>
 					</targetClasses>
-					<!--
 					<excludedMethods>
-						<param>io.swagger.petstore.data.PetData.deleteAll*</param>
-						<param>io.swagger.petstore.data.PetData.createPet*</param>
-						<param>io.swagger.petstore.data.PetData.addPet*</param>
+						<!-- don't mutate methods that are not the goal of tests (although some can't be excluded) -->
+						<param>get*</param>
+						<param>add*</param>
+						<param>create*</param>
+						<param>delete*</param>
+						<param>findPetByTags</param>
 					</excludedMethods>
-					-->
+
 				</configuration>
 			</plugin>
 			<plugin>
