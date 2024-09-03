@@ -20,17 +20,23 @@ import giis.tdrules.store.loader.oa.OaLiveUidGen;
 import giis.tdrules.store.loader.oa.OaPathResolver;
 import test4giis.tdrules.tdg.st.test.BaseAll;
 
+/**
+ * Common configuration and customization for all Market tests that use entities in its OpenApi model.
+ */
 public class BaseMarket extends BaseAll {
 	protected static final String MARKET_SCHEMA_LOCAL = "../sut-market/src/main/resources/marketWithoutArrays.json";
 	private static final String MARKET_URL_LIVE = "http://localhost:8083";
-	
+
+	// attributes that can be filtered during comparisons of assertions 
 	private static final String[] FILTERED_ATTRS = {"password", "dateCreated","number"};
 
+	public static String queryCartByUser = "tds CartDTO where user='lucia@email.com'";
+	public static String queryCartByUserProductQuantity = "tds CartDTO,CartItemDTORes,ProductDTORes where CartDTO.user='pepe@email.com' and CartItemDTORes.productId=1 and CartItemDTORes.quantity=5 and ProductDTORes.available=1";
+	public static String queryOrderByUser = "tds OrderDTO where userAccount='pepe@email.com' ";
 	public static String queryProductByAge = "tds ProductDTORes where age=10";
 	public static String queryUserByName = "tds UserDTORes where name='Pepe'";
 	public static String queryUserByEmail = "tds UserDTORes where email ='pepe@email.com'";
-	public static String queryCartByUserProductQuantity = "tds CartDTO,CartItemDTORes,ProductDTORes where CartDTO.user='pepe@email.com' and CartItemDTORes.productId=1 and CartItemDTORes.quantity=5 and ProductDTORes.available=1";
-		
+	
 	@Override
 	protected String getSutName() {
 		return "market";
@@ -54,9 +60,9 @@ public class BaseMarket extends BaseAll {
 	@Override
 	protected TdSchema getSchema() {
 		// Configure:
-		// filter entities Link* and attributes _link*, and
-		// the schema id resolver to use id attributes as uid and
-		// not to use productId as product.id in entities CartItem and ProductDTO	
+		// - filter entities Link* and attributes _link*
+		// - the schema id resolver to use id attributes as uid 
+		//   except in entities CartItemDTO (pk are user + productId) and ProductDTO (pk is productId)	
 		OaSchemaApi api = new OaSchemaApi(MARKET_SCHEMA_LOCAL)
 				.setFilter(new OaSchemaFilter()
 						.add("*", "_link*")
@@ -69,15 +75,16 @@ public class BaseMarket extends BaseAll {
 				;
 		return api.getSchema();
 	}
-
-	/**
-	 * Instancia un generador utilizando un Adaptador para Openapi que genera los datos directamente a traves del api
-	 * El path resolver se configura con la url donde extraer los paths de los endpoints de LiveBackId.
-	 * La generación de las claves se realiza en el backend (UidGen), las columnas (AttrGen) se generan de forma determinista.
-	 * Se utliza  diccionario para la generación de columnas (getDictionaryAttrGen)
-	 */	
+	
 	@Override
 	protected DataLoader getLiveDataLoader() {
+		// Generator with a custom path resolver injected:
+		// * Get uids from the backend
+		// * Include an authenticator:
+		//   - The provider is the entity userDTOReq storing credential in email and password attributes
+		//   - Consumers are entities CartItemDTO and ContactsDTO (username is user attribute) and 
+		//     OrderDTO (username is userAccount attribute)
+		// * Use a dictionary
 		TdSchema model = getSchema();
 		IPathResolver pathResolver=new CustomPathResolver().setServerUrl(MARKET_URL_LIVE);
 		OaBasicAuthStore authenticator = new OaBasicAuthStore()
@@ -91,12 +98,12 @@ public class BaseMarket extends BaseAll {
 				                            .setAttrGen(getDictionaryAttrGen());
 	}
 	
-	/**
-	 * Instancia un generador de datos configurado con un diccionario para que los datos
-	 * generados no sean solo numeros, sino valores procedentes de un diccionario o mascaras
-	 * Para tarjetas de crédito: https://dev.na.bambora.com/docs/references/payment_APIs/test_cards/
-	 */
 	protected IAttrGen getDictionaryAttrGen() {
+		// Dictionary configured for:
+		// - UserDTO (attributes email, name, password, phone)
+		// - DistilleryDTO (attribute title)
+		// - RegionDTO (attribute name)
+		// - CreditCardDTO (attribute ccNumber, source https://dev.na.bambora.com/docs/references/payment_APIs/test_cards/)
 		return new DictionaryAttrGen()
 				.with("UserDTORes", "email").padLeft('0', 2).mask("us{}@email.com")
 				.with("UserDTOReq", "email").padLeft('0', 2).mask("us{}@email.com")
@@ -119,7 +126,7 @@ public class BaseMarket extends BaseAll {
 	protected void assertLiveData(String fileName, DataLoader dg) {
 		String dataLive = getAllLiveData();
 		log.info("Actual data stored in the backend\n{}", reserializeStoredData(dataLive));
-		// antes de comparar, se deben filtrar los atributos que no se quieren comparar
+		// before comparing, filter attributes
 		super.assertModel(fileName, filterAttributes(dataLive,FILTERED_ATTRS));  
 	}
 	
@@ -140,7 +147,7 @@ public class BaseMarket extends BaseAll {
 		return reserializeStoredData(sb.toString());
     }
 	
-	// actualiza json eliminando attributeName y su valor en todas las apariciones 
+	// update json deleting attributeName and its value  
 	private void removeAttribute(JsonNode node, String attributeName) {
         if (node.isObject()) {
             ObjectNode objectNode = (ObjectNode) node;
@@ -151,11 +158,11 @@ public class BaseMarket extends BaseAll {
         }
     }
 	
-	//los endpoints estan bajo el path backid
+	// Use the appropiate endpoint depending on the entity
 	public class CustomPathResolver extends OaPathResolver {
 		@Override
 		public String getEndpointPath(String tableName) {
-			//Eliminacion de Req o Res en las llamadas a los endpoints
+			//Removing Req or Res from the endpoints
 			String table = tableName.split("Re(s|q)")[0];
 			if ("CartDTO".equals(table))
 				return null;
@@ -173,6 +180,7 @@ public class BaseMarket extends BaseAll {
 				return super.getEndpointPath(table);
 		}
 		
+		// Endpoint using PUT instead of POST for entity CartItemDTO
 		@Override public boolean usePut(String tableName) {
 			String table = tableName.split("Re(s|q)")[0];
 			return "CartItemDTO".equals(table);
