@@ -45,7 +45,7 @@ jobs:
           #don't precompile, here, dockerfile does
           docker build -t market-rest --build-arg module=market-rest .
           docker build -t market-web --build-arg module=market-web .
-          docker compose -f docker-compose.yaml up -d
+          docker-compose -f docker-compose.yaml up -d
           chmod u+x ../setup/wait-container-ready.sh
           ../setup/wait-container-ready.sh db "ready for start up"
           ../setup/wait-container-ready.sh market-rest "Started RestApplication"
@@ -54,7 +54,7 @@ jobs:
         working-directory: ./sut-gestaoHospital
         run: |
           mvn package -q -DskipTests=true
-          docker compose up -d --force-recreate --build
+          docker-compose up -d --force-recreate --build
           chmod u+x ../setup/wait-container-ready.sh
           ../setup/wait-container-ready.sh mongodb "HospitalDB.product_collection"
           ../setup/wait-container-ready.sh gestaohospital "Started GestaohospitalarApplication"
