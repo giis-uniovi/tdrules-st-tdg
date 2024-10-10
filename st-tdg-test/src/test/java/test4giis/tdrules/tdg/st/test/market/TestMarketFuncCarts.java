@@ -20,7 +20,6 @@ public class TestMarketFuncCarts extends BaseMarket {
 	
 	@Test
 	public void testDictUserDTOResByName() {
-		// users
 		String query = queryUserByName;
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
@@ -30,7 +29,6 @@ public class TestMarketFuncCarts extends BaseMarket {
 
 	@Test
 	public void testDictCartDTOByUser() {
-		// empty carts
 		String query = queryCartByUser;
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
@@ -40,8 +38,6 @@ public class TestMarketFuncCarts extends BaseMarket {
 	
 	@Test
 	public void testDictCartDTOByUserProductQuantity() {
-		// carts and items
-		// products must be available
 		String query = queryCartByUserProductQuantity;
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);

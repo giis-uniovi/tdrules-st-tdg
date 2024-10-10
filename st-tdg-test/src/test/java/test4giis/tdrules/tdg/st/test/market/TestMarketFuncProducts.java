@@ -49,7 +49,7 @@ public class TestMarketFuncProducts extends BaseMarket {
 	
 	@Test
 	public void testProductsByDistilleryPrice() {
-		// available products of a distillery, price between two values
+		// products of a distillery, price between two values
 		String query =  "tds ProductDTOReq where distillery ='Ardbeg' and price < 100 and price > 5";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
@@ -59,18 +59,17 @@ public class TestMarketFuncProducts extends BaseMarket {
 	
 	@Test
 	public void testProductsByDistilleryPriceAge() {
-		// available products of a distillery and an age, price between two values
+		// products of a distillery and an age, price between two values
 		String query =  "tds ProductDTOReq where distillery ='Ardbeg' and price < 100 and price > 5 and age = 12";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		generateAndLoad(dg, query, dict);
 		assertData("func-ProductsByDistilleryPriceAge.txt", dg);
 	}
-	
-	
+		
 	@Test
 	public void testDistilleryByTitle() {
-		// distillery 
+		// distillery by title 
 		String query =  "tds DistilleryDTOReq where title ='Ardbeg'";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
@@ -90,7 +89,7 @@ public class TestMarketFuncProducts extends BaseMarket {
 	
 	@Test
 	public void testRegionByName() {
-		// region
+		// region by name
 		String query =  "tds RegionDTOReq where name ='Campbeltown'";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
