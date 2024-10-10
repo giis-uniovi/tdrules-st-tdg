@@ -5,8 +5,8 @@
 <parsedsql>SELECT Customer_address_xa.zip , SUM("Order".quantity)
    FROM Customer
      LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     INNER JOIN "Order" ON Customer.id = Order.customerId
-     INNER JOIN Pet ON Order.petId = Pet.id
+     INNER JOIN "Order" ON Customer.id = "Order".customerId
+     INNER JOIN Pet ON "Order".petId = Pet.id
      LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      LEFT JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
@@ -17,8 +17,8 @@
     <sql>SELECT Customer_address_xa.zip , SUM("Order".quantity)
    FROM Customer
      INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     INNER JOIN "Order" ON Customer.id = Order.customerId
-     INNER JOIN Pet ON Order.petId = Pet.id
+     INNER JOIN "Order" ON Customer.id = "Order".customerId
+     INNER JOIN Pet ON "Order".petId = Pet.id
      INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
@@ -32,8 +32,8 @@
     <sql>SELECT Customer_address_xa.zip , SUM("Order".quantity)
    FROM Customer
      INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     INNER JOIN "Order" ON Customer.id = Order.customerId
-     INNER JOIN Pet ON Order.petId = Pet.id
+     INNER JOIN "Order" ON Customer.id = "Order".customerId
+     INNER JOIN Pet ON "Order".petId = Pet.id
      INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
@@ -47,8 +47,8 @@
     <sql>SELECT Customer_address_xa.zip , SUM("Order".quantity)
    FROM Customer
      LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     INNER JOIN "Order" ON Customer.id = Order.customerId
-     INNER JOIN Pet ON Order.petId = Pet.id
+     INNER JOIN "Order" ON Customer.id = "Order".customerId
+     INNER JOIN Pet ON "Order".petId = Pet.id
      INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
@@ -66,17 +66,17 @@
     <sql>SELECT Customer_address_xa.zip , SUM("Order".quantity)
    FROM Customer
      INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     LEFT JOIN "Order" ON Customer.id = Order.customerId
-     LEFT JOIN Pet ON Order.petId = Pet.id
+     LEFT JOIN "Order" ON Customer.id = "Order".customerId
+     LEFT JOIN Pet ON "Order".petId = Pet.id
      LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      LEFT JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
-   WHERE (Order.customerId IS NULL) AND (Customer.id IS NOT NULL)
+   WHERE ("Order".customerId IS NULL) AND (Customer.id IS NOT NULL)
    GROUP BY Customer_address_xa.zip</sql>
     <description>
 --The JOIN tables fulfill:
 --COMMENT: Reduced conditions: [WHERE "Order".status = 'approved'] ; 
-  --summary: [Customer] left [Order] ON Customer.id = Order.customerId
+  --summary: [Customer] left [Order] ON Customer.id = "Order".customerId
   --There exist a set of rows joined from tables Customer, Customer_address_xa
   --which does not join to any table in Order</description>
   </fpcrule>
@@ -84,17 +84,17 @@
     <sql>SELECT Customer_address_xa.zip , SUM("Order".quantity)
    FROM Customer
      LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     RIGHT JOIN "Order" ON Customer.id = Order.customerId
-     RIGHT JOIN Pet ON Order.petId = Pet.id
+     RIGHT JOIN "Order" ON Customer.id = "Order".customerId
+     RIGHT JOIN Pet ON "Order".petId = Pet.id
      INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
-   WHERE (Order.petId IS NULL) AND (Pet.id IS NOT NULL)
+   WHERE ("Order".petId IS NULL) AND (Pet.id IS NOT NULL)
    GROUP BY Customer_address_xa.zip</sql>
     <description>
 --The JOIN tables fulfill:
 --COMMENT: Reduced conditions: [WHERE "Order".status = 'approved'] ; 
-  --summary: [Order] right [Pet] ON Order.petId = Pet.id
+  --summary: [Order] right [Pet] ON "Order".petId = Pet.id
   --There exist a set of rows joined from tables Pet, Pet_tags_xa, Pet_photoUrls_xa, Category Pet_category_xref
   --which does not join to any table in Order</description>
   </fpcrule>
@@ -102,8 +102,8 @@
     <sql>SELECT Customer_address_xa.zip , SUM("Order".quantity)
    FROM Customer
      INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     INNER JOIN "Order" ON Customer.id = Order.customerId
-     INNER JOIN Pet ON Order.petId = Pet.id
+     INNER JOIN "Order" ON Customer.id = "Order".customerId
+     INNER JOIN Pet ON "Order".petId = Pet.id
      LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
@@ -121,8 +121,8 @@
     <sql>SELECT Customer_address_xa.zip , SUM("Order".quantity)
    FROM Customer
      INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     INNER JOIN "Order" ON Customer.id = Order.customerId
-     INNER JOIN Pet ON Order.petId = Pet.id
+     INNER JOIN "Order" ON Customer.id = "Order".customerId
+     INNER JOIN Pet ON "Order".petId = Pet.id
      INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
@@ -140,8 +140,8 @@
     <sql>SELECT Customer_address_xa.zip , SUM("Order".quantity)
    FROM Customer
      LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     RIGHT JOIN "Order" ON Customer.id = Order.customerId
-     RIGHT JOIN Pet ON Order.petId = Pet.id
+     RIGHT JOIN "Order" ON Customer.id = "Order".customerId
+     RIGHT JOIN Pet ON "Order".petId = Pet.id
      LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      RIGHT JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
@@ -158,8 +158,8 @@
     <sql>SELECT Customer_address_xa.zip , SUM("Order".quantity)
    FROM Customer
      LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     INNER JOIN "Order" ON Customer.id = Order.customerId
-     INNER JOIN Pet ON Order.petId = Pet.id
+     INNER JOIN "Order" ON Customer.id = "Order".customerId
+     INNER JOIN Pet ON "Order".petId = Pet.id
      LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      LEFT JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
@@ -174,8 +174,8 @@
     <sql>SELECT COUNT(*)
    FROM Customer
      LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     INNER JOIN "Order" ON Customer.id = Order.customerId
-     INNER JOIN Pet ON Order.petId = Pet.id
+     INNER JOIN "Order" ON Customer.id = "Order".customerId
+     INNER JOIN Pet ON "Order".petId = Pet.id
      LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      LEFT JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
@@ -189,8 +189,8 @@
     <sql>SELECT Customer_address_xa.zip , SUM("Order".quantity)
    FROM Customer
      LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     INNER JOIN "Order" ON Customer.id = Order.customerId
-     INNER JOIN Pet ON Order.petId = Pet.id
+     INNER JOIN "Order" ON Customer.id = "Order".customerId
+     INNER JOIN Pet ON "Order".petId = Pet.id
      LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
      LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      LEFT JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
