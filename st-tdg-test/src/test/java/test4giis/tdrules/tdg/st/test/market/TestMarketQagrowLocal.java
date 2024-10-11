@@ -5,9 +5,10 @@ import org.junit.Test;
 import giis.tdrules.store.loader.DataLoader;
 
 /**
- * Generacion de datos para Market utilizando QAGrow.
- * Utiliza un un esquema y un DataAdapter local, que no requiere una conexion activa a un servidor.
+ * Generates test data for a given query using QAGrow and loads
+ * the data as indicated by the local specified data loader
  */
+
 public class TestMarketQagrowLocal extends BaseMarket {
 
 	@Test

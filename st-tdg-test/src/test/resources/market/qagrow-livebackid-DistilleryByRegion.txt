@@ -1,4 +1,0 @@
-"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"5","description":"3","color":"2"},"description":"203"}
-"distillery":{"id":2,"title":"Balvenie","region":{"id":2,"name":"Highland","subtitle":"105","description":"103","color":"102"},"description":"303"}
-"region":{"id":1,"name":"Campbeltown","subtitle":"5","description":"3","color":"2"}
-"region":{"id":2,"name":"Highland","subtitle":"105","description":"103","color":"102"}
