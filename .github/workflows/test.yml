@@ -62,7 +62,7 @@ jobs:
 
       - name: Rules cache
         id: rules-cache
-        uses: actions/cache@v4.1.1
+        uses: actions/cache@v4.1.2
         with:
           path: .tdrules-cache
           key: cache-${{ matrix.scope }}-v1-${{ github.run_id }}
