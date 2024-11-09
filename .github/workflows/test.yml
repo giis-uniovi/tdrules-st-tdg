@@ -95,7 +95,7 @@ jobs:
 
       - name: Generate report checks
         if: always()
-        uses: mikepenz/action-junit-report@v4.3.1
+        uses: mikepenz/action-junit-report@v5
         with:
           check_name: "test-result-${{ matrix.scope }}"
           report_paths: "**/surefire-reports/TEST-*.xml"
