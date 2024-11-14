@@ -243,6 +243,28 @@
       "notnull" : "true"
     } ]
   }, {
+    "name" : "OrderedProductDTO",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "orderId",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true",
+      "rid" : "OrderDTO.id",
+      "ridname" : "fk_OrderedProductDTO_orderId"
+    }, {
+      "name" : "productId",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true",
+      "rid" : "ProductDTORes.productId",
+      "ridname" : "fk_OrderedProductDTO_productId"
+    }, {
+      "name" : "quantity",
+      "datatype" : "int32",
+      "notnull" : "true"
+    } ]
+  }, {
     "name" : "ProductDTOReq",
     "entitytype" : "table",
     "attributes" : [ {

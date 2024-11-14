@@ -10,6 +10,8 @@ classDiagram
   RegionDTORes <--"*" DistilleryDTORes
   CreditCardDTO <--"*" OrderDTO
   UserDTOReq <--"*" OrderDTO
+  OrderDTO <--"*" OrderedProductDTO
+  ProductDTORes <--"*" OrderedProductDTO
   DistilleryDTOReq <--"*" ProductDTOReq
   DistilleryDTORes <--"*" ProductDTORes
   CartItemDTOReq: +put(/customer/cart)
