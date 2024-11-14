@@ -109,7 +109,7 @@ classDiagram
   Pet1: +post(/pet1)
 ```
 
-- Market (/src/test/resources/market/schema-marketWithoutArrays.md)
+- Market (/src/test/resources/market/schema-marketWithOrderedProducts.md)
 
 ```mermaid
 classDiagram
@@ -124,6 +124,8 @@ classDiagram
   RegionDTORes <--"*" DistilleryDTORes
   CreditCardDTO <--"*" OrderDTO
   UserDTOReq <--"*" OrderDTO
+  OrderDTO <--"*" OrderedProductDTO
+  ProductDTORes <--"*" OrderedProductDTO
   DistilleryDTOReq <--"*" ProductDTOReq
   DistilleryDTORes <--"*" ProductDTORes
   CartItemDTOReq: +put(/customer/cart)
