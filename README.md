@@ -111,7 +111,7 @@ classDiagram
   ApiResponse: +post(/pet/{petId}/uploadImage)
 ```
 
-- Market (/src/test/resources/market/schema-marketWithoutArrays.md)
+- Market (/src/test/resources/market/schema-marketWithOrderedProducts.md)
 
 ```mermaid
 classDiagram
@@ -126,6 +126,8 @@ classDiagram
   RegionDTORes <--"*" DistilleryDTORes
   CreditCardDTO <--"*" OrderDTO
   UserDTOReq <--"*" OrderDTO
+  OrderDTO <--"*" OrderedProductDTO
+  ProductDTORes <--"*" OrderedProductDTO
   DistilleryDTOReq <--"*" ProductDTOReq
   DistilleryDTORes <--"*" ProductDTORes
   CartDTO: +put(/customer/cart)
