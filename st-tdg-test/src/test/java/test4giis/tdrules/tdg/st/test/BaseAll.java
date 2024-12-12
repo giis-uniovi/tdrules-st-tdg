@@ -33,25 +33,28 @@ import in2test.application.qagrow.QAGrowApiProcess;
 
 /**
  * This is the base class for all system and integration tests to
- * define basic configurations to manage the different items involved in the tests:
+ * define basic configurations and manage the different items involved in testing:
  * 
- * - Abstract methods to configure main test parameters
- * - Methods to configure the main test objects (can be overriden for fine tuning)
+ * - Abstract methods to configure the main test parameters
+ * - Methods to configure the main test objects (can be overridden for fine tuning)
  * - Test utilities (making assertions, serialization, etc.)
  *
- * The two main configurations for every test are getSubjectName() (to identify the SUT) and
- * isLiveBackend() to indicate whether the test generates and sends data to a live backend
- * or everything is performed in local (no running SUT needed).
- * These values in combination with the test inheritance, allow creating four
+ * The two main configurations for every test are:
+ * 
+ * - getSubjectName() to identify the SUT, and
+ * - isLiveBackend() to indicate whether the test generates and sends data to a live backend
+ *   or if everything is performed locally (without running the SUT).
+ * 
+ * These values, in combination with the test inheritance, allow creating four
  * different flavours of the tests:
  * 
- * - datagen-local: the test simulates the data generation by specifying
- *   the commands sent to the Data Loader and gets the data that would be loaded.
+ * - datagen-local: simulates the data generation by specifying
+ *   the commands sent to the Data Loader and gets the data to be loaded.
  * - datagen-live: manually specifies the commands sent to the Data Loader,
  *   but loads the data in a running (live) SUT backend.
- * - qagrow-local: Automatically generates the test data, but working in local
- * - qagrow-live: Automatically generates and loads the test data
- *   in a live SUT backend.
+ * - qagrow-local: automatically generates the test data, but working locally.
+ * - qagrow-live: automatically generates and loads the test data
+ *   in a running (live) SUT backend.
  *   
  * The last is the true system test that integrates all main components:
  * data loader, qagrow data generator, fpc rule generator and the SUT backend.
@@ -76,15 +79,15 @@ public abstract class BaseAll {
 
 	/**
 	 * Returns a string to identify the SUT (e.g. petstore, market)
-	 * to allow identify separate the expected and actual outputs
-	 * (must be overriden by all test methods, usually in a base 
-	 * class for this SUT)
+	 * to allow separately identifying the expected and actual outputs
+	 * (must be overridden by all test methods, usually in a base 
+	 * class for the SUT)
 	 */
 	protected abstract String getSutName();
 	
 	/**
-	 * Returns true if the tests are running against a live backend, false by default
-	 * (must be overriden by all live test methods)
+	 * Returns true if the tests are run against a live backend, false by default
+	 * (must be overridden by all live test methods)
 	 */
 	protected boolean isLiveBackend() {
 		return false;
@@ -119,7 +122,7 @@ public abstract class BaseAll {
 	}
 	
 	/**
-	 * Gets the TdRules model for a given query and reprocess the version numbers
+	 * Gets the TdRules model for a given query and reprocesses the version numbers
 	 * to allow comparison of expected test results
 	 */
 	protected TdRules getRules(String query) {
@@ -130,13 +133,13 @@ public abstract class BaseAll {
 	
 	/**
 	 * Gets a data loader for the current configuration:
-	 * - In local tests uses the default OaLocalAdapter.
-	 * - In live tests uses the default OaLiveAdapter and the default OaPathResolver
+	 * - In local tests, uses the default OaLocalAdapter.
+	 * - In live tests, uses the default OaLiveAdapter and the default OaPathResolver
 	 *   configured to resolve paths from the schema model.
 	 *   
 	 * If a custom path resolver is needed, the test must override the getLiveDataLoader()
-	 * method with the appropriate configuration so that calling getDataLoader() will invoke
-	 * the overriden method.
+	 * method with the appropriate configuration so that calling getDataLoader() invokes
+	 * the overridden method.
 	 */
 	protected DataLoader getDataLoader() {
 		return isLiveBackend() ? getLiveDataLoader() : getLocalDataLoader();
@@ -151,9 +154,9 @@ public abstract class BaseAll {
 	}
 	
 	/**
-	 * Generates test data for a given query using QAGrow and loads
-	 * the data as indicated by the specified data loader (that can be
-	 * either local or live)
+	 * Generates test data for a given query using qagrow and loads
+	 * the data as indicated by the specified data loader (which can be
+	 * local or live)
 	 */
 	protected void generateAndLoad(DataLoader loader, String query) {
 		log.info("Generate test data for query\n{}", query);
@@ -191,8 +194,8 @@ public abstract class BaseAll {
 
 	/**
 	 * General assert on a model (as string) against the expected.
-	 * Actual outputs are saved and then comparison is made between the content of
-	 * the expected and actual files.
+	 * Actual outputs are saved and then the comparison is made between the content of
+	 * the expected and actual files
 	 */
 	protected void assertModel(String fileName, String actualModel) {
 		String outFolder = FilenameUtils.concat(TEST_PATH_OUTPUT, getSutName());
@@ -208,9 +211,9 @@ public abstract class BaseAll {
 	
 	/**
 	 * Assert to compare the test data that has been generated or loaded.
-	 * Comparison is different if the test data is locally generated,
-	 * or if it has been loaded to a live backend (in this case
-	 * a call to get the data content is made before comparison)
+	 * The comparison is different if the test data is generated locally,
+	 * or if it has been loaded into a live backend (in this case
+	 * a call is made to get the data content before the comparison)
 	 */
 	protected void assertData(String fileName, DataLoader dg) {
 		if (isLiveBackend())
@@ -222,18 +225,18 @@ public abstract class BaseAll {
 		assertModel(fileName, dg.getDataAdapter().getAllAsString());
 	}
 	protected void assertLiveData(String fileName, DataLoader dg) {
-		// Gets the data from the backend and transforms into
-		// a more compact presentation for easier comparison (an object per line)
+		// Gets the data from the backend and transforms it into
+		// a more compact presentation for easier comparison (one object per line)
 		String payload=getAllLiveData();
 		payload=reserializeStoredData(payload);
 		log.info("Actual data stored in the backend\n{}", reserializeStoredData(payload));
-		// Rename the file to separate locally generated from live loaded
+		// Rename the file to separate the locally generated from the live loaded
 		assertModel(fileName.replace("-local-", "-live-"), payload); 
 	}
 
 	/**
 	 * Removes the version number of the FPC rules to allow repeatable comparisons
-	 * (saves the renamed version in target to use during debugging)
+	 * (saves the renamed version in target for use during debugging)
 	 */
 	protected TdRules filterRulesVersion(TdRules rules) {
 		String version=rules.getVersion();
@@ -244,7 +247,7 @@ public abstract class BaseAll {
 	}
 	
 	/**
-	 * General purpose serialization of an object to use in test comparison
+	 * General purpose serialization of an object for use in test comparison
 	 */
 	protected String serialize(TdSchema model) {
 		return new ModelJsonSerializer().serialize(model, true);
