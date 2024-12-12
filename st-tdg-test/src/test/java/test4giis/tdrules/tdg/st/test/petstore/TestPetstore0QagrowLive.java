@@ -1,10 +1,10 @@
 package test4giis.tdrules.tdg.st.test.petstore;
 
 /**
- * Proof of concept of Test Data generation for APIs (TDG)
+ * Proof of concept of Test Data Generation for APIs (TDG)
  * using simplified entities from the Swagger Petstore.
  * 
- * Tests in this class Automatically generates the test data 
+ * Tests in this class automatically generate the test data 
  * and load the data in a running (live) SUT backend.
  * 
  * This is the true system test that integrates all main components:
