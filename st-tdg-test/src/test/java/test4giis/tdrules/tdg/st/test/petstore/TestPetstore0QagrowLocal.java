@@ -5,11 +5,11 @@ import org.junit.Test;
 import giis.tdrules.store.loader.DataLoader;
 
 /**
- * Proof of concept of Test Data generation for APIs (TDG)
+ * Proof of concept of Test Data Generation for APIs (TDG)
  * using simplified entities from the Swagger Petstore.
  * 
- * Tests in this class Automatically generates the test data, 
- * but working in local.
+ * Tests in this class automatically generate the test data, 
+ * but working locally.
  */
 public class TestPetstore0QagrowLocal extends BasePetstore {
 
