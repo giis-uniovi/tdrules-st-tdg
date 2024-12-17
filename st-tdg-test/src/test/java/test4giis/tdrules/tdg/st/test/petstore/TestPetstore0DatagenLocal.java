@@ -7,21 +7,21 @@ import giis.tdrules.openapi.model.TdRules;
 import giis.tdrules.store.loader.DataLoader;
 
 /**
- * Proof of concept of Test Data generation for APIs (TDG)
+ * Proof of concept of Test Data Generation for APIs (TDG)
  * using simplified entities from the Swagger Petstore.
  * 
  * Tests in this class simulate the data generation by specifying
- * the commands sent to the Data Loader and gets the data that would be loaded.
+ * the commands sent to the Data Loader and get the data to be loaded.
  * 
- * This also serves to illustrate using examples the main transformations performed on the
+ * This also serves to illustrate by means of examples the main transformations performed on the
  * model and the coverage rules.
  * 
- * Test data specification is written as a query in a SQL like language 
+ * Test data specification is written as a query in a SQL-like language 
  * called "Test Data Specification" (TDS).
  * The OpenApi model is first transformed into the Test Data Model (TDM)
- * that is represented as a DbSchema model (see the tdrules project)
- * and the TDS is also transformed into a query to generate the FPC
- * coverage rules
+ * which is then represented as a DbSchema model (see the tdrules project).
+ * The TDS is also transformed into a query to generate the FPC
+ * coverage rules.
  */
 public class TestPetstore0DatagenLocal extends BasePetstore {
 
@@ -31,11 +31,11 @@ public class TestPetstore0DatagenLocal extends BasePetstore {
 	public static String querySmoke = "tds Category where name='Dogs'";
 	@Test
 	public void testSmoke() {
-		// The rules look for a category that matches Dogs and other that doesn't
+		// The rules look for a category that matches Dogs and another that doesn't
 		TdRules rules=getRules(querySmoke);
 		assertModel("rules-smoke.xml", new TdRulesXmlSerializer().serialize(rules));
 		// The data generator should issue the appropriate commands to the data loader
-		// to cover each of the rules, this is simulated here.
+		// to cover each of the rules. This is simulated here.
 		DataLoader dg = getDataLoader();
 		dg.load("Category","name=Dogs");
 		dg.load("Category","");
@@ -43,12 +43,12 @@ public class TestPetstore0DatagenLocal extends BasePetstore {
 	}
 
 	/**
-	 * Using a simplified schema: Pet0 without arrays and external references.
-	 * Specifies pets with a given category that are available to be sold:
+	 * Using a simplified schema: Pet0 without arrays or external references.
+	 * Specifies pets with a given category that are available for sale:
 	 * 
 	 *   TDS Pet0 where Pet0.category::name='Dogs' and Pet0.status='available'
 	 * 
-	 * Note the :: notation to access to an attribute that is inside of an object.
+	 * Note the :: notation to access an attribute that is inside an object.
 	 */
 	public static String queryPet0ByCategoryAndStatus = 
 			"tds Pet0 where Pet0.category::name='Dogs' and Pet0.status='available'";
@@ -67,19 +67,19 @@ public class TestPetstore0DatagenLocal extends BasePetstore {
 	}
 	
 	/**	
-	 * Using a simplified schema: Pet1 without arrays bat with external references.
-	 * As in the previous, specifies pets with a given category that are available to be sold:
+	 * Using a simplified schema: Pet1 without arrays but with external references.
+	 * As in the previous test case, specifies pets with a given category that are available for sale:
 	 * 
-	 * 	 tds Pet1 where Pet1.category::name='Dogs' and Pet1.status='available'
+	 * 	 TDS Pet1 where Pet1.category::name='Dogs' and Pet1.status='available'
 	 * 
-	 * Here the external reference is transformed by creating a type Pet1_category_xt
+	 * Here, the external reference is transformed by creating a type Pet1_category_xt
 	 * that references a Category. This is the data type assigned to Pet1.category
 	 * 
-	 * As the schema references an independent object (Category), data of Pet1::category
+	 * Since the schema references an independent object (Category), the data of Pet1::category
 	 * must be consistent with those that are in Category (there is duplicated data).
-	 * To support this, the rule generation makes a transformation by adding a join to Category.
-	 * The data generator produces data that is consistent with this relation and the data loader
-	 * ensures that the appropriated data is stored both in Category and in Pet1::category.
+	 * To support this, the rule generation performs a transformation by adding a join to Category.
+	 * The data generator produces data that is consistent with this relationship, and the data loader
+	 * ensures that the appropriate data is stored in both Category and Pet1::category.
 	 * Internally, the transformed query that generates the rules will be:
 	 * 
 	 * SELECT * FROM Pet1
@@ -94,11 +94,11 @@ public class TestPetstore0DatagenLocal extends BasePetstore {
 		assertModel("rules-pet1-by-category-status.xml", new TdRulesXmlSerializer().serialize(rules));
 
 		DataLoader dg = getDataLoader();
-		// First three rules like the previous test, but here, the data is in another entity (category)
+		// First three rules are like the previous test, but here the data is in another entity (category)
 		// that must be loaded before
 		dg.load("Category", "id=@cid1, name=Dogs");
 		dg.load("Pet1", "id=@pid1, category::id=@cid1, status=available");
-		dg.load("Pet1", "id=@pid2, category::id=@cid1, status=sold");//sold es un valor !=available indicado por qagrow entre los permitidos 
+		dg.load("Pet1", "id=@pid2, category::id=@cid1, status=sold");//sold is a value !=available selected by qagrow among those allowed 
 		// Now the rules look for Pet1.category!=Dogs, a new category must be created
 		dg.load("Category", "id=@cid2, name=1"); //1 is any value !=Dogs created by the generator
 		dg.load("Pet1", "id=@pid3, category::id=@cid2, status=available");
@@ -109,15 +109,16 @@ public class TestPetstore0DatagenLocal extends BasePetstore {
 	}
 	
 	/**
-	 * Relational join, 3 entities:
-	 * Specifies a Client with a given name such that his Order0 reference a Pet1 with category Dogs and status placed
+	 * Using a simplified schema: Pet0 without arrays or external references.
+	 * Relational join of 3 entities: Customer0, Order0 and Pet0
+	 * Specifies a client such that his order refers to a pet with category Dogs and status placed
 	 * This can be specified as:
 	 * 
-	 *   tds Customer0 xjoin Order0 xjoin Pet where Pet0.category::name='Dogs' and Order0.status='placed'
+	 *   TDS Customer0 xjoin Order0 xjoin Pet0 where Pet0.category::name='Dogs' and Order0.status='placed'
 	 *   
 	 * or more more simple:
 	 * 
-	 *   tds Customer0, Order0, Pet where Pet0.category::name='Dogs' and Order0.status='placed'
+	 *   TDS Customer0, Order0, Pet0 where Pet0.category::name='Dogs' and Order0.status='placed'
 	 *   
 	 * Internally, the transformed query that generates the rules will be:
 	 * 
@@ -144,8 +145,8 @@ public class TestPetstore0DatagenLocal extends BasePetstore {
 		dg.load("Pet0","id=@pid2, category::name=1");
 		dg.load("Order0","id=@oid2, customerId=@cid1, petId=@pid2, status=placed");
 		// Third rule requires status!=placed, reusing the previous master entities
-		dg.load("Order0","id=@oid3, customerId=@cid1, petId=@pid1, status=delivered"); //status indicado por qagrow !=placed
-		
+		dg.load("Order0","id=@oid3, customerId=@cid1, petId=@pid1, status=delivered"); // delivered is a value !=placed selected by qagrow
+
 		// Four and five rules require a Customer0 without Order0, and a Pet0 without Order0
 		dg.load("Customer0", "id=@cid2");
 		dg.load("Pet0", "id=@pid2, category::name=Dogs");
@@ -154,7 +155,7 @@ public class TestPetstore0DatagenLocal extends BasePetstore {
 	}
 	
 	/**
-	 * Same query than before, but using aliases for some entity names
+	 * Same query as before, but using aliases for some entity names
 	 */
 	public static String queryPlacedPet0OrdersWithAlias=
 			"tds Customer0 c, \"Order0\" o, Pet0"
