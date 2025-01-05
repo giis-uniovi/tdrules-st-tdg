@@ -91,14 +91,14 @@ public class BaseMarket extends BaseAll {
 		//     OrderDTO (username is userAccount attribute)
 		// * Use a dictionary
 		TdSchema model = getSchema();
-		IPathResolver pathResolver=new CustomPathResolver().setServerUrl(MARKET_URL_LIVE);
+		IPathResolver pathResolver=new CustomPathResolver();
 		OaBasicAuthStore authenticator = new OaBasicAuthStore()
 				.setProvider("UserDTOReq", "email", "password")
 				.addConsumer(new String[] { "CartItemDTORes", "CartItemDTOReq", 
 						                    "ContactsDTORes", "ContactsDTOReq" }, "user")
 				.addConsumer(new String[] { "OrderDTO"} , "userAccount");
 		
-		return new DataLoader(model, new OaLiveAdapter(pathResolver).setAuthStore(authenticator))
+		return new DataLoader(model, new OaLiveAdapter(MARKET_URL_LIVE, pathResolver).setAuthStore(authenticator))
 				                            .setUidGen(new OaLiveUidGen())
 				                            .setAttrGen(getDictionaryAttrGen());
 	}

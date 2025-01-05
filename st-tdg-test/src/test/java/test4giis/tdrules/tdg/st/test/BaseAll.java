@@ -149,8 +149,8 @@ public abstract class BaseAll {
 	}
 	protected DataLoader getLiveDataLoader() {
 		TdSchema model = getSchema();
-		IPathResolver pathResolver = new OaPathResolver().setSchemaModel(model).setServerUrl(getServerUrl());
-		return new DataLoader(model, new OaLiveAdapter(pathResolver));
+		IPathResolver pathResolver = new OaPathResolver().setSchemaModel(model);
+		return new DataLoader(model, new OaLiveAdapter(getServerUrl(), pathResolver));
 	}
 	
 	/**
