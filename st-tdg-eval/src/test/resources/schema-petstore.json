@@ -286,11 +286,11 @@
       "command" : "post",
       "query" : "/pet"
     }, {
-      "command" : "put",
-      "query" : "/pet"
-    }, {
       "command" : "post",
       "query" : "/backid/pet"
+    }, {
+      "command" : "put",
+      "query" : "/pet"
     } ]
   }, {
     "name" : "Customer0",
