@@ -28,7 +28,7 @@ public class TestPetstoreDatagenLiveBackId extends BasePetstore {
 		@Override
 		public String getEndpointPath(String tableName) {
 			if ("Pet".equals(tableName) || "Category".equals(tableName))
-				return super.getEndpointPath("backid/" + tableName);
+				return "/backid/" + tableName.toLowerCase();
 			else
 				return super.getEndpointPath(tableName);
 		}
@@ -39,7 +39,7 @@ public class TestPetstoreDatagenLiveBackId extends BasePetstore {
 	@Override
 	protected DataLoader getLiveDataLoader() {
 		IPathResolver pathResolver=new CustomPathResolver();
-		return new DataLoader(getSchema(), new OaLiveAdapter(getServerUrl(), pathResolver)).setUidGen(new OaLiveUidGen());
+		return new DataLoader(getSchema(), new OaLiveAdapter(getServerUrl()).setPathResolver(pathResolver)).setUidGen(new OaLiveUidGen());
 	}
 	
 	/**
