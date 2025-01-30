@@ -28,7 +28,7 @@ public class TestPetstoreDatagenLiveBackId extends BasePetstore {
 		@Override
 		public String getEndpointPath(String tableName) {
 			if ("Pet".equals(tableName) || "Category".equals(tableName))
-				return super.getEndpointPath("backid/" + tableName);
+				return "/backid/" + tableName.toLowerCase();
 			else
 				return super.getEndpointPath(tableName);
 		}
@@ -38,8 +38,8 @@ public class TestPetstoreDatagenLiveBackId extends BasePetstore {
 	// We override this method to allow the custom path resolver be injected y the data adapter
 	@Override
 	protected DataLoader getLiveDataLoader() {
-		IPathResolver pathResolver=new CustomPathResolver().setServerUrl(getServerUrl());
-		return new DataLoader(getSchema(), new OaLiveAdapter(pathResolver)).setUidGen(new OaLiveUidGen());
+		IPathResolver pathResolver=new CustomPathResolver();
+		return new DataLoader(getSchema(), new OaLiveAdapter(getServerUrl()).setPathResolver(pathResolver)).setUidGen(new OaLiveUidGen());
 	}
 	
 	/**

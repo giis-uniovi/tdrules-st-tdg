@@ -12,9 +12,7 @@ import giis.tdrules.store.loader.DataLoader;
 import giis.tdrules.store.loader.IAttrGen;
 import giis.tdrules.store.loader.gen.DictionaryAttrGen;
 import giis.tdrules.store.loader.oa.ApiWriter;
-import giis.tdrules.store.loader.oa.IPathResolver;
 import giis.tdrules.store.loader.oa.OaLiveAdapter;
-import giis.tdrules.store.loader.oa.OaPathResolver;
 import giis.visualassert.Framework;
 import giis.visualassert.VisualAssert;
 import giis.visualassert.portable.FileUtil;
@@ -57,8 +55,8 @@ public class Base {
 
 		// The path resolver is created using a controller mock (writer)
 		// and the data loader using a dictionary
-		IPathResolver pathResolver = new OaPathResolver().setSchemaModel(model).setServerUrl("").setApiWriter(writer);
-		DataLoader loader = new DataLoader(model, new OaLiveAdapter(pathResolver)).setAttrGen(getPetstoreDictionary().setMinYear(2024));
+		DataLoader loader = new DataLoader(model, new OaLiveAdapter("").setApiWriter(writer))
+				.setAttrGen(getPetstoreDictionary().setMinYear(2024));
 
 		// Generation and loading: Each test first delete all data previous to the generation and load
 		writer.delete("/test/deleteAll");

@@ -22,10 +22,8 @@ import giis.tdrules.openapi.model.TdSchema;
 import giis.tdrules.store.loader.DataLoader;
 import giis.tdrules.store.loader.IAttrGen;
 import giis.tdrules.store.loader.oa.ApiWriter;
-import giis.tdrules.store.loader.oa.IPathResolver;
 import giis.tdrules.store.loader.oa.OaLiveAdapter;
 import giis.tdrules.store.loader.oa.OaLocalAdapter;
-import giis.tdrules.store.loader.oa.OaPathResolver;
 import giis.tdrules.store.loader.oa.Reserializer;
 import giis.visualassert.Framework;
 import giis.visualassert.VisualAssert;
@@ -149,8 +147,7 @@ public abstract class BaseAll {
 	}
 	protected DataLoader getLiveDataLoader() {
 		TdSchema model = getSchema();
-		IPathResolver pathResolver = new OaPathResolver().setSchemaModel(model).setServerUrl(getServerUrl());
-		return new DataLoader(model, new OaLiveAdapter(pathResolver));
+		return new DataLoader(model, new OaLiveAdapter(getServerUrl()));
 	}
 	
 	/**

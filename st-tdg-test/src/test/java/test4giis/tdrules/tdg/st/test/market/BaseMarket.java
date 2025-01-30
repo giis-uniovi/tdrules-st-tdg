@@ -13,7 +13,6 @@ import giis.tdrules.openapi.model.TdSchema;
 import giis.tdrules.store.loader.DataLoader;
 import giis.tdrules.store.loader.IAttrGen;
 import giis.tdrules.store.loader.gen.DictionaryAttrGen;
-import giis.tdrules.store.loader.oa.IPathResolver;
 import giis.tdrules.store.loader.oa.OaBasicAuthStore;
 import giis.tdrules.store.loader.oa.OaLiveAdapter;
 import giis.tdrules.store.loader.oa.OaLiveUidGen;
@@ -91,14 +90,13 @@ public class BaseMarket extends BaseAll {
 		//     OrderDTO (username is userAccount attribute)
 		// * Use a dictionary
 		TdSchema model = getSchema();
-		IPathResolver pathResolver=new CustomPathResolver().setServerUrl(MARKET_URL_LIVE);
 		OaBasicAuthStore authenticator = new OaBasicAuthStore()
 				.setProvider("UserDTOReq", "email", "password")
 				.addConsumer(new String[] { "CartItemDTORes", "CartItemDTOReq", 
 						                    "ContactsDTORes", "ContactsDTOReq" }, "user")
 				.addConsumer(new String[] { "OrderDTO"} , "userAccount");
 		
-		return new DataLoader(model, new OaLiveAdapter(pathResolver).setAuthStore(authenticator))
+		return new DataLoader(model, new OaLiveAdapter(MARKET_URL_LIVE).setPathResolver(new CustomPathResolver()).setAuthStore(authenticator))
 				                            .setUidGen(new OaLiveUidGen())
 				                            .setAttrGen(getDictionaryAttrGen());
 	}

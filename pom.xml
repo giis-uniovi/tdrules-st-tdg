@@ -19,7 +19,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<surefire.version>3.3.0</surefire.version>
-		<tdrules.version>4.3.1</tdrules.version>
+		<!--<tdrules.version>4.3.1</tdrules.version>-->
+		<!--<tdrules.version>4.3.2-SNAPSHOT</tdrules.version>-->
+		<tdrules.version>4.3.2-next-release-SNAPSHOT</tdrules.version>
 		<qagrow.version>1.4.275</qagrow.version>
 	</properties>
 
@@ -178,7 +180,7 @@
    		</repository>
 		<!-- GitHub branch snapshots -->
 		<repository>
-			<id>github-giis-uniovi</id>
+			<id>github</id>
 			<url>https://maven.pkg.github.com/giis-uniovi/*</url>
 			<snapshots>
 				<enabled>true</enabled>
