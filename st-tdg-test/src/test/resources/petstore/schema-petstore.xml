@@ -74,8 +74,8 @@
 <column name="tags" type="Pet_tags_xa" compositetype="array" subtype="object" notnull="true" />
 <column name="status" type="string" notnull="true" checkin="available,pending,sold" />
 <ddl command="post">/pet</ddl>
-<ddl command="put">/pet</ddl>
 <ddl command="post">/backid/pet</ddl>
+<ddl command="put">/pet</ddl>
 </table>
 <table name="Customer0" type="table">
 <column name="id" type="int64" key="true" notnull="true" />
