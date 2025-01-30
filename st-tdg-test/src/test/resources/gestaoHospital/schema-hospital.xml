@@ -83,6 +83,7 @@
 <column name="location" type="Patient_location_xt" compositetype="type" notnull="true" />
 <column name="name" type="string" notnull="true" />
 <ddl command="post">/v1/hospitais/{hospital_id}/pacientes/checkin</ddl>
+<ddl command="post">/v1/hospitais/{hospital_id}/pacientes/checkout</ddl>
 <ddl command="put">/v1/hospitais/{hospital_id}/pacientes/{patientId}</ddl>
 </table>
 <table name="GeoJsonPoint" type="table">

@@ -34,6 +34,13 @@
       "name" : "totalItems",
       "datatype" : "int32",
       "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "put",
+      "query" : "/customer/cart"
+    }, {
+      "command" : "put",
+      "query" : "/customer/cart/delivery"
     } ]
   }, {
     "name" : "CartItemDTOReq",
@@ -126,6 +133,10 @@
       "datatype" : "string",
       "size" : "20",
       "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "put",
+      "query" : "/customer/contacts"
     } ]
   }, {
     "name" : "CreditCardDTO",
@@ -188,6 +199,10 @@
       "name" : "title",
       "datatype" : "string",
       "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/distillerydto"
     } ]
   }, {
     "name" : "OrderDTO",
@@ -241,6 +256,10 @@
       "name" : "totalCost",
       "datatype" : "double",
       "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/customer/cart/pay"
     } ]
   }, {
     "name" : "ProductDTOReq",
@@ -411,6 +430,10 @@
       "name" : "subtitle",
       "datatype" : "string",
       "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/regiondto"
     } ]
   }, {
     "name" : "UserDTOReq",
@@ -475,6 +498,10 @@
       "datatype" : "string",
       "size" : "20",
       "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/register"
     } ]
   } ]
 }

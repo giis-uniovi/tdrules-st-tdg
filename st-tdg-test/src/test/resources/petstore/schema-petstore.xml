@@ -45,6 +45,7 @@
 <column name="phone" type="string" notnull="true" />
 <column name="userStatus" type="int32" notnull="true" />
 <ddl command="post">/user</ddl>
+<ddl command="post">/user/createWithList</ddl>
 <ddl command="put">/user/{username}</ddl>
 </table>
 <table name="Tag" type="table">
@@ -118,5 +119,6 @@
 <column name="code" type="int32" notnull="true" />
 <column name="type" type="string" notnull="true" />
 <column name="message" type="string" notnull="true" />
+<ddl command="post">/pet/{petId}/uploadImage</ddl>
 </table>
 </schema>

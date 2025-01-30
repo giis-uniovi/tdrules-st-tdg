@@ -7,6 +7,8 @@
 <column name="productsCost" type="double" notnull="true" />
 <column name="totalCost" type="double" notnull="true" />
 <column name="totalItems" type="int32" notnull="true" />
+<ddl command="put">/customer/cart</ddl>
+<ddl command="put">/customer/cart/delivery</ddl>
 </table>
 <table name="CartItemDTOReq" type="table">
 <column name="user" type="string" key="true" notnull="true" fk="CartDTO.user" fkname="fk_CartItemDTOReq_user" />
@@ -29,6 +31,7 @@
 <column name="user" type="string" notnull="true" fk="UserDTORes.email" fkname="fk_ContactsDTORes_user" />
 <column name="address" type="string" size="100" notnull="true" />
 <column name="phone" type="string" size="20" notnull="true" />
+<ddl command="put">/customer/contacts</ddl>
 </table>
 <table name="CreditCardDTO" type="table">
 <column name="ccNumber" type="string" notnull="true" />
@@ -46,6 +49,7 @@
 <column name="region" type="string" notnull="true" fk="RegionDTORes.name" fkname="fk_DistilleryDTORes_region" />
 <column name="description" type="string" notnull="true" />
 <column name="title" type="string" notnull="true" />
+<ddl command="post">/distillerydto</ddl>
 </table>
 <table name="OrderDTO" type="table">
 <column name="id" type="int64" key="true" notnull="true" />
@@ -59,6 +63,7 @@
 <column name="payed" type="boolean" notnull="true" />
 <column name="productsCost" type="double" notnull="true" />
 <column name="totalCost" type="double" notnull="true" />
+<ddl command="post">/customer/cart/pay</ddl>
 </table>
 <table name="ProductDTOReq" type="table">
 <column name="productId" type="int64" key="true" notnull="true" />
@@ -103,6 +108,7 @@
 <column name="description" type="string" notnull="true" />
 <column name="name" type="string" notnull="true" />
 <column name="subtitle" type="string" notnull="true" />
+<ddl command="post">/regiondto</ddl>
 </table>
 <table name="UserDTOReq" type="table">
 <column name="email" type="string" size="50" key="true" notnull="true" />
@@ -118,5 +124,6 @@
 <column name="name" type="string" size="50" notnull="true" />
 <column name="password" type="string" size="50" notnull="true" />
 <column name="phone" type="string" size="20" notnull="true" />
+<ddl command="post">/register</ddl>
 </table>
 </schema>

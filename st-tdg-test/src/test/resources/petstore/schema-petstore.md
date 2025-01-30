@@ -22,6 +22,7 @@ classDiagram
   Category: +post(/category)
   Category: +post(/backid/category)
   User: +post(/user)
+  User: +post(/user/createWithList)
   User: +put(/user/{username})
   Pet: +post(/pet)
   Pet: +post(/backid/pet)
@@ -30,3 +31,4 @@ classDiagram
   Order0: +post(/store/order0)
   Pet0: +post(/pet0)
   Pet1: +post(/pet1)
+  ApiResponse: +post(/pet/{petId}/uploadImage)

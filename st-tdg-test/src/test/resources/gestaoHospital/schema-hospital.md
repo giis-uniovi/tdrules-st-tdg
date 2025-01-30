@@ -25,6 +25,7 @@ classDiagram
   HospitalDTO: +post(/v1/hospitais/)
   HospitalDTO: +put(/v1/hospitais/{hospital_id})
   Patient: +post(/v1/hospitais/{hospital_id}/pacientes/checkin)
+  Patient: +post(/v1/hospitais/{hospital_id}/pacientes/checkout)
   Patient: +put(/v1/hospitais/{hospital_id}/pacientes/{patientId})
   ProductDTO: +post(/v1/hospitais/estoque)
   ProductDTO: +post(/v1/hospitais/{hospital_id}/estoque)

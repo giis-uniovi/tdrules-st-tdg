@@ -99,14 +99,16 @@ classDiagram
   Category: +post(/category)
   Category: +post(/backid/category)
   User: +post(/user)
+  User: +post(/user/createWithList)
   User: +put(/user/{username})
   Pet: +post(/pet)
-  Pet: +put(/pet)
   Pet: +post(/backid/pet)
+  Pet: +put(/pet)
   Customer0: +post(/store/customer0)
   Order0: +post(/store/order0)
   Pet0: +post(/pet0)
   Pet1: +post(/pet1)
+  ApiResponse: +post(/pet/{petId}/uploadImage)
 ```
 
 - Market (/src/test/resources/market/schema-marketWithoutArrays.md)
@@ -126,13 +128,20 @@ classDiagram
   UserDTOReq <--"*" OrderDTO
   DistilleryDTOReq <--"*" ProductDTOReq
   DistilleryDTORes <--"*" ProductDTORes
+  CartDTO: +put(/customer/cart)
+  CartDTO: +put(/customer/cart/delivery)
   CartItemDTOReq: +put(/customer/cart)
   ContactsDTOReq: +put(/customer/contacts)
+  ContactsDTORes: +put(/customer/contacts)
   CreditCardDTO: +post(/customer/cart/pay)
   DistilleryDTOReq: +post(/distillerydto)
+  DistilleryDTORes: +post(/distillerydto)
+  OrderDTO: +post(/customer/cart/pay)
   ProductDTOReq: +post(/products/productdto)
   RegionDTOReq: +post(/regiondto)
+  RegionDTORes: +post(/regiondto)
   UserDTOReq: +post(/register)
+  UserDTORes: +post(/register)
 ```
 
 - Gestao Hospital (src/test/resources/gestaoHospital/schema-hospital.md)
@@ -165,7 +174,9 @@ classDiagram
   HospitalDTO: +post(/v1/hospitais/)
   HospitalDTO: +put(/v1/hospitais/{hospital_id})
   Patient: +post(/v1/hospitais/{hospital_id}/pacientes/checkin)
+  Patient: +post(/v1/hospitais/{hospital_id}/pacientes/checkout)
   Patient: +put(/v1/hospitais/{hospital_id}/pacientes/{patientId})
+  ProductDTO: +post(/v1/hospitais/estoque)
   ProductDTO: +post(/v1/hospitais/{hospital_id}/estoque)
   ProductDTO: +put(/v1/hospitais/{hospital_id}/estoque/{produto_id})
 ```
