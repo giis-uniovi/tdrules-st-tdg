@@ -19,11 +19,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<surefire.version>3.3.0</surefire.version>
-		<!--<tdrules.version>4.3.1</tdrules.version>-->
-		<!--<tdrules.version>4.3.2-SNAPSHOT</tdrules.version>-->
-		<tdrules.version>4.3.2-next-release-SNAPSHOT</tdrules.version>
-		<!--<qagrow.version>1.4.275</qagrow.version>-->
-		<qagrow.version>1.4.0-next-tdrules-release-SNAPSHOT</qagrow.version>
+		
+		<tdrules.version>4.4.0</tdrules.version>
+		
+		<qagrow.version>1.4.280</qagrow.version>
 	</properties>
 
 	<modules>
