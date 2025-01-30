@@ -20,7 +20,7 @@ import giis.tdrules.model.io.ModelJsonSerializer;
 import giis.tdrules.openapi.model.TdRules;
 import giis.tdrules.openapi.model.TdSchema;
 import giis.tdrules.store.loader.DataLoader;
-import giis.tdrules.store.loader.IAttrGen;
+import giis.tdrules.store.loader.gen.IAttrGen;
 import giis.tdrules.store.loader.oa.ApiWriter;
 import giis.tdrules.store.loader.oa.OaLiveAdapter;
 import giis.tdrules.store.loader.oa.OaLocalAdapter;
@@ -226,7 +226,7 @@ public abstract class BaseAll {
 		// a more compact presentation for easier comparison (one object per line)
 		String payload=getAllLiveData();
 		payload=reserializeStoredData(payload);
-		log.info("Actual data stored in the backend\n{}", reserializeStoredData(payload));
+		log.info("Actual data stored in the backend:\n{}", payload);
 		// Rename the file to separate the locally generated from the live loaded
 		assertModel(fileName.replace("-local-", "-live-"), payload); 
 	}

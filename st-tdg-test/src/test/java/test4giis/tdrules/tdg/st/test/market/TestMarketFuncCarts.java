@@ -3,7 +3,7 @@ package test4giis.tdrules.tdg.st.test.market;
 import org.junit.Test;
 
 import giis.tdrules.store.loader.DataLoader;
-import giis.tdrules.store.loader.IAttrGen;
+import giis.tdrules.store.loader.gen.IAttrGen;
 
 /**
  * Carts Functionality Tests.

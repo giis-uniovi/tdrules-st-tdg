@@ -22,7 +22,8 @@
 		<!--<tdrules.version>4.3.1</tdrules.version>-->
 		<!--<tdrules.version>4.3.2-SNAPSHOT</tdrules.version>-->
 		<tdrules.version>4.3.2-next-release-SNAPSHOT</tdrules.version>
-		<qagrow.version>1.4.275</qagrow.version>
+		<!--<qagrow.version>1.4.275</qagrow.version>-->
+		<qagrow.version>1.4.0-next-tdrules-release-SNAPSHOT</qagrow.version>
 	</properties>
 
 	<modules>

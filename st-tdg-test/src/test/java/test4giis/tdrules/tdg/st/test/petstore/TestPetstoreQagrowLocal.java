@@ -3,7 +3,7 @@ package test4giis.tdrules.tdg.st.test.petstore;
 import org.junit.Test;
 
 import giis.tdrules.store.loader.DataLoader;
-import giis.tdrules.store.loader.IAttrGen;
+import giis.tdrules.store.loader.gen.IAttrGen;
 
 /** 
  * Test Data generation for APIs (TDG) for the Swagger Petstore as SUT:
