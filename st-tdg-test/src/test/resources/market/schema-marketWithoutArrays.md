@@ -1,5 +1,5 @@
 classDiagram
-  UserDTOReq <--"*" CartDTO
+  UserDTORes <--"*" CartDTO
   CartDTO <--"*" CartItemDTOReq
   ProductDTOReq <--"*" CartItemDTOReq
   ProductDTORes <--"*" CartItemDTORes
@@ -9,7 +9,7 @@ classDiagram
   RegionDTOReq <--"*" DistilleryDTOReq
   RegionDTORes <--"*" DistilleryDTORes
   CreditCardDTO <--"*" OrderDTO
-  UserDTOReq <--"*" OrderDTO
+  UserDTORes <--"*" OrderDTO
   DistilleryDTOReq <--"*" ProductDTOReq
   DistilleryDTORes <--"*" ProductDTORes
   CartDTO: +put(/customer/cart)
@@ -22,6 +22,7 @@ classDiagram
   DistilleryDTORes: +post(/distillerydto)
   OrderDTO: +post(/customer/cart/pay)
   ProductDTOReq: +post(/products/productdto)
+  ProductDTORes: +post(/products/productdto)
   RegionDTOReq: +post(/regiondto)
   RegionDTORes: +post(/regiondto)
   UserDTOReq: +post(/register)

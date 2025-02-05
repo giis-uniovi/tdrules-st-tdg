@@ -403,7 +403,10 @@
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
+         "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/ProductDTORes" }
+          },
           "201": { "description": "Created" },
           "401": { "description": "Unauthorized" },
           "403": { "description": "Forbidden" },
@@ -531,7 +534,7 @@
       "properties": {
         "_links": { "$ref": "#/definitions/Links" },
         "cartItems": {
-          "type": { "$ref": "#/definitions/CartItemDTOReq" }
+          "type": { "$ref": "#/definitions/CartItemDTORes" }
         },
         "deliveryCost": {
           "type": "integer",
@@ -553,7 +556,7 @@
         },
         "user": {
           "x-pk": "true",
-          "x-fk": "UserDTOReq.email",
+          "x-fk": "UserDTORes.email",
           "type": "string"
         }
       },
@@ -762,7 +765,7 @@
           "format": "double"
         },
         "userAccount": { 
-          "x-fk": "UserDTOReq.email",
+          "x-fk": "UserDTORes.email",
           "type": "string" 
         }
       },

@@ -1,6 +1,6 @@
 <schema dbms="openapi">
 <table name="CartDTO" type="table">
-<column name="user" type="string" key="true" notnull="true" fk="UserDTOReq.email" fkname="fk_CartDTO_user" />
+<column name="user" type="string" key="true" notnull="true" fk="UserDTORes.email" fkname="fk_CartDTO_user" />
 <column name="deliveryCost" type="int32" notnull="true" />
 <column name="deliveryIncluded" type="boolean" notnull="true" />
 <column name="empty" type="boolean" notnull="true" />
@@ -54,7 +54,7 @@
 <table name="OrderDTO" type="table">
 <column name="id" type="int64" key="true" notnull="true" />
 <column name="ccNumber" type="string" notnull="true" fk="CreditCardDTO.ccNumber" fkname="fk_OrderDTO_ccNumber" />
-<column name="userAccount" type="string" notnull="true" fk="UserDTOReq.email" fkname="fk_OrderDTO_userAccount" />
+<column name="userAccount" type="string" notnull="true" fk="UserDTORes.email" fkname="fk_OrderDTO_userAccount" />
 <column name="billNumber" type="int32" notnull="true" />
 <column name="dateCreated" type="date-time" notnull="true" />
 <column name="deliveryCost" type="int32" notnull="true" />
@@ -93,6 +93,7 @@
 <check column="age">age&lt;=2E+3</check>
 <check column="alcohol">alcohol&gt;=1</check>
 <check column="alcohol">alcohol&lt;=96</check>
+<ddl command="post">/products/productdto</ddl>
 </table>
 <table name="RegionDTOReq" type="table">
 <column name="id" type="int64" key="true" notnull="true" />
