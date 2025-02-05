@@ -8,7 +8,7 @@
       "datatype" : "string",
       "uid" : "true",
       "notnull" : "true",
-      "rid" : "UserDTOReq.email",
+      "rid" : "UserDTORes.email",
       "ridname" : "fk_CartDTO_user"
     }, {
       "name" : "deliveryCost",
@@ -222,7 +222,7 @@
       "name" : "userAccount",
       "datatype" : "string",
       "notnull" : "true",
-      "rid" : "UserDTOReq.email",
+      "rid" : "UserDTORes.email",
       "ridname" : "fk_OrderDTO_userAccount"
     }, {
       "name" : "billNumber",
@@ -376,6 +376,10 @@
       "attribute" : "alcohol",
       "name" : "chkmax_ProductDTORes_alcohol",
       "constraint" : "alcohol<=96"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/products/productdto"
     } ]
   }, {
     "name" : "RegionDTOReq",

@@ -91,7 +91,7 @@ public class BaseMarket extends BaseAll {
 		// * Use a dictionary
 		TdSchema model = getSchema();
 		OaBasicAuthStore authenticator = new OaBasicAuthStore()
-				.setProvider("UserDTOReq", "email", "password")
+				.setProvider("UserDTORes", "email", "password")
 				.addConsumer(new String[] { "CartItemDTORes", "CartItemDTOReq", 
 						                    "ContactsDTORes", "ContactsDTOReq" }, "user")
 				.addConsumer(new String[] { "OrderDTO"} , "userAccount");
@@ -165,22 +165,14 @@ public class BaseMarket extends BaseAll {
 	public class CustomPathResolver extends OaPathResolver {
 		@Override
 		public String getEndpointPath(String tableName) {
-			//Removing Req or Res from the endpoints
-			String table = tableName.split("Re(s|q)")[0];
-			if ("CartDTO".equals(table))
+			if ("CartDTO".equals(tableName))
 				return null;
-			else if ("CreditCardDTO".equals(table))
+			else if ("CreditCardDTO".equals(tableName))
 				return null;
-			else if ("ProductDTO".equals(table))
-				return super.getEndpointPath("products/" + table);
-			else if ("UserDTO".equals(table))
-				return super.getEndpointPath("register");
-			else if ("CartItemDTO".equals(table))
+			else if ("CartItemDTORes".equals(tableName))
 				return super.getEndpointPath("customer/cart");
-			else if ("OrderDTO".equals(table))
-				return super.getEndpointPath("customer/cart/pay");
 			else
-				return super.getEndpointPath(table);
+				return super.getEndpointPath(tableName);
 		}
 		
 		// Endpoint using PUT instead of POST for entity CartItemDTO
