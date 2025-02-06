@@ -810,7 +810,7 @@
         },
         "user": {
           "x-pk": "true",
-          "x-fk": "UserDTOReq.email",
+          "x-fk": "UserDTORes.email",
           "type": "string"
         }
       },
@@ -1074,7 +1074,7 @@
           "format": "double"
         },
         "userAccount": { 
-          "x-fk": "UserDTOReq.email",
+          "x-fk": "UserDTORes.email",
           "type": "string" 
         }
       },
