@@ -75,25 +75,30 @@ and the mutation report in `target/pit-reports`
 - Swagger Petstore (src/test/resources/petstore/schema-petstore.md)
 
 ```mermaid
+---
+  config:
+    class:
+      hideEmptyMembersBox: true
+---
 classDiagram
   Pet <--"*" Order
   Customer <--"*" Order
   Customer *--"*" Customer_address_xa
   Category <--"*" Pet_category_xt
+  Pet *--"1" Pet_category_xt
   Pet *--"*" Pet_photoUrls_xa
   Pet *--"*" Pet_tags_xa
-  Pet *--"1" Pet_category_xt
   Pet0 <--"*" Order0
   Customer0 <--"*" Order0
   Pet0 *--"1" Pet0_category_xt
   Category <--"*" Pet1_category_xt
   Pet1 *--"1" Pet1_category_xt
+  Pet <--"*" ApiResponse
   Customer_address_xa ..|> Address
   Pet_category_xt ..|> Category
   Pet_tags_xa ..|> Tag
   Pet1_category_xt ..|> Category
   class User
-  class ApiResponse
   Order: +post(/store/order)
   Customer: +post(/store/customer)
   Category: +post(/category)
@@ -114,8 +119,45 @@ classDiagram
 - Market (/src/test/resources/market/schema-marketWithoutArrays.md)
 
 ```mermaid
+---
+  config:
+    class:
+      hideEmptyMembersBox: true
+---
 classDiagram
-  UserDTOReq <--"*" CartDTO
+  namespace post__customer_cart_pay {
+    class CreditCardDTO
+    class OrderDTO
+  }
+  namespace post__distillerydto {
+    class DistilleryDTOReq
+    class DistilleryDTORes
+  }
+  namespace post__products_productdto {
+    class ProductDTOReq
+    class ProductDTORes
+  }
+  namespace post__regiondto {
+    class RegionDTOReq
+    class RegionDTORes
+  }
+  namespace post__register {
+    class UserDTOReq
+    class UserDTORes
+  }
+  namespace put__customer_cart {
+    class CartDTO
+    class CartItemDTOReq
+  }
+  namespace put__customer_cart_delivery {
+    class CartDTO_r1
+  }
+  style CartDTO_r1 fill:#fff,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
+  namespace put__customer_contacts {
+    class ContactsDTOReq
+    class ContactsDTORes
+  }
+  UserDTORes <--"*" CartDTO
   CartDTO <--"*" CartItemDTOReq
   ProductDTOReq <--"*" CartItemDTOReq
   ProductDTORes <--"*" CartItemDTORes
@@ -125,7 +167,7 @@ classDiagram
   RegionDTOReq <--"*" DistilleryDTOReq
   RegionDTORes <--"*" DistilleryDTORes
   CreditCardDTO <--"*" OrderDTO
-  UserDTOReq <--"*" OrderDTO
+  UserDTORes <--"*" OrderDTO
   DistilleryDTOReq <--"*" ProductDTOReq
   DistilleryDTORes <--"*" ProductDTORes
   CartDTO: +put(/customer/cart)
@@ -138,6 +180,7 @@ classDiagram
   DistilleryDTORes: +post(/distillerydto)
   OrderDTO: +post(/customer/cart/pay)
   ProductDTOReq: +post(/products/productdto)
+  ProductDTORes: +post(/products/productdto)
   RegionDTOReq: +post(/regiondto)
   RegionDTORes: +post(/regiondto)
   UserDTOReq: +post(/register)
@@ -147,21 +190,26 @@ classDiagram
 - Gestao Hospital (src/test/resources/gestaoHospital/schema-hospital.md)
 
 ```mermaid
+---
+  config:
+    class:
+      hideEmptyMembersBox: true
+---
 classDiagram
-  GeoJsonPoint *--"*" GeoJsonPoint_coordinates_xa
-  Location_location_xt *--"*" Location_location_xt_coordinates_xa
   GeoJsonPoint <--"*" Location_location_xt
-  Location_position_xt *--"*" Location_position_xt_coordinates_xa
+  Location_location_xt *--"*" Location_location_xt_coordinates_xa
   GeoJsonPoint <--"*" Location_position_xt
-  Patient_location_xt_location_xt *--"*" Patient_location_xt_location_xt_coordinates_xa
+  Location_position_xt *--"*" Location_position_xt_coordinates_xa
   GeoJsonPoint <--"*" Patient_location_xt_location_xt
-  Patient_location_xt_position_xt *--"*" Patient_location_xt_position_xt_coordinates_xa
+  Patient_location_xt_location_xt *--"*" Patient_location_xt_location_xt_coordinates_xa
   GeoJsonPoint <--"*" Patient_location_xt_position_xt
+  Patient_location_xt_position_xt *--"*" Patient_location_xt_position_xt_coordinates_xa
   Location <--"*" Patient_location_xt
   Patient_location_xt *--"1" Patient_location_xt_location_xt
   Patient_location_xt *--"1" Patient_location_xt_position_xt
   HospitalDTO <--"*" Patient
   Patient *--"1" Patient_location_xt
+  GeoJsonPoint *--"*" GeoJsonPoint_coordinates_xa
   HospitalDTO <--"*" ProductDTO
   Location *--"1" Location_location_xt
   Location *--"1" Location_position_xt

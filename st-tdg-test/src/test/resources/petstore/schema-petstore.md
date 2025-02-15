@@ -1,22 +1,27 @@
+---
+  config:
+    class:
+      hideEmptyMembersBox: true
+---
 classDiagram
   Pet <--"*" Order
   Customer <--"*" Order
   Customer *--"*" Customer_address_xa
   Category <--"*" Pet_category_xt
+  Pet *--"1" Pet_category_xt
   Pet *--"*" Pet_photoUrls_xa
   Pet *--"*" Pet_tags_xa
-  Pet *--"1" Pet_category_xt
   Pet0 <--"*" Order0
   Customer0 <--"*" Order0
   Pet0 *--"1" Pet0_category_xt
   Category <--"*" Pet1_category_xt
   Pet1 *--"1" Pet1_category_xt
+  Pet <--"*" ApiResponse
   Customer_address_xa ..|> Address
   Pet_category_xt ..|> Category
   Pet_tags_xa ..|> Tag
   Pet1_category_xt ..|> Category
   class User
-  class ApiResponse
   Order: +post(/store/order)
   Customer: +post(/store/customer)
   Category: +post(/category)

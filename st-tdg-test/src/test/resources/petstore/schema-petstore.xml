@@ -116,6 +116,7 @@
 <ddl command="post">/pet1</ddl>
 </table>
 <table name="ApiResponse" type="table">
+<column name="petId" type="int64" notnull="true" fk="Pet.id" fkname="fk_ApiResponse_petId" />
 <column name="code" type="int32" notnull="true" />
 <column name="type" type="string" notnull="true" />
 <column name="message" type="string" notnull="true" />

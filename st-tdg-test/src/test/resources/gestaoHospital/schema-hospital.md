@@ -1,18 +1,23 @@
+---
+  config:
+    class:
+      hideEmptyMembersBox: true
+---
 classDiagram
-  GeoJsonPoint *--"*" GeoJsonPoint_coordinates_xa
-  Location_location_xt *--"*" Location_location_xt_coordinates_xa
   GeoJsonPoint <--"*" Location_location_xt
-  Location_position_xt *--"*" Location_position_xt_coordinates_xa
+  Location_location_xt *--"*" Location_location_xt_coordinates_xa
   GeoJsonPoint <--"*" Location_position_xt
-  Patient_location_xt_location_xt *--"*" Patient_location_xt_location_xt_coordinates_xa
+  Location_position_xt *--"*" Location_position_xt_coordinates_xa
   GeoJsonPoint <--"*" Patient_location_xt_location_xt
-  Patient_location_xt_position_xt *--"*" Patient_location_xt_position_xt_coordinates_xa
+  Patient_location_xt_location_xt *--"*" Patient_location_xt_location_xt_coordinates_xa
   GeoJsonPoint <--"*" Patient_location_xt_position_xt
+  Patient_location_xt_position_xt *--"*" Patient_location_xt_position_xt_coordinates_xa
   Location <--"*" Patient_location_xt
   Patient_location_xt *--"1" Patient_location_xt_location_xt
   Patient_location_xt *--"1" Patient_location_xt_position_xt
   HospitalDTO <--"*" Patient
   Patient *--"1" Patient_location_xt
+  GeoJsonPoint *--"*" GeoJsonPoint_coordinates_xa
   HospitalDTO <--"*" ProductDTO
   Location *--"1" Location_location_xt
   Location *--"1" Location_position_xt

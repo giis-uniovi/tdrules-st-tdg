@@ -29,7 +29,7 @@ public class TestMarketSchemaLocal extends BaseMarket {
 	@Test
 	public void testSchemaLocalMermaid () {
 		TdSchema schema = getSchema();
-		String mermaid = new MermaidWriter(schema).getMermaid();
+		String mermaid = new MermaidWriter(schema).setGroupEntitiesInPath().getMermaid();
 		assertModel("schema-marketWithoutArrays.md", mermaid);
 	}
 }
