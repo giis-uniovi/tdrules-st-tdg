@@ -16,6 +16,12 @@
 		<url>http://giis.uniovi.es/</url>
 	</organization>
 	
+	<properties>
+		<!-- java 11 required by pitest -->
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>io.github.giis-uniovi</groupId>
@@ -112,6 +118,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+				<!-- java 11 required by pitest -->
+					<release>11</release>
 					<excludes>
 						<exclude>**/io/swagger/petstore/controller/**</exclude>
 						<exclude>**/io/swagger/petstore/exception/**</exclude>
