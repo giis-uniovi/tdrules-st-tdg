@@ -781,11 +781,6 @@
         "_links": {
           "$ref": "#/definitions/Links"
         },
-        "cartItems": {
-          "type": {
-            "$ref": "#/definitions/CartItemDTORes"
-          }
-        },
         "deliveryCost": {
           "type": "integer",
           "format": "int32"
@@ -1056,11 +1051,6 @@
         "id": {
           "type": "integer",
           "format": "int64"
-        },
-        "orderedProducts": {
-          "type": {
-            "$ref": "#/definitions/OrderedProductDTO"
-          }
         },
         "payed": {
           "type": "boolean"
