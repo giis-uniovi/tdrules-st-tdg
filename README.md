@@ -116,7 +116,7 @@ classDiagram
   ApiResponse: +post(/pet/{petId}/uploadImage)
 ```
 
-- Market (/src/test/resources/market/schema-marketWithOrderedProducts.md)
+- Market (/src/test/resources/market/schema-testMarket.md)
 
 ```mermaid
 ---
