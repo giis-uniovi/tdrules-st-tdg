@@ -2,8 +2,11 @@ package market.dto;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class OrderDTO extends RepresentationModel<OrderDTO> {
 
@@ -17,6 +20,17 @@ public class OrderDTO extends RepresentationModel<OrderDTO> {
 	private double totalCost;
 	private boolean payed;
 	private boolean executed;
+	
+	// Tests: include orderedProducts, getter and setter
+	private Set<OrderedProductDTO> orderedProducts = Collections.emptySet();
+
+	public Set<OrderedProductDTO> getOrderedProducts() {
+		return orderedProducts;
+	}
+
+	public void setOrderedProducts(Set<OrderedProductDTO> orderedProducts) {
+		this.orderedProducts = orderedProducts;
+	}
 
 	public String getUserAccount() {
 		return userAccount;

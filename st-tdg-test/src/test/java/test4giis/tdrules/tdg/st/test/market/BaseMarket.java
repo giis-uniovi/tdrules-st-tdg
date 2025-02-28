@@ -23,7 +23,7 @@ import test4giis.tdrules.tdg.st.test.BaseAll;
  * Common configuration and customization for all Market tests that use entities in its OpenApi model.
  */
 public class BaseMarket extends BaseAll {
-	protected static final String MARKET_SCHEMA_LOCAL = "../sut-market/src/main/resources/marketWithoutArrays.json";
+	protected static final String MARKET_SCHEMA_LOCAL = "../sut-market/src/main/resources/testMarket.json";
 	private static final String MARKET_URL_LIVE = "http://localhost:8083";
 
 	// attributes that can be filtered during comparisons of assertions 
@@ -74,6 +74,7 @@ public class BaseMarket extends BaseAll {
 				.setIdResolver(new OaSchemaIdResolver().setIdName("id")
 							.excludeEntity("CartItemDTOReq")
 							.excludeEntity("CartItemDTORes")
+							.excludeEntity("OrderedProductDTO")
 							.excludeEntity("ProductDTORes")
 							.excludeEntity("ProductDTOReq"))
 				;

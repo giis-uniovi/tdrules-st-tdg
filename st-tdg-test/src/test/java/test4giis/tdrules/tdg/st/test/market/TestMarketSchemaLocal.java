@@ -17,19 +17,19 @@ public class TestMarketSchemaLocal extends BaseMarket {
 	@Test
 	public void testSchemaLocalJson() throws JsonProcessingException {
 		TdSchema schema = getSchema();
-		assertModel("schema-marketWithoutArrays.json", serialize(schema));
+		assertModel("schema-testMarket.json", serialize(schema));
 	}
 	
 	@Test
 	public void testSchemaLocalXml () {
 		TdSchema schema = getSchema();
-		assertModel("schema-marketWithoutArrays.xml", new TdSchemaXmlSerializer().serialize(schema));
+		assertModel("schema-testMarket.xml", new TdSchemaXmlSerializer().serialize(schema));
 	}
 	
 	@Test
 	public void testSchemaLocalMermaid () {
 		TdSchema schema = getSchema();
 		String mermaid = new MermaidWriter(schema).setGroupEntitiesInPath().getMermaid();
-		assertModel("schema-marketWithoutArrays.md", mermaid);
+		assertModel("schema-testMarket.md", mermaid);
 	}
 }
