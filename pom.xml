@@ -22,7 +22,7 @@
 		
 		<tdrules.version>4.5.0</tdrules.version>
 		
-		<qagrow.version>1.4.283</qagrow.version>
+		<qagrow.version>1.4.285</qagrow.version>
 	</properties>
 
 	<modules>
