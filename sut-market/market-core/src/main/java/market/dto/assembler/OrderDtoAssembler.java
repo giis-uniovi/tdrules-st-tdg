@@ -2,11 +2,15 @@ package market.dto.assembler;
 
 import market.domain.Order;
 import market.dto.OrderDTO;
+import market.domain.OrderedProduct;
+import market.dto.OrderedProductDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class OrderDtoAssembler implements RepresentationModelAssembler<Order, OrderDTO> {
 
@@ -23,6 +27,21 @@ public class OrderDtoAssembler implements RepresentationModelAssembler<Order, Or
 		dto.setDeliveryIncluded(order.isDeliveryIncluded());
 		dto.setPayed(order.getBill().isPayed());
 		dto.setExecuted(order.isExecuted());
+		
+		// Tests: include to obtain orderedProductDtos from order
+		Set<OrderedProductDTO> orderedProductDto = order.getOrderedProducts().stream()
+			.map(this::toOrderedProductDto)
+			.collect(Collectors.toSet());
+		dto.setOrderedProducts(orderedProductDto);
+		return dto;
+	}
+
+	// Tests: include to obtain orderedProductDtos from each orderedProduct in the order
+	private OrderedProductDTO toOrderedProductDto(OrderedProduct orderedProduct) {
+		OrderedProductDTO dto = new OrderedProductDTO();
+		dto.setOrderId(orderedProduct.getOrder().getId());
+		dto.setProductId(orderedProduct.getProduct().getId());
+		dto.setQuantity(orderedProduct.getQuantity());
 		return dto;
 	}
 
