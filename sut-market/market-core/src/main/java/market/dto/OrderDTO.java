@@ -4,7 +4,6 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -112,6 +111,7 @@ public class OrderDTO extends RepresentationModel<OrderDTO> {
 		this.payed = payed;
 	}
 
+	// Tests: include orderedProducts in the comparison
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -126,12 +126,14 @@ public class OrderDTO extends RepresentationModel<OrderDTO> {
 			payed == orderDTO.payed &&
 			executed == orderDTO.executed &&
 			Objects.equals(userAccount, orderDTO.userAccount) &&
-			Objects.equals(dateCreated, orderDTO.dateCreated);
+			Objects.equals(dateCreated, orderDTO.dateCreated) &&
+			Objects.equals(orderedProducts, orderDTO.orderedProducts);
 	}
 
+	// Tests: include orderedProducts
 	@Override
 	public int hashCode() {
-		return Objects.hash(userAccount, id, billNumber, dateCreated, productsCost, deliveryCost, deliveryIncluded, totalCost, payed, executed);
+		return Objects.hash(userAccount, id, billNumber, dateCreated, productsCost, deliveryCost, deliveryIncluded, totalCost, payed, executed, orderedProducts);
 	}
 
 	@Override
