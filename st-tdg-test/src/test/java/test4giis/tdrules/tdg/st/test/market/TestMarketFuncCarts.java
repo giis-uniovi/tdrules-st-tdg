@@ -44,17 +44,19 @@ public class TestMarketFuncCarts extends BaseMarket {
 		generateAndLoad(dg, query, dict);
 		assertData("func-CartsByUserProductQuantity.txt", dg);
 	}
-	
+
 	@Test
-	public void testOrderDTOByUser() {
-		// order (cart must not be empty)
-		// query 1 generates a non-empty cart, 
-		// query 2 generates the order
-		String query1= queryCartByUserProductQuantity;
-		String query2 = queryOrderByUser;
+	public void testDictCartDTOByUserChangeProductQuantity() {
+		String query = queryCartByUserProductQuantity;
+		// Cambio en la cardinalidad del producto 1
+		String query2 = "tds CartDTO,CartItemDTORes,ProductDTORes where CartDTO.user='pepe@email.com' and CartItemDTORes.productId=1 and CartItemDTORes.quantity=3 and ProductDTORes.available=1";
+		
+		
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
-		generateAndLoad(dg, new String[] {query1, query2}, dict);
-		assertData("func-OrderByUser.txt", dg);
+		//generateAndLoad(dg, query, dict);
+		//generateAndLoad(dg, query2, dict);
+		generateAndLoad(dg, new String[] {query, query2}, dict);
+		assertData("func-CartsByUserProductQuantity.txt", dg);
 	}
 }
