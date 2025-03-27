@@ -33,6 +33,6 @@ public class DistilleryRestController {
 		Distillery dis = distilleryDtoAssembler.toDomain(distillery);
 		
 		distilleryService.create(dis, distillery.getRegion());
-		return distilleryDtoAssembler.toModel(distilleryService.findByTitle(dis.getTitle()));
+		return distilleryDtoAssembler.toModel(distilleryService.findById(dis.getId()));
 	}
 }
