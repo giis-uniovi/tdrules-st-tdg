@@ -19,8 +19,9 @@ public class TestMarketFuncCarts extends BaseMarket {
 	}
 	
 	@Test
-	public void testDictUserDTOResByName() {
-		String query = queryUserByName;
+	public void testUsersByName() {
+		// users by name
+		String query = "tds UserDTOReq where name='Pepe'";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		generateAndLoad(dg, query, dict);
@@ -28,35 +29,42 @@ public class TestMarketFuncCarts extends BaseMarket {
 	}
 
 	@Test
-	public void testDictCartDTOByUser() {
-		String query = queryCartByUser;
+	public void testUsersByEmail() {
+		// user by email
+		String query = "tds UserDTOReq where email ='pepe@email.com'";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		generateAndLoad(dg, query, dict);
-		assertData("func-CartsByUser.txt", dg);
+		assertData("func-UsersByEmail.txt", dg);
+	}
+				
+	@Test
+	public void testEmptyCartsByUser() {
+		// empty cart of an user
+		String query = "tds CartDTO where user='lucia@email.com'";
+		IAttrGen dict=getDictionaryAttrGen();
+		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
+		generateAndLoad(dg, query, dict);
+		assertData("func-EmptyCartsByUser.txt", dg);
 	}
 	
 	@Test
-	public void testDictCartDTOByUserProductQuantity() {
-		String query = queryCartByUserProductQuantity;
+	public void testCartsProductAvailable() {
+		// carts with items (products added) of an user, products must be available
+		String query = "tds CartDTO,CartItemDTORes,ProductDTORes where ProductDTORes.available=1";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		generateAndLoad(dg, query, dict);
-		assertData("func-CartsByUserProductQuantity.txt", dg);
+		assertData("func-CartsProductAvailable.txt", dg);
 	}
-
+	
 	@Test
-	public void testDictCartDTOByUserChangeProductQuantity() {
-		String query = queryCartByUserProductQuantity;
-		// Cambio en la cardinalidad del producto 1
-		String query2 = "tds CartDTO,CartItemDTORes,ProductDTORes where CartDTO.user='pepe@email.com' and CartItemDTORes.productId=1 and CartItemDTORes.quantity=3 and ProductDTORes.available=1";
-		
-		
+	public void testCartsByUserProductQuantityAvailable() {
+		// carts with items (products added) of an user, products must be available, quantity 5
+		String query = "tds CartDTO,CartItemDTORes,ProductDTORes where CartDTO.user='pepe@email.com' and CartItemDTORes.quantity=5 and ProductDTORes.available=1";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
-		//generateAndLoad(dg, query, dict);
-		//generateAndLoad(dg, query2, dict);
-		generateAndLoad(dg, new String[] {query, query2}, dict);
-		assertData("func-CartsByUserProductQuantity.txt", dg);
+		generateAndLoad(dg, query, dict);
+		assertData("func-CartsByUserProductQuantityAvailable.txt", dg);
 	}
 }

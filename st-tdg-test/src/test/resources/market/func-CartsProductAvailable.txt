@@ -1,0 +1,11 @@
+"cart":{"id":1,"userAccount":{"id":1,"email":"us01@email.com","name":"Lucia","active":true,"roles":[]},"cartItems":[{"product":{"id":2,"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"505","description":"503","color":"502"},"description":"603"},"name":"807","price":80.8,"description":"806","volume":809,"alcohol":80.4,"age":803,"available":true},"quantity":1103}],"deliveryIncluded":true,"itemsCost":89122.4,"itemsCount":1,"empty":false}
+"cart":{"id":2,"userAccount":{"id":2,"email":"us101@email.com","name":"Sofia","active":true,"roles":[]},"cartItems":[],"deliveryIncluded":true,"itemsCost":0.0,"itemsCount":0,"empty":true}
+"contacts":{"id":1,"userAccount":{"id":1,"email":"us01@email.com","name":"Lucia","active":true,"roles":[]},"phone":"+12123456789","address":"102","cityAndRegion":null}
+"contacts":{"id":2,"userAccount":{"id":2,"email":"us101@email.com","name":"Sofia","active":true,"roles":[]},"phone":"+12112345678","address":"202","cityAndRegion":null}
+"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"505","description":"503","color":"502"},"description":"603"}
+"product":{"id":1,"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"505","description":"503","color":"502"},"description":"603"},"name":"707","price":70.8,"description":"706","volume":709,"alcohol":70.4,"age":703,"available":false}
+"product":{"id":2,"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"505","description":"503","color":"502"},"description":"603"},"name":"807","price":80.8,"description":"806","volume":809,"alcohol":80.4,"age":803,"available":true}
+"product":{"id":3,"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"505","description":"503","color":"502"},"description":"603"},"name":"907","price":90.8,"description":"906","volume":909,"alcohol":90.4,"age":903,"available":true}
+"region":{"id":1,"name":"Campbeltown","subtitle":"505","description":"503","color":"502"}
+"userAccount":{"id":1,"email":"us01@email.com","name":"Lucia","active":true,"roles":[]}
+"userAccount":{"id":2,"email":"us101@email.com","name":"Sofia","active":true,"roles":[]}
