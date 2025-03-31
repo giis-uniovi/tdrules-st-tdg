@@ -18,6 +18,46 @@ public class TestMarketFuncProducts extends BaseMarket {
 	}
 	
 	@Test
+	public void testProductsNotAvailable() {
+		// not available products 
+		String query =  "tds ProductDTOReq where available=0";
+		IAttrGen dict=getDictionaryAttrGen();
+		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
+		generateAndLoad(dg, query, dict);
+		assertData("func-ProductsNotAvailable.txt", dg);
+	}
+	
+	@Test
+	public void testProductsAvailable() {
+		// available products 
+		String query =  "tds ProductDTOReq where available=1";
+		IAttrGen dict=getDictionaryAttrGen();
+		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
+		generateAndLoad(dg, query, dict);
+		assertData("func-ProductsAvailable.txt", dg);
+	}
+	
+	@Test
+	public void testProductsByPrice() {
+		// products of a range of price
+		String query =  "tds ProductDTOReq where price<=120";
+		IAttrGen dict=getDictionaryAttrGen();
+		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
+		generateAndLoad(dg, query, dict);
+		assertData("func-ProductsByPrice.txt", dg);
+	}
+	
+	@Test
+	public void testProductsByAge() {
+		// products of a range of age
+		String query =  "tds ProductDTOReq where age>2 and age<=12";
+		IAttrGen dict=getDictionaryAttrGen();
+		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
+		generateAndLoad(dg, query, dict);
+		assertData("func-ProductsByAge.txt", dg);
+	}
+	
+	@Test
 	public void testProductsByDistillery() {
 		// products of a distillery
 		String query =  "tds ProductDTOReq where distillery ='Ardbeg'";
@@ -25,6 +65,26 @@ public class TestMarketFuncProducts extends BaseMarket {
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		generateAndLoad(dg, query, dict);
 		assertData("func-ProductsByDistillery.txt", dg);
+	}
+	
+	@Test
+	public void testProductsByRegion() {
+		// products of a region
+		String query =  "tds ProductDTOReq,DistilleryDTOReq where DistilleryDTOReq.region ='Islay'";
+		IAttrGen dict=getDictionaryAttrGen();
+		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
+		generateAndLoad(dg, query, dict);
+		assertData("func-ProductsByRegion.txt", dg);
+	}
+	
+	@Test
+	public void testProductsByDistilleryRegion() {
+		// products of a distillery and a region
+		String query =  "tds ProductDTOReq,DistilleryDTOReq,regionDTOReq where DistilleryDTOReq.title='Ardbeg' and RegionDTOReq.name ='Islay'";
+		IAttrGen dict=getDictionaryAttrGen();
+		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
+		generateAndLoad(dg, query, dict);
+		assertData("func-ProductsByDistilleryRegion.txt", dg);
 	}
 
 	@Test
@@ -66,7 +126,17 @@ public class TestMarketFuncProducts extends BaseMarket {
 		generateAndLoad(dg, query, dict);
 		assertData("func-ProductsByDistilleryPriceAge.txt", dg);
 	}
-		
+	
+	@Test
+	public void testDistilleryByTitleRegion() {
+		// distillery by title and region
+		String query =  "tds DistilleryDTOReq where title ='Ardbeg' and region ='Islay'";
+		IAttrGen dict=getDictionaryAttrGen();
+		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
+		generateAndLoad(dg, query, dict);
+		assertData("func-DistilleryByTitleRegion.txt", dg);
+	}
+	
 	@Test
 	public void testDistilleryByTitle() {
 		// distillery by title 
