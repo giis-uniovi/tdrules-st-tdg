@@ -66,7 +66,9 @@ public class BaseMarket extends BaseAll {
 		// Configure:
 		// - filter entities Link* and attributes _link*
 		// - the schema id resolver to use id attributes as uid 
-		//   except in entities CartItemDTO (pk are user + productId) and ProductDTO (pk is productId)	
+		//   except in entities CartItemDTO (pk are user + productId) and ProductDTO (pk is productId)
+		//   except in entities DistilleryDTO (pk can be id and title, but title is rid in ProductDTO) and 
+		//   RegionDTO (pk can be id and name, but name is rid in DistilleryDTO)   
 		OaSchemaApi api = new OaSchemaApi(MARKET_SCHEMA_LOCAL)
 				.setFilter(new OaSchemaFilter()
 						.add("*", "_link*")
@@ -74,9 +76,15 @@ public class BaseMarket extends BaseAll {
 				.setIdResolver(new OaSchemaIdResolver().setIdName("id")
 							.excludeEntity("CartItemDTOReq")
 							.excludeEntity("CartItemDTORes")
+							.excludeEntity("DistilleryDTOReq")
+							.excludeEntity("DistilleryDTORes")
 							.excludeEntity("OrderedProductDTO")
 							.excludeEntity("ProductDTORes")
-							.excludeEntity("ProductDTOReq"))
+							.excludeEntity("ProductDTOReq")
+							.excludeEntity("RegionDTOReq")
+							.excludeEntity("RegionDTORes")
+							)
+				
 				;
 		return api.getSchema();
 	}

@@ -1,5 +1,5 @@
-"RegionDTORes":{"id":1,"color":"2","description":"3","name":"0","subtitle":"5"}
-"DistilleryDTORes":{"id":1,"region":"0","description":"103","title":"0"}
+"RegionDTORes":{"name":"0","color":"2","description":"3","id":4,"subtitle":"5"}
+"DistilleryDTORes":{"title":"0","region":"0","description":"103","id":104}
 "ProductDTORes":{"productId":1,"distillery":"0","age":11,"alcohol":20.4,"available":true,"description":"206","name":"207","price":20.8,"volume":209}
 "ProductDTORes":{"productId":2,"distillery":"0","age":10,"alcohol":30.4,"available":false,"description":"306","name":"307","price":30.8,"volume":309}
 "ProductDTORes":{"productId":3,"distillery":"0","age":9,"alcohol":40.4,"available":true,"description":"406","name":"407","price":40.8,"volume":409}

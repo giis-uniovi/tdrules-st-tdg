@@ -946,6 +946,7 @@
           "type": "string"
         },
         "title": {
+          "x-pk": "true",
           "type": "string"
         }
       },
@@ -969,6 +970,7 @@
           "type": "string"
         },
         "title": {
+          "x-pk": "true",
           "type": "string"
         }
       },
@@ -1228,6 +1230,7 @@
           "format": "int64"
         },
         "name": {
+          "x-pk": "true",
           "type": "string"
         },
         "subtitle": {
@@ -1253,6 +1256,7 @@
           "format": "int64"
         },
         "name": {
+          "x-pk": "true",
           "type": "string"
         },
         "subtitle": {
