@@ -1,0 +1,4 @@
+"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"5","description":"3","color":"2"},"description":"103"}
+"product":{"id":1,"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"5","description":"3","color":"2"},"description":"103"},"name":"207","price":20.8,"description":"206","volume":209,"alcohol":20.4,"age":203,"available":false}
+"product":{"id":2,"distillery":{"id":1,"title":"Ardbeg","region":{"id":1,"name":"Campbeltown","subtitle":"5","description":"3","color":"2"},"description":"103"},"name":"307","price":30.8,"description":"306","volume":309,"alcohol":30.4,"age":303,"available":true}
+"region":{"id":1,"name":"Campbeltown","subtitle":"5","description":"3","color":"2"}
