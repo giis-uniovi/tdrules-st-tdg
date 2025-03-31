@@ -128,43 +128,43 @@ public class TestMarketFuncProducts extends BaseMarket {
 	}
 	
 	@Test
-	public void testDistilleryByTitleRegion() {
-		// distillery by title and region
+	public void testDistilleriesByTitleRegion() {
+		// distilleries by title and region
 		String query =  "tds DistilleryDTOReq where title ='Ardbeg' and region ='Islay'";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		generateAndLoad(dg, query, dict);
-		assertData("func-DistilleryByTitleRegion.txt", dg);
+		assertData("func-DistilleriesByTitleRegion.txt", dg);
 	}
 	
 	@Test
-	public void testDistilleryByTitle() {
-		// distillery by title 
+	public void testDistilleriesByTitle() {
+		// distilleries by title 
 		String query =  "tds DistilleryDTOReq where title ='Ardbeg'";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		generateAndLoad(dg, query, dict);
-		assertData("func-DistilleryByTitle.txt", dg);
+		assertData("func-DistilleriesByTitle.txt", dg);
 	}
 	
 	@Test
-	public void testDistilleryByRegion() {
-		// distillery of a region
+	public void testDistilleriesByRegion() {
+		// distilleries of a region
 		String query =  "tds DistilleryDTOReq where region ='Islay'";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		generateAndLoad(dg, query, dict);
-		assertData("func-DistilleryByRegion.txt", dg);
+		assertData("func-DistilleriesByRegion.txt", dg);
 	}
 	
 	@Test
-	public void testRegionByName() {
-		// region by name
+	public void testRegionsByName() {
+		// regions by name
 		String query =  "tds RegionDTOReq where name ='Campbeltown'";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		generateAndLoad(dg, query, dict);
-		assertData("func-RegionByName.txt", dg);
+		assertData("func-RegionsByName.txt", dg);
 	}
 
 }
