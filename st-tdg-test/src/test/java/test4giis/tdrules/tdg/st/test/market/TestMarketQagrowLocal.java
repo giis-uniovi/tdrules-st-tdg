@@ -15,22 +15,29 @@ public class TestMarketQagrowLocal extends BaseMarket {
 
 	@Test
 	public void testProduct() {
+		// products by age
+		String query = "tds ProductDTORes where age=10";
 		DataLoader dg = getDataLoader();
-		generateAndLoad(dg, queryProductByAge);
+		generateAndLoad(dg, query);
 		assertData("qagrow-local-product.txt", dg);
 	}
 	
+			
 	@Test
 	public void testUserByName() {
+		// user by name
+		String query = "tds UserDTORes where name ='Pepe'";
 		DataLoader dg = getDataLoader();
-		generateAndLoad(dg, queryUserByName);
+		generateAndLoad(dg, query);
 		assertData("qagrow-local-userbyname.txt", dg);
 	}
 	
 	@Test
 	public void testUserByEmail() {
+		// user by email
+		String query = "tds UserDTORes where email ='pepe@email.com'";
 		DataLoader dg = getDataLoader();
-		generateAndLoad(dg, queryUserByEmail);
+		generateAndLoad(dg, query);
 		assertData("qagrow-local-userbyemail.txt", dg);
 	}
 	
@@ -38,7 +45,6 @@ public class TestMarketQagrowLocal extends BaseMarket {
 	public void testRulesProductsByRegion() {
 		// The rules look for products that matches a region and another that doesn't
 		String query = "tds ProductDTOReq, DistilleryDTOReq where ProductDTOReq.distillery=DistilleryDTOReq.title and DistilleryDTOReq.region='Islay'";
-
 		TdRules rules=getRules(query);
 		assertModel("rules-ProductsByRegion.xml", new TdRulesXmlSerializer().serialize(rules));
 	}

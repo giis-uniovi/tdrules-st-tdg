@@ -154,8 +154,8 @@
     "name" : "DistilleryDTOReq",
     "entitytype" : "table",
     "attributes" : [ {
-      "name" : "id",
-      "datatype" : "int64",
+      "name" : "title",
+      "datatype" : "string",
       "uid" : "true",
       "notnull" : "true"
     }, {
@@ -169,8 +169,8 @@
       "datatype" : "string",
       "notnull" : "true"
     }, {
-      "name" : "title",
-      "datatype" : "string",
+      "name" : "id",
+      "datatype" : "int64",
       "notnull" : "true"
     } ],
     "ddls" : [ {
@@ -181,8 +181,8 @@
     "name" : "DistilleryDTORes",
     "entitytype" : "table",
     "attributes" : [ {
-      "name" : "id",
-      "datatype" : "int64",
+      "name" : "title",
+      "datatype" : "string",
       "uid" : "true",
       "notnull" : "true"
     }, {
@@ -196,8 +196,8 @@
       "datatype" : "string",
       "notnull" : "true"
     }, {
-      "name" : "title",
-      "datatype" : "string",
+      "name" : "id",
+      "datatype" : "int64",
       "notnull" : "true"
     } ],
     "ddls" : [ {
@@ -407,8 +407,8 @@
     "name" : "RegionDTOReq",
     "entitytype" : "table",
     "attributes" : [ {
-      "name" : "id",
-      "datatype" : "int64",
+      "name" : "name",
+      "datatype" : "string",
       "uid" : "true",
       "notnull" : "true"
     }, {
@@ -420,8 +420,8 @@
       "datatype" : "string",
       "notnull" : "true"
     }, {
-      "name" : "name",
-      "datatype" : "string",
+      "name" : "id",
+      "datatype" : "int64",
       "notnull" : "true"
     }, {
       "name" : "subtitle",
@@ -436,8 +436,8 @@
     "name" : "RegionDTORes",
     "entitytype" : "table",
     "attributes" : [ {
-      "name" : "id",
-      "datatype" : "int64",
+      "name" : "name",
+      "datatype" : "string",
       "uid" : "true",
       "notnull" : "true"
     }, {
@@ -449,8 +449,8 @@
       "datatype" : "string",
       "notnull" : "true"
     }, {
-      "name" : "name",
-      "datatype" : "string",
+      "name" : "id",
+      "datatype" : "int64",
       "notnull" : "true"
     }, {
       "name" : "subtitle",
