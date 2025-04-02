@@ -67,4 +67,24 @@ public class TestMarketFuncCarts extends BaseMarket {
 		generateAndLoad(dg, query, dict);
 		assertData("func-CartsByUserProductQuantityAvailable.txt", dg);
 	}
+	
+	@Test
+	public void testProductsInCartsGroupByDistillery() {
+		// carts with items grouped by distilleries
+		String query = "tds CartDTO,CartItemDTORes,ProductDTORes where ProductDTORes.available=1 group by ProductDTORes.distillery";
+		IAttrGen dict=getDictionaryAttrGen();
+		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
+		generateAndLoad(dg,query, dict);
+		assertData("func-ProductsInCartsGroupByDistillery.txt", dg);
+	}
+	
+	@Test
+	public void testProductsInCartsGroupByRegion() {
+		// carts with items grouped by distilleries
+		String query = "tds CartDTO,CartItemDTORes,ProductDTORes,DistilleryDTORes where ProductDTORes.available=1 group by DistilleryDTORes.region";
+		IAttrGen dict=getDictionaryAttrGen();
+		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
+		generateAndLoad(dg,query, dict);
+		assertData("func-ProductsInCartsGroupByRegion.txt", dg);
+	}
 }
