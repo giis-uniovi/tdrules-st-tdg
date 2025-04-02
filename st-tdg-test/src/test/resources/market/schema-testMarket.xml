@@ -38,17 +38,17 @@
 <ddl command="post">/customer/cart/pay</ddl>
 </table>
 <table name="DistilleryDTOReq" type="table">
-<column name="id" type="int64" key="true" notnull="true" />
+<column name="title" type="string" key="true" notnull="true" />
 <column name="region" type="string" notnull="true" fk="RegionDTOReq.name" fkname="fk_DistilleryDTOReq_region" />
 <column name="description" type="string" notnull="true" />
-<column name="title" type="string" notnull="true" />
+<column name="id" type="int64" notnull="true" />
 <ddl command="post">/distillerydto</ddl>
 </table>
 <table name="DistilleryDTORes" type="table">
-<column name="id" type="int64" key="true" notnull="true" />
+<column name="title" type="string" key="true" notnull="true" />
 <column name="region" type="string" notnull="true" fk="RegionDTORes.name" fkname="fk_DistilleryDTORes_region" />
 <column name="description" type="string" notnull="true" />
-<column name="title" type="string" notnull="true" />
+<column name="id" type="int64" notnull="true" />
 <ddl command="post">/distillerydto</ddl>
 </table>
 <table name="OrderDTO" type="table">
@@ -101,18 +101,18 @@
 <ddl command="post">/products/productdto</ddl>
 </table>
 <table name="RegionDTOReq" type="table">
-<column name="id" type="int64" key="true" notnull="true" />
+<column name="name" type="string" key="true" notnull="true" />
 <column name="color" type="string" notnull="true" />
 <column name="description" type="string" notnull="true" />
-<column name="name" type="string" notnull="true" />
+<column name="id" type="int64" notnull="true" />
 <column name="subtitle" type="string" notnull="true" />
 <ddl command="post">/regiondto</ddl>
 </table>
 <table name="RegionDTORes" type="table">
-<column name="id" type="int64" key="true" notnull="true" />
+<column name="name" type="string" key="true" notnull="true" />
 <column name="color" type="string" notnull="true" />
 <column name="description" type="string" notnull="true" />
-<column name="name" type="string" notnull="true" />
+<column name="id" type="int64" notnull="true" />
 <column name="subtitle" type="string" notnull="true" />
 <ddl command="post">/regiondto</ddl>
 </table>
