@@ -14,4 +14,12 @@ public class OrderedProductDtoAssembler implements RepresentationModelAssembler<
 		dto.setProductId(orderedProduct.getProduct().getId());
 		return dto;
 	}
+	
+	
+	// Add for tests
+	public OrderedProduct toDomain(OrderedProductDTO dto) {
+		return new OrderedProduct.Builder()
+				.setQuantity(dto.getQuantity())
+				.build();
+	}
 }
