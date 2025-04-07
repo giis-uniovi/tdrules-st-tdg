@@ -28,6 +28,9 @@ public class OrderDtoAssembler implements RepresentationModelAssembler<Order, Or
 		dto.setPayed(order.getBill().isPayed());
 		dto.setExecuted(order.isExecuted());
 		
+		// Tests: incluce ccNumber
+		dto.setCcNumber(order.getBill().getCcNumber());
+		
 		// Tests: include to obtain orderedProductDtos from order
 		Set<OrderedProductDTO> orderedProductDto = order.getOrderedProducts().stream()
 			.map(this::toOrderedProductDto)
@@ -52,5 +55,16 @@ public class OrderDtoAssembler implements RepresentationModelAssembler<Order, Or
 
 	public OrderDTO[] toDtoArray(List<Order> items) {
 		return toCollectionModel(items).getContent().toArray(new OrderDTO[items.size()]);
+	}
+	
+	// new method for tests
+	public Order toDomain(OrderDTO dto) {
+		return new Order.Builder()
+			.setDateCreated(dto.getDateCreated())
+			.setDeliveryCost(dto.getDeliveryCost())
+			.setDeliveryIncluded(dto.isDeliveryIncluded())
+			.setExecuted(dto.isExecuted())
+			.setProductsCost(dto.getProductsCost())
+			.build();
 	}
 }

@@ -23,11 +23,12 @@ public class TestMarketFuncOrders extends BaseMarket {
 		// order (cart must not be empty)
 		// query 1 generates a non-empty cart, 
 		// query 2 generates the order
-		String query1 = "tds CartDTO,CartItemDTORes,ProductDTORes where CartDTO.user='pepe@email.com' and CartItemDTORes.productId=1 and CartItemDTORes.quantity=5 and ProductDTORes.available=1";
-		String query2 = "tds OrderDTO where userAccount='pepe@email.com'";
+		//String query1 = "tds CartDTO,CartItemDTORes,ProductDTORes where CartDTO.user='pepe@email.com' and CartItemDTORes.productId=1 and CartItemDTORes.quantity=5 and ProductDTORes.available=1";
+		String query2 = "tds OrderDTORes where userAccount='pepe@email.com'";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
-		generateAndLoad(dg, new String[] {query1, query2}, dict);
+		//generateAndLoad(dg, new String[] {query1, query2}, dict);
+		generateAndLoad(dg, query2, dict);
 		assertData("func-OrdersByUser.txt", dg);
 	}
 }

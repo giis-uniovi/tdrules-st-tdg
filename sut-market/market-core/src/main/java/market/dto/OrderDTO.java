@@ -20,13 +20,25 @@ public class OrderDTO extends RepresentationModel<OrderDTO> {
 	private boolean payed;
 	private boolean executed;
 	
+	// Tests: include ccNumber, getter and setter
+	private String ccNumber;
+	
 	// Tests: include orderedProducts, getter and setter
 	private Set<OrderedProductDTO> orderedProducts = Collections.emptySet();
 
+	
 	public Set<OrderedProductDTO> getOrderedProducts() {
 		return orderedProducts;
 	}
 
+	public String getCcNumber() {
+		return ccNumber;
+	}
+
+	public void setCcNumber(String ccNumber) {
+		this.ccNumber = ccNumber;
+	}
+	
 	public void setOrderedProducts(Set<OrderedProductDTO> orderedProducts) {
 		this.orderedProducts = orderedProducts;
 	}
@@ -125,15 +137,16 @@ public class OrderDTO extends RepresentationModel<OrderDTO> {
 			Double.compare(orderDTO.totalCost, totalCost) == 0 &&
 			payed == orderDTO.payed &&
 			executed == orderDTO.executed &&
+			Objects.equals(ccNumber, orderDTO.ccNumber) &&
 			Objects.equals(userAccount, orderDTO.userAccount) &&
 			Objects.equals(dateCreated, orderDTO.dateCreated) &&
 			Objects.equals(orderedProducts, orderDTO.orderedProducts);
 	}
 
-	// Tests: include orderedProducts
+	// Tests: include ccNumber and orderedProducts
 	@Override
 	public int hashCode() {
-		return Objects.hash(userAccount, id, billNumber, dateCreated, productsCost, deliveryCost, deliveryIncluded, totalCost, payed, executed, orderedProducts);
+		return Objects.hash(userAccount, id, ccNumber,billNumber, dateCreated, productsCost, deliveryCost, deliveryIncluded, totalCost, payed, executed, orderedProducts);
 	}
 
 	@Override
