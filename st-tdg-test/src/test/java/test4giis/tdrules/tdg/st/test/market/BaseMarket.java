@@ -67,6 +67,8 @@ public class BaseMarket extends BaseAll {
 							.excludeEntity("DistilleryDTOReq")
 							.excludeEntity("DistilleryDTORes")
 							.excludeEntity("OrderedProductDTO")
+							.excludeEntity("OrderedProductDTORes")
+							.excludeEntity("OrderedProductDTOReq")
 							.excludeEntity("ProductDTORes")
 							.excludeEntity("ProductDTOReq")
 							.excludeEntity("RegionDTOReq")

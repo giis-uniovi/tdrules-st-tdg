@@ -1,31 +1,38 @@
 package market.rest;
 
+import java.security.Principal;
+
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import market.domain.Distillery;
-import market.domain.OrderedProduct;
-import market.dto.DistilleryDTO;
+import market.domain.Product;
+import market.domain.Order;
+import market.dto.OrderDTO;
 import market.dto.OrderedProductDTO;
-import market.dto.assembler.DistilleryDtoAssembler;
-import market.dto.assembler.OrderedProductDtoAssembler;
-import market.service.DistilleryService;
+import market.dto.assembler.OrderDtoAssembler;
+import market.exception.UnknownEntityException;
+import market.service.ProductService;
+import market.service.OrderService;
 import market.service.OrderedProductService;
 
 /*
- *  New class for test: endpoint (POST) to insert a distillery
+ *  New class for test: endpoint (POST) to insert a ordered product into a order
  */
 @RestController
-@ExposesResourceFor(DistilleryDTO.class)
+@ExposesResourceFor(OrderedProductDTO.class)
 
 public class OrderedProductRestController {
 
+	private final ProductService productService;
+	private final OrderService orderService;
 	private final OrderedProductService orderedProductService;
-	private final OrderedProductDtoAssembler orderedProductDtoAssembler = new OrderedProductDtoAssembler();
+	private final OrderDtoAssembler orderDtoAssembler = new OrderDtoAssembler();
 
-	public OrderedProductRestController(OrderedProductService orderedProductService) {
+	public OrderedProductRestController(ProductService productService, OrderService orderService, OrderedProductService orderedProductService) {
+		this.productService = productService;
+		this.orderService = orderService;
 		this.orderedProductService = orderedProductService;
 	}
 
@@ -33,10 +40,12 @@ public class OrderedProductRestController {
 	 * New endpoint for test: insert a new orderedProduct in a order
 	*/
 	@PostMapping (value = "orderedproductdto")
-	public OrderedProductDTO createOrderedProduct(@RequestBody OrderedProductDTO orderedProduct) {
-		OrderedProduct op = orderedProductDtoAssembler.toDomain(orderedProduct);
+	public OrderDTO createOrderedProduct(@RequestBody OrderedProductDTO orderedProduct) {
+		Order order = orderService.getOrder(orderedProduct.getOrderId());
+
+		Product product = productService.getProduct(orderedProduct.getProductId());
+		int quantity = orderedProduct.getQuantity();
 		
-		orderedProductService.create(op);
-		return orderedProductDtoAssembler.toModel(orderedProductService.fingById(op.getPk()));
+		return orderDtoAssembler.toModel(orderedProductService.addToOrder(order, product, quantity));
 	}
 }
