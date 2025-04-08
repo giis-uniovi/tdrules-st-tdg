@@ -114,7 +114,7 @@ public class OrderServiceImpl implements OrderService {
 			.setExecuted(false)
 			.build();
 	}
-
+	
 	private Bill createBill(Order order, String cardNumber) {
 		return new Bill.Builder()
 			.setOrder(order)
@@ -139,5 +139,32 @@ public class OrderServiceImpl implements OrderService {
 			.setOrder(order)
 			.setQuantity(item.getQuantity())
 			.build();
+	}
+
+	// Add for test
+	@Override
+	public Order createOrder(String userLogin, Order o,String ccNumber) {
+		Order order = new Order.Builder()
+				.setDeliveryIncluded(o.isDeliveryIncluded())
+				.setDeliveryCost(o.getDeliveryCost())
+				.setUserAccount(o.getUserAccount())
+				.setProductsCost(o.getProductsCost())
+				.setDateCreated(o.getDateCreated())
+				.setExecuted(o.isExecuted())
+				.setUserAccount(userAccountService.findByEmail(userLogin))
+				.build();
+		
+		Bill bill = createBill(order, ccNumber);
+		order.setBill(bill);
+		orderDAO.saveAndFlush(order);
+		
+		return order;
+	}
+	//add for test
+	@Transactional(readOnly = true)
+	@Override
+	public Order getOrder(long orderId) {
+		// todo: add user check
+		return orderDAO.findById(orderId).orElse(null);
 	}
 }

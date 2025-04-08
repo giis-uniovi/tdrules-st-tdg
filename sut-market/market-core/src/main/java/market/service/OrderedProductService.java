@@ -5,6 +5,7 @@ import java.util.List;
 import market.domain.Order;
 import market.domain.OrderedProduct;
 import market.domain.OrderedProductId;
+import market.domain.Product;
 
 // For test: new interface for ordered products
 
@@ -24,4 +25,7 @@ public interface OrderedProductService {
 	 * @return the ordered product identified by its PK
 	 */
 	OrderedProduct fingById(OrderedProductId id);
+
+	// test
+	Order addToOrder(Order order, Product product, int quantity);
 }

@@ -39,4 +39,16 @@ public interface OrderService {
 	 * Updates a state of the order with the specified id
 	 */
 	void updateStatus(long orderId, boolean executed);
+	
+	/**
+	 * New method for test
+	 * Creates new order
+	 */
+	Order createOrder(String userLogin, Order order, String ccNumber);
+	
+	/**
+	 * for tests
+	 */
+	Order getOrder(long orderId);
+
 }

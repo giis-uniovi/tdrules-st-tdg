@@ -24,7 +24,7 @@ public class TestMarketFuncOrders extends BaseMarket {
 		// query 1 generates a non-empty cart, 
 		// query 2 generates the order
 		//String query1 = "tds CartDTO,CartItemDTORes,ProductDTORes where CartDTO.user='pepe@email.com' and CartItemDTORes.productId=1 and CartItemDTORes.quantity=5 and ProductDTORes.available=1";
-		String query2 = "tds OrderDTORes where userAccount='pepe@email.com'";
+		String query2 = "tds OrderDTORes,OrderedProductDTORes,ProductDTORes where userAccount='pepe@email.com' and OrderedProductDTORes.productId=1 and ProductDTORes.available=1";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		//generateAndLoad(dg, new String[] {query1, query2}, dict);

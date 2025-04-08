@@ -73,7 +73,7 @@ public class OrdersRestController {
 	@PostMapping(value = "orderdto")
 	public OrderDTO createOrder(Principal principal, @RequestBody @Valid OrderDTO orderdto) {
 		Order order = orderDtoAssembler.toDomain(orderdto);
-		orderService.createUserOrder(principal.getName(), orderdto.getDeliveryCost(),orderdto.getCcNumber());
+		order = orderService.createOrder(principal.getName(), order, orderdto.getCcNumber());
 		
 		return orderDtoAssembler.toModel(order);
 	}
