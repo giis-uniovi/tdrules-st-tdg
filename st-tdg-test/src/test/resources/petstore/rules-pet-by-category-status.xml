@@ -4,17 +4,21 @@
 <sql>tds Pet where Pet.category::name='Dogs' and Pet.status='available'</sql>
 <parsedsql>SELECT *
    FROM Pet
-     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      LEFT JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
-   WHERE Pet.category::name = 'Dogs' AND Pet.status = 'available'</parsedsql>
+     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
+   WHERE Pet.category::name = 'Dogs' AND Pet.status = 'available'
+--COMMENT: Transform OA composite with RID for entity Pet: add join to Category ON Pet.category::id=Pet_category_xref.id
+--COMMENT: Transform Array for entity Pet: add join to Pet_photoUrls_xa ON Pet.id=Pet_photoUrls_xa.fk_xa
+--COMMENT: Transform Array for entity Pet: add join to Pet_tags_xa ON Pet.id=Pet_tags_xa.fk_xa
+</parsedsql>
 <fpcrules>
   <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[Pet.category::name = 'Dogs']</location>
     <sql>SELECT *
    FROM Pet
-     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
    WHERE (Pet.category::name = 'Dogs') AND (Pet.status = 'available')</sql>
     <description>--A set of joined tables such that:
 --The WHERE condition fulfills:
@@ -24,9 +28,9 @@
   <fpcrule><id>2</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.1.[Pet.category::name = 'Dogs']</location>
     <sql>SELECT *
    FROM Pet
-     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
    WHERE NOT(Pet.category::name = 'Dogs') AND (Pet.status = 'available')</sql>
     <description>--A set of joined tables such that:
 --The WHERE condition fulfills:
@@ -36,51 +40,21 @@
   <fpcrule><id>3</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.2.[Pet.status = 'available']</location>
     <sql>SELECT *
    FROM Pet
-     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
    WHERE NOT(Pet.status = 'available') AND (Pet.category::name = 'Dogs')</sql>
     <description>--A set of joined tables such that:
 --The WHERE condition fulfills:
   --(F) Pet.status = 'available' is FALSE
   --(T) Pet.category::name = 'Dogs' is TRUE</description>
   </fpcrule>
-  <fpcrule><id>4</id><category>J</category><type>L</type><subtype>O</subtype><location>1.j.1.[LEFT JOIN]</location>
+  <fpcrule><id>4</id><category>J</category><type>R</type><subtype>O</subtype><location>1.j.1.[LEFT JOIN]</location>
     <sql>SELECT *
    FROM Pet
-     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
-     INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
-   WHERE ((Pet_tags_xa.fk_xa IS NULL) AND (Pet.id IS NOT NULL))
-     AND (Pet.category::name = 'Dogs' AND Pet.status = 'available')</sql>
-    <description>
---The JOIN tables fulfill:
-  --summary: [Pet] left [Pet_tags_xa] ON Pet.id = Pet_tags_xa.fk_xa
-  --There exist a set of rows joined from tables Pet, Pet_photoUrls_xa, Category Pet_category_xref
-  --which does not join to any table in Pet_tags_xa
---The WHERE condition is TRUE.</description>
-  </fpcrule>
-  <fpcrule><id>5</id><category>J</category><type>L</type><subtype>O</subtype><location>1.j.2.[LEFT JOIN]</location>
-    <sql>SELECT *
-   FROM Pet
-     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
-     INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
-   WHERE ((Pet_photoUrls_xa.fk_xa IS NULL) AND (Pet.id IS NOT NULL))
-     AND (Pet.category::name = 'Dogs' AND Pet.status = 'available')</sql>
-    <description>
---The JOIN tables fulfill:
-  --summary: [Pet] left [Pet_photoUrls_xa] ON Pet.id = Pet_photoUrls_xa.fk_xa
-  --There exist a set of rows joined from tables Pet, Pet_tags_xa, Category Pet_category_xref
-  --which does not join to any table in Pet_photoUrls_xa
---The WHERE condition is TRUE.</description>
-  </fpcrule>
-  <fpcrule><id>6</id><category>J</category><type>R</type><subtype>O</subtype><location>1.j.3.[LEFT JOIN]</location>
-    <sql>SELECT *
-   FROM Pet
-     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      RIGHT JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
    WHERE (Pet.category::id IS NULL) AND (Pet_category_xref.id IS NOT NULL)</sql>
     <description>
 --The JOIN tables fulfill:
@@ -88,6 +62,36 @@
   --summary: [Pet] right [Category Pet_category_xref] ON Pet.category::id = Pet_category_xref.id
   --There exist some row in table Category Pet_category_xref
   --which does not join to any table in Pet</description>
+  </fpcrule>
+  <fpcrule><id>5</id><category>J</category><type>L</type><subtype>O</subtype><location>1.j.2.[LEFT JOIN]</location>
+    <sql>SELECT *
+   FROM Pet
+     INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
+   WHERE ((Pet_photoUrls_xa.fk_xa IS NULL) AND (Pet.id IS NOT NULL))
+     AND (Pet.category::name = 'Dogs' AND Pet.status = 'available')</sql>
+    <description>
+--The JOIN tables fulfill:
+  --summary: [Pet] left [Pet_photoUrls_xa] ON Pet.id = Pet_photoUrls_xa.fk_xa
+  --There exist a set of rows joined from tables Pet, Category Pet_category_xref, Pet_tags_xa
+  --which does not join to any table in Pet_photoUrls_xa
+--The WHERE condition is TRUE.</description>
+  </fpcrule>
+  <fpcrule><id>6</id><category>J</category><type>L</type><subtype>O</subtype><location>1.j.3.[LEFT JOIN]</location>
+    <sql>SELECT *
+   FROM Pet
+     INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
+   WHERE ((Pet_tags_xa.fk_xa IS NULL) AND (Pet.id IS NOT NULL))
+     AND (Pet.category::name = 'Dogs' AND Pet.status = 'available')</sql>
+    <description>
+--The JOIN tables fulfill:
+  --summary: [Pet] left [Pet_tags_xa] ON Pet.id = Pet_tags_xa.fk_xa
+  --There exist a set of rows joined from tables Pet, Category Pet_category_xref, Pet_photoUrls_xa
+  --which does not join to any table in Pet_tags_xa
+--The WHERE condition is TRUE.</description>
   </fpcrule>
 </fpcrules>
 </sqlfpc>

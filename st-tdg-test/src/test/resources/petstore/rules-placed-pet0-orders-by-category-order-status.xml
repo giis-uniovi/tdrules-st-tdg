@@ -6,7 +6,10 @@
    FROM Customer0
      INNER JOIN "Order0" ON Customer0.id = "Order0".customerId
      INNER JOIN Pet0 ON "Order0".petId = Pet0.id
-   WHERE Pet0.category::name = 'Dogs' AND "Order0".status = 'placed'</parsedsql>
+   WHERE Pet0.category::name = 'Dogs' AND "Order0".status = 'placed'
+--COMMENT: Transform XJOIN for entity: Pet0 ON "Order0".petId=Pet0.id
+--COMMENT: Transform XJOIN for entity: "Order0" ON Customer0.id="Order0".customerId
+</parsedsql>
 <fpcrules>
   <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[Pet0.category::name = 'Dogs']</location>
     <sql>SELECT *

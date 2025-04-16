@@ -5,7 +5,9 @@
 <parsedsql>SELECT *
    FROM Pet1
      LEFT JOIN Category Pet1_category_xref ON Pet1.category::id = Pet1_category_xref.id
-   WHERE Pet1.category::name = 'Dogs' AND Pet1.status = 'available'</parsedsql>
+   WHERE Pet1.category::name = 'Dogs' AND Pet1.status = 'available'
+--COMMENT: Transform OA composite with RID for entity Pet1: add join to Category ON Pet1.category::id=Pet1_category_xref.id
+</parsedsql>
 <fpcrules>
   <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[Pet1.category::name = 'Dogs']</location>
     <sql>SELECT *

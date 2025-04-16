@@ -7,10 +7,18 @@
      LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
      INNER JOIN "Order" ON Customer.id = "Order".customerId
      INNER JOIN Pet ON "Order".petId = Pet.id
-     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      LEFT JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
-   WHERE Customer_address_xa.zip = '99999' AND "Order".status = 'placed'</parsedsql>
+     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
+   WHERE Customer_address_xa.zip = '99999' AND "Order".status = 'placed'
+--COMMENT: Transform OA composite with RID for entity Pet: add join to Category ON Pet.category::id=Pet_category_xref.id
+--COMMENT: Transform Array for entity Pet: add join to Pet_photoUrls_xa ON Pet.id=Pet_photoUrls_xa.fk_xa
+--COMMENT: Transform Array for entity Pet: add join to Pet_tags_xa ON Pet.id=Pet_tags_xa.fk_xa
+--COMMENT: Transform Array for entity Customer: add join to Customer_address_xa ON Customer.id=Customer_address_xa.fk_xa
+--COMMENT: Transform Array reference: Customer.address[]::zip to Customer_address_xa.zip
+--COMMENT: Transform XJOIN for entity: Pet ON "Order".petId=Pet.id
+--COMMENT: Transform XJOIN for entity: "Order" ON Customer.id="Order".customerId
+</parsedsql>
 <fpcrules>
   <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[Customer_address_xa.zip = '99999']</location>
     <sql>SELECT *
@@ -18,9 +26,9 @@
      INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
      INNER JOIN "Order" ON Customer.id = "Order".customerId
      INNER JOIN Pet ON "Order".petId = Pet.id
-     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
    WHERE (Customer_address_xa.zip = '99999') AND ("Order".status = 'placed')</sql>
     <description>--A set of joined tables such that:
 --The WHERE condition fulfills:
@@ -33,9 +41,9 @@
      INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
      INNER JOIN "Order" ON Customer.id = "Order".customerId
      INNER JOIN Pet ON "Order".petId = Pet.id
-     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
    WHERE NOT(Customer_address_xa.zip = '99999') AND ("Order".status = 'placed')</sql>
     <description>--A set of joined tables such that:
 --The WHERE condition fulfills:
@@ -48,9 +56,9 @@
      INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
      INNER JOIN "Order" ON Customer.id = "Order".customerId
      INNER JOIN Pet ON "Order".petId = Pet.id
-     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
    WHERE NOT("Order".status = 'placed') AND (Customer_address_xa.zip = '99999')</sql>
     <description>--A set of joined tables such that:
 --The WHERE condition fulfills:
@@ -63,16 +71,16 @@
      LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
      INNER JOIN "Order" ON Customer.id = "Order".customerId
      INNER JOIN Pet ON "Order".petId = Pet.id
-     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
    WHERE ((Customer_address_xa.fk_xa IS NULL) AND (Customer.id IS NOT NULL))
      AND ("Order".status = 'placed')</sql>
     <description>
 --The JOIN tables fulfill:
 --COMMENT: Reduced conditions: [Customer_address_xa.zip = '99999'] ; 
   --summary: [Customer] left [Customer_address_xa] ON Customer.id = Customer_address_xa.fk_xa
-  --There exist a set of rows joined from tables Customer, Order, Pet, Pet_tags_xa, Pet_photoUrls_xa, Category Pet_category_xref
+  --There exist a set of rows joined from tables Customer, Order, Pet, Category Pet_category_xref, Pet_photoUrls_xa, Pet_tags_xa
   --which does not join to any table in Customer_address_xa
 --The following condition in the WHERE holds:
   --WHERE "Order".status = 'placed'</description>
@@ -83,9 +91,9 @@
      INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
      LEFT JOIN "Order" ON Customer.id = "Order".customerId
      LEFT JOIN Pet ON "Order".petId = Pet.id
-     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      LEFT JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
    WHERE (("Order".customerId IS NULL) AND (Customer.id IS NOT NULL))
      AND (Customer_address_xa.zip = '99999')</sql>
     <description>
@@ -103,62 +111,26 @@
      LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
      RIGHT JOIN "Order" ON Customer.id = "Order".customerId
      RIGHT JOIN Pet ON "Order".petId = Pet.id
-     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
    WHERE ("Order".petId IS NULL) AND (Pet.id IS NOT NULL)</sql>
     <description>
 --The JOIN tables fulfill:
 --COMMENT: Reduced conditions: [Customer_address_xa.zip = '99999'] ; ["Order".status = 'placed'] ; 
   --summary: [Order] right [Pet] ON "Order".petId = Pet.id
-  --There exist a set of rows joined from tables Pet, Pet_tags_xa, Pet_photoUrls_xa, Category Pet_category_xref
+  --There exist a set of rows joined from tables Pet, Category Pet_category_xref, Pet_photoUrls_xa, Pet_tags_xa
   --which does not join to any table in Order</description>
   </fpcrule>
-  <fpcrule><id>7</id><category>J</category><type>L</type><subtype>O</subtype><location>1.j.4.[LEFT JOIN]</location>
-    <sql>SELECT *
-   FROM Customer
-     INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     INNER JOIN "Order" ON Customer.id = "Order".customerId
-     INNER JOIN Pet ON "Order".petId = Pet.id
-     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
-     INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
-   WHERE ((Pet_tags_xa.fk_xa IS NULL) AND (Pet.id IS NOT NULL))
-     AND (Customer_address_xa.zip = '99999' AND "Order".status = 'placed')</sql>
-    <description>
---The JOIN tables fulfill:
-  --summary: [Pet] left [Pet_tags_xa] ON Pet.id = Pet_tags_xa.fk_xa
-  --There exist a set of rows joined from tables Customer, Customer_address_xa, Order, Pet, Pet_photoUrls_xa, Category Pet_category_xref
-  --which does not join to any table in Pet_tags_xa
---The WHERE condition is TRUE.</description>
-  </fpcrule>
-  <fpcrule><id>8</id><category>J</category><type>L</type><subtype>O</subtype><location>1.j.5.[LEFT JOIN]</location>
-    <sql>SELECT *
-   FROM Customer
-     INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
-     INNER JOIN "Order" ON Customer.id = "Order".customerId
-     INNER JOIN Pet ON "Order".petId = Pet.id
-     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
-     INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
-   WHERE ((Pet_photoUrls_xa.fk_xa IS NULL) AND (Pet.id IS NOT NULL))
-     AND (Customer_address_xa.zip = '99999' AND "Order".status = 'placed')</sql>
-    <description>
---The JOIN tables fulfill:
-  --summary: [Pet] left [Pet_photoUrls_xa] ON Pet.id = Pet_photoUrls_xa.fk_xa
-  --There exist a set of rows joined from tables Customer, Customer_address_xa, Order, Pet, Pet_tags_xa, Category Pet_category_xref
-  --which does not join to any table in Pet_photoUrls_xa
---The WHERE condition is TRUE.</description>
-  </fpcrule>
-  <fpcrule><id>9</id><category>J</category><type>R</type><subtype>O</subtype><location>1.j.6.[LEFT JOIN]</location>
+  <fpcrule><id>7</id><category>J</category><type>R</type><subtype>O</subtype><location>1.j.4.[LEFT JOIN]</location>
     <sql>SELECT *
    FROM Customer
      LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
      RIGHT JOIN "Order" ON Customer.id = "Order".customerId
      RIGHT JOIN Pet ON "Order".petId = Pet.id
-     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
-     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
      RIGHT JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
    WHERE (Pet.category::id IS NULL) AND (Pet_category_xref.id IS NOT NULL)</sql>
     <description>
 --The JOIN tables fulfill:
@@ -166,6 +138,42 @@
   --summary: [Pet] right [Category Pet_category_xref] ON Pet.category::id = Pet_category_xref.id
   --There exist some row in table Category Pet_category_xref
   --which does not join to any table in Pet</description>
+  </fpcrule>
+  <fpcrule><id>8</id><category>J</category><type>L</type><subtype>O</subtype><location>1.j.5.[LEFT JOIN]</location>
+    <sql>SELECT *
+   FROM Customer
+     INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
+     INNER JOIN "Order" ON Customer.id = "Order".customerId
+     INNER JOIN Pet ON "Order".petId = Pet.id
+     INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     LEFT JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     INNER JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
+   WHERE ((Pet_photoUrls_xa.fk_xa IS NULL) AND (Pet.id IS NOT NULL))
+     AND (Customer_address_xa.zip = '99999' AND "Order".status = 'placed')</sql>
+    <description>
+--The JOIN tables fulfill:
+  --summary: [Pet] left [Pet_photoUrls_xa] ON Pet.id = Pet_photoUrls_xa.fk_xa
+  --There exist a set of rows joined from tables Customer, Customer_address_xa, Order, Pet, Category Pet_category_xref, Pet_tags_xa
+  --which does not join to any table in Pet_photoUrls_xa
+--The WHERE condition is TRUE.</description>
+  </fpcrule>
+  <fpcrule><id>9</id><category>J</category><type>L</type><subtype>O</subtype><location>1.j.6.[LEFT JOIN]</location>
+    <sql>SELECT *
+   FROM Customer
+     INNER JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
+     INNER JOIN "Order" ON Customer.id = "Order".customerId
+     INNER JOIN Pet ON "Order".petId = Pet.id
+     INNER JOIN Category Pet_category_xref ON Pet.category::id = Pet_category_xref.id
+     INNER JOIN Pet_photoUrls_xa ON Pet.id = Pet_photoUrls_xa.fk_xa
+     LEFT JOIN Pet_tags_xa ON Pet.id = Pet_tags_xa.fk_xa
+   WHERE ((Pet_tags_xa.fk_xa IS NULL) AND (Pet.id IS NOT NULL))
+     AND (Customer_address_xa.zip = '99999' AND "Order".status = 'placed')</sql>
+    <description>
+--The JOIN tables fulfill:
+  --summary: [Pet] left [Pet_tags_xa] ON Pet.id = Pet_tags_xa.fk_xa
+  --There exist a set of rows joined from tables Customer, Customer_address_xa, Order, Pet, Category Pet_category_xref, Pet_photoUrls_xa
+  --which does not join to any table in Pet_tags_xa
+--The WHERE condition is TRUE.</description>
   </fpcrule>
 </fpcrules>
 </sqlfpc>

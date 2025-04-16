@@ -5,7 +5,9 @@
 <parsedsql>SELECT *
    FROM ProductDTO
      INNER JOIN HospitalDTO ON ProductDTO.hospitalDTOId = HospitalDTO.id
-   WHERE ProductDTO.productType = 'COMMON' AND ProductDTO.quantity &gt; 0</parsedsql>
+   WHERE ProductDTO.productType = 'COMMON' AND ProductDTO.quantity &gt; 0
+--COMMENT: Transform XJOIN for entity: HospitalDTO ON ProductDTO.hospitalDTOId=HospitalDTO.id
+</parsedsql>
 <fpcrules>
   <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[ProductDTO.productType = 'COMMON']</location>
     <sql>SELECT *

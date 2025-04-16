@@ -4,5 +4,5 @@
 "Pet":{"id":1,"name":"1102","category":{"id":1,"name":"Dogs"},"photoUrls":["303"],"tags":[{"id":703,"name":"704"}],"status":"available"}
 "Pet":{"id":2,"name":"1202","category":{"id":2,"name":"1"},"photoUrls":["403"],"tags":[{"id":803,"name":"804"}],"status":"available"}
 "Pet":{"id":3,"name":"1302","category":{"id":1,"name":"Dogs"},"photoUrls":["503"],"tags":[{"id":903,"name":"904"}],"status":"pending"}
-"Pet":{"id":4,"name":"1402","category":{"id":1,"name":"Dogs"},"photoUrls":["603"],"tags":[],"status":"available"}
-"Pet":{"id":5,"name":"1502","category":{"id":1,"name":"Dogs"},"photoUrls":[],"tags":[{"id":1003,"name":"1004"}],"status":"available"}
+"Pet":{"id":4,"name":"1402","category":{"id":1,"name":"Dogs"},"photoUrls":[],"tags":[{"id":1003,"name":"1004"}],"status":"available"}
+"Pet":{"id":5,"name":"1502","category":{"id":1,"name":"Dogs"},"photoUrls":["603"],"tags":[],"status":"available"}

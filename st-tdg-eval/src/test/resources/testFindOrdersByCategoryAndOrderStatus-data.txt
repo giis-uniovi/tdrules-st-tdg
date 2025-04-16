@@ -4,8 +4,8 @@
 "pet":{"id":1,"category":{"id":1,"name":"Dogs"},"name":"Max","photoUrls":["http://localhost/photos/000303.jpg"],"tags":[{"id":703,"name":"Puppy"}],"status":"available"}
 "pet":{"id":2,"category":{"id":2,"name":"Tiger"},"name":"Luna","photoUrls":["http://localhost/photos/000403.jpg"],"tags":[{"id":803,"name":"Young"}],"status":"pending"}
 "pet":{"id":3,"category":{"id":1,"name":"Dogs"},"name":"Charlie","photoUrls":["http://localhost/photos/000503.jpg"],"tags":[{"id":903,"name":"Old"}],"status":"sold"}
-"pet":{"id":4,"category":{"id":1,"name":"Dogs"},"name":"Bella","photoUrls":["http://localhost/photos/000603.jpg"],"status":"available"}
-"pet":{"id":5,"category":{"id":1,"name":"Dogs"},"name":"Cooper","tags":[{"id":1003,"name":"Puppy-1"}],"status":"pending"}
+"pet":{"id":4,"category":{"id":1,"name":"Dogs"},"name":"Bella","tags":[{"id":1003,"name":"Puppy-1"}],"status":"available"}
+"pet":{"id":5,"category":{"id":1,"name":"Dogs"},"name":"Cooper","photoUrls":["http://localhost/photos/000603.jpg"],"status":"pending"}
 "order":{"id":1,"petId":1,"customerId":1,"quantity":11,"shipDate":"2024-01-26","status":"placed","complete":false}
 "order":{"id":2,"petId":2,"customerId":1,"quantity":7,"shipDate":"2024-01-27","status":"placed","complete":true}
 "order":{"id":3,"petId":1,"customerId":1,"quantity":3,"shipDate":"2024-01-28","status":"approved","complete":false}
