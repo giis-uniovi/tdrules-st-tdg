@@ -5,11 +5,11 @@ import org.junit.Test;
 import giis.tdrules.store.loader.DataLoader;
 
 /**
- * Generación de datos para gestaoHospital utilizando QAGrow
- * Mismos test que TestGestaoHospitalDatagenLocal, 
- * generando los datos de prueba en un archivo utilizando QAGrow.
- * Utiliza un un esquema y un DataAdapter local, que no requiere una conexion activa a un servidor.
- *  
+ * Test data generation for GestaoHospital:
+ * using a local Data Loader (which does not require an active connection to the server), 
+ * with the test data generated with QAGrow.
+ * 
+ * Same tests as those included in TestGestaoHospitalDatagenLocal 
  */
 public class TestGestaoHospitalQagrowLocal extends BaseGestaoHospital {
 

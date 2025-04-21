@@ -7,6 +7,11 @@ import giis.tdrules.store.loader.gen.DictionaryAttrGen;
 import giis.tdrules.store.loader.gen.IAttrGen;
 import test4giis.tdrules.tdg.st.test.BaseAll;
 
+/**
+ * Common configuration and customization for the all GestaoHospital tests that
+ * use entities in the OpenAPI model.
+ */
+
 public class BaseGestaoHospital extends BaseAll{
 
 	protected static final String GESTAOHOSPITAL_SCHEMA_LOCAL = "../sut-gestaoHospital/src/main/resources/gestaohospital-rest.json";
@@ -35,14 +40,14 @@ public class BaseGestaoHospital extends BaseAll{
 
 	@Override
 	protected TdSchema getSchema() {
+		//Configure the schema id resolver to use id attributes as uid.
 		OaSchemaApi api = new OaSchemaApi(GESTAOHOSPITAL_SCHEMA_LOCAL)
 				.setIdResolver(new OaSchemaIdResolver().setIdName("id"));
 		return api.getSchema();
 	}
 
 	/**
-	 * Instancia un generador de datos configurado con un diccionario para que los datos
-	 * generados no sean solo numeros, sino valores procedentes de un diccionario o mascaras
+	 * Instantiate a data generator with realistic values from a dictionary
 	 */
 	protected IAttrGen getDictionaryAttrGen() {
 		return new DictionaryAttrGen()
@@ -60,4 +65,3 @@ public class BaseGestaoHospital extends BaseAll{
 	}
 	
 }
-

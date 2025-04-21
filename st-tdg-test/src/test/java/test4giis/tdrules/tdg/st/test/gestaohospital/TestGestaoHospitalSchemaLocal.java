@@ -9,7 +9,8 @@ import giis.tdrules.model.io.TdSchemaXmlSerializer;
 import giis.tdrules.openapi.model.TdSchema;
 
 /**
- * Genera el esquema a partir de la especificacion (leida de archivo) y lo comprueba en formato json y xml
+ * Checks the transformation of the OpenApi specification into the TdSchema model
+ * (json, xml and Mermaid graph)
  */
 public class TestGestaoHospitalSchemaLocal extends BaseGestaoHospital {
 
