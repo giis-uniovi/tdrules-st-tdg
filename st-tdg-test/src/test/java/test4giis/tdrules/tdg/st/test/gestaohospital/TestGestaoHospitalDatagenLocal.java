@@ -7,14 +7,13 @@ import giis.tdrules.openapi.model.TdRules;
 import giis.tdrules.store.loader.DataLoader;
 
 /**
- * Generación de datos para gestaoHospital utilizando Datagen
- * Utiliza un un esquema y un DataAdapter local, que no requiere una conexion activa a un servidor.
- * 
+ * Test data generation for GestaoHospital:
+ * using a local Data Loader (which does not require an active connection to the server) 
  */
-public class TestGestaoHospitalDatagenLocal extends BaseGestaoHospital {
+ public class TestGestaoHospitalDatagenLocal extends BaseGestaoHospital {
 
 	/**
-	 * Una query simple con una unica tabla para la prueba inicial que comprueba que se genera correctamente
+	 *A simple query with a single table for the initial test that checks that it is generated correctly.
 	 */
 	public static String querySmoke = "select * from HospitalDTO where availableBeds=10";
 	@Test
@@ -30,7 +29,7 @@ public class TestGestaoHospitalDatagenLocal extends BaseGestaoHospital {
 	}
 
 	/**
-	 * Una query que busca Productos de tipo "COMMON" que tenga disponibilidad :
+	 * A query that searches for Products of type “COMMON” that have availability:
 	 *    TDS ProductDTO where ProductDTO.productType='COMMON' and ProductDTO.quantity>0   
 	 */
 	public static String queryProductByProductTypeAndQuantity = 
@@ -41,9 +40,9 @@ public class TestGestaoHospitalDatagenLocal extends BaseGestaoHospital {
 		assertModel("rules-product-by-producttype-and-quantity.xml", new TdRulesXmlSerializer().serialize(rules));
 		
 		DataLoader dg = getDataLoader();
-		//Una fila ProductType=COMMON y quantity >0
+		//One row ProductType=COMMON and quantity >0
 		dg.load("ProductDTO","productType=COMMON, quantity=1");
-		//dos filas en las que falla la igualdad en cada una de estas propiedades
+		//two rows in which equality fails in each of these properties
 		dg.load("ProductDTO","productType=BLOOD, quantity=1"); 
 		dg.load("ProductDTO","productType=COMMON, quantity=0");
 		
@@ -51,8 +50,8 @@ public class TestGestaoHospitalDatagenLocal extends BaseGestaoHospital {
 	}
 	
 	/**
-	 * Una query similar a la anterior buscando Productos de tipo "COMMON" que tenga disponibilidad 
-	 * pero que estén en algún Hospital (join relacional de dos tablas)
+	 * A similar query to the previous one searching for Products of type “COMMON” that have availability 
+	 * but that are in some Hospital (relational join of two tables).
 	 *    TDS ProductDTO, HospitalDTO where ProductDTO.productType='COMMON' and ProductDTO.quantity>0   
 	 */
 	public static String queryHospitalProductByProductTypeAndQuantity = 
@@ -63,14 +62,14 @@ public class TestGestaoHospitalDatagenLocal extends BaseGestaoHospital {
 		assertModel("rules-hospital-product-by-producttype-and-quantity.xml", new TdRulesXmlSerializer().serialize(rules));
 		
 		DataLoader dg = getDataLoader();
-		//La primera regla debe generar un maestro HospitalDTO con Productos
-		//que cumplan la decisión del where
+		//The first rule must generate a HospitalDTO with Products 
+		//that meet the decision of where
 		dg.load("HospitalDTO","id=@hid1");
 		dg.load("ProductDTO","id=@pid1,hospitalDTOId=@hid1 ,productType=COMMON, quantity=1");
-		//Reutiliza el mismo hospital pero con productos que no cumplen las condiciones
+		//Reuses the same hospital but with non-conforming products
 		dg.load("ProductDTO","id=@pid2,hospitalDTOId=@hid1,productType=BLOOD,quantity=1");
 		dg.load("ProductDTO","id=@pid3,hospitalDTOId=@hid1,productType=COMMON,quantity=0");
-		//Un hospital sin productos
+		//A hospital without products
 		dg.load("HospitalDTO","id=@hid2");
 				
 		assertData("datagen-local-hospital-product-by-productype-quantity.txt", dg);
