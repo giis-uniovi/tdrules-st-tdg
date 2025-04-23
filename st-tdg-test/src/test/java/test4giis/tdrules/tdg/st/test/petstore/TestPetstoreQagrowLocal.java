@@ -7,7 +7,7 @@ import giis.tdrules.store.loader.gen.IAttrGen;
 
 /** 
  * Test Data generation for APIs (TDG) for the Swagger Petstore as SUT:
- * Data generation and loading in local.
+ * Data generation with QAGrow and loading in local.
  */
 public class TestPetstoreQagrowLocal extends BasePetstore {
 
