@@ -13,12 +13,12 @@ import giis.tdrules.store.loader.DataLoader;
 public class TestPetstoreDatagenLocal extends BasePetstore {
 
 	/**	
-	 * Specifies pets with a given category that are available to be sold:
+	 * Specifies pets with category 'Dogs' that are available to be sold:
 	 * 
 	 * 	 tds Pet where Pet.category::name='Dogs' and Pet.status='available'
 	 * 
 	 * The difference with the equivalent testPet1ByCategoryAndStatus in Petstore0 
-	 * test is that entities have arrays. 
+	 * tests is that entities have arrays. 
 	 * The model transformation extracts arrays to another entity.
 	 * Internally, the transformed query to generate the rules is:
 	 * 
@@ -74,7 +74,7 @@ public class TestPetstoreDatagenLocal extends BasePetstore {
 	}
 
 	/**
-	 * Specifies pets with a given url and tag
+	 * Specifies pets with a given photUrl and a tag name
 	 * 
 	 * 	 tds Pet where Pet.photoUrls[]='URL' and Pet.tags[]::name='kitty'"
 	 * 
@@ -98,14 +98,14 @@ public class TestPetstoreDatagenLocal extends BasePetstore {
 	}
 	
 	/**
-	 * Relational join, 3 entities:
-	 * Specifies a Client with a given name such that his Order reference a Pet with category Dogs and status placed
+	 * Relational join of 3 entities:
+	 * Specifies a customer with a given name such that his order reference a pet with category 'Dogs' and status 'placed'
 	 * 
 	 *   tds Customer, Order, Pet where Pet.category::name='Dogs' and Order.status='placed'
 	 * 
 	 * The difference with the equivalent testPlacedPet0OrdersByCategoryAndOrderStatus in Petstore0 
-	 * is that here the arrays.
-	 * Internally they must be included and joined to generate the rules:
+	 * is that here the tds contains arrays.
+	 * Internally, the transformed query to generate the rules must join with the arrays:
 	 * 
 	 * SELECT * FROM Customer
      *   LEFT JOIN Customer_address_xa ON Customer.id = Customer_address_xa.fk_xa
@@ -126,10 +126,12 @@ public class TestPetstoreDatagenLocal extends BasePetstore {
 	}
 
 	/**
-	 * Specifies a the orders that must be sent to an address area (given by the zip).
+	 * Specifies the orders that must be sent to customers in an address area (given by the zip).
+	 *   tds Customer, Order, Pet where Customer.address[]::zip='99999' and \"Order\".status='placed'
+	 * 
 	 * Includes two versions: without and with dictionary.
 	 * 
-	 * From now, we does not comment on the internal detals of queries needed to generate the rules
+	 * From this point on, we does not comment on the internal details of queries needed to generate the rules
 	 */
 	public static String queryPlacedPetOrdersByAddressAndOrderStatus=
 			"tds Customer, \"Order\", Pet"
@@ -157,14 +159,14 @@ public class TestPetstoreDatagenLocal extends BasePetstore {
 		assertData(outputFileName, dg);
 	}
 	
-	////////////////////////////// Generacion de datos con group by //////////////////////////////
+	////////////////////////////// Data generation with group by //////////////////////////////
 
 	/**
 	 * This TDS indicates that the generated test data must form groups, 
 	 * used when the SUT performs some kind of aggregation:
 	 * 
-	 * Specifies that we want to count the total number of orders that must be sent (status is approved)
-	 * to an address area (given by zip).
+	 * Specifies that we want to count the total number of orders that must be sent to customers (status is 'approved')
+	 * in an address area (given by zip).
 	 */
 	public static String queryTotalOrdersToDeliverByAddress=
 			"tds Customer, \"Order\", Pet"
@@ -178,7 +180,7 @@ public class TestPetstoreDatagenLocal extends BasePetstore {
 	
 	/**
 	 * A variant of the previous to show that we also can use a sql syntax by specifying 
-	 * the values that the SUT  is going to obtain is also allowed.
+	 * the values that the SUT is going to obtain
 	 */
 	public static String queryTotalPetsToDeliverByAddress=
 			"select Customer.address[]::zip, sum(\"Order\".quantity) from Customer, \"Order\", Pet"

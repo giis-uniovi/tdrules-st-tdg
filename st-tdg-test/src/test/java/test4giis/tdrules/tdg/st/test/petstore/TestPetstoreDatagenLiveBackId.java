@@ -21,7 +21,7 @@ public class TestPetstoreDatagenLiveBackId extends BasePetstore {
 	}
 	
 	// The swagger petstore does not generate uids in the backend.
-	// A new endpoint (backid) has been included to illustrate this funcionality.
+	// A new endpoint (backid) has been included to illustrate this functionality.
 	// As this is not specified in the model, we use a custom path resolver
 	// to identify the appropriate endpoint
 	public class CustomPathResolver extends OaPathResolver {
@@ -35,7 +35,7 @@ public class TestPetstoreDatagenLiveBackId extends BasePetstore {
 	}
 	
 	// The BaseAll class instantiates data loaders using the default path resolver.
-	// We override this method to allow the custom path resolver be injected y the data adapter
+	// We override this method to allow the custom path resolver be injected by the data adapter
 	@Override
 	protected DataLoader getLiveDataLoader() {
 		IPathResolver pathResolver=new CustomPathResolver();
