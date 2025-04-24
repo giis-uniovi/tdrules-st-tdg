@@ -1,2 +1,2 @@
-{"zip":"0","total":18}
-{"zip":"1","total":18}
+{"zip":"0","total":60}
+{"zip":"1","total":30}
