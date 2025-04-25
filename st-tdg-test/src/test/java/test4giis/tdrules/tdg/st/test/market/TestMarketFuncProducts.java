@@ -80,7 +80,7 @@ public class TestMarketFuncProducts extends BaseMarket {
 	@Test
 	public void testProductsByDistilleryRegion() {
 		// products of a distillery and a region
-		String query =  "tds ProductDTOReq,DistilleryDTOReq,regionDTOReq where DistilleryDTOReq.title='Ardbeg' and RegionDTOReq.name ='Islay'";
+		String query =  "tds ProductDTOReq,DistilleryDTOReq,RegionDTOReq where DistilleryDTOReq.title='Ardbeg' and RegionDTOReq.name ='Islay'";
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		generateAndLoad(dg, query, dict);

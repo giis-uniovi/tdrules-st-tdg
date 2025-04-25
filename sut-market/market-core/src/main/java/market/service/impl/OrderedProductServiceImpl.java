@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import market.dao.OrderedProductDAO;
-import market.domain.Cart;
 import market.domain.Order;
 import market.domain.OrderedProduct;
 import market.domain.OrderedProductId;
@@ -44,7 +43,7 @@ public class OrderedProductServiceImpl implements OrderedProductService {
 	// for tests
 	@Transactional
 	@Override
-	public Order addToOrder(Order order, Product product, int quantity) {
+	public OrderedProduct addToOrder(Order order, Product product, int quantity) {
 		OrderedProduct op = new OrderedProduct.Builder()
 				.setOrder(order)
 				.setProduct(product)
@@ -53,6 +52,6 @@ public class OrderedProductServiceImpl implements OrderedProductService {
 		
 		orderedProductDAO.save(op);
 		
-		return order;
+		return op;
 	}
 }

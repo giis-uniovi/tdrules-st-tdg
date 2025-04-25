@@ -27,5 +27,5 @@ public interface OrderedProductService {
 	OrderedProduct fingById(OrderedProductId id);
 
 	// test
-	Order addToOrder(Order order, Product product, int quantity);
+	OrderedProduct addToOrder(Order order, Product product, int quantity);
 }

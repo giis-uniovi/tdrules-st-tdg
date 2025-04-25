@@ -1,7 +1,5 @@
 package market.rest;
 
-import java.security.Principal;
-
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,10 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import market.domain.Product;
 import market.domain.Order;
+import market.domain.OrderedProduct;
 import market.dto.OrderDTO;
 import market.dto.OrderedProductDTO;
 import market.dto.assembler.OrderDtoAssembler;
-import market.exception.UnknownEntityException;
 import market.service.ProductService;
 import market.service.OrderService;
 import market.service.OrderedProductService;
@@ -46,6 +44,9 @@ public class OrderedProductRestController {
 		Product product = productService.getProduct(orderedProduct.getProductId());
 		int quantity = orderedProduct.getQuantity();
 		
-		return orderDtoAssembler.toModel(orderedProductService.addToOrder(order, product, quantity));
+		OrderedProduct op = orderedProductService.addToOrder(order, product, quantity);
+		
+		order = orderService.updateOrder(order, op);
+		return orderDtoAssembler.toModel(order);
 	}
 }

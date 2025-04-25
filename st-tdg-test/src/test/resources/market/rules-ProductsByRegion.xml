@@ -6,7 +6,9 @@
    FROM ProductDTOReq
      INNER JOIN DistilleryDTOReq ON ProductDTOReq.distillery = DistilleryDTOReq.title
    WHERE ProductDTOReq.distillery = DistilleryDTOReq.title
-     AND DistilleryDTOReq.region = 'Islay'</parsedsql>
+     AND DistilleryDTOReq.region = 'Islay'
+--COMMENT: Transform XJOIN for entity: DistilleryDTOReq ON ProductDTOReq.distillery=DistilleryDTOReq.title
+</parsedsql>
 <fpcrules>
   <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[ProductDTOReq.distillery = DistilleryDTOReq.title]</location>
     <sql>SELECT *
