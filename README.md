@@ -72,7 +72,8 @@ and the mutation report in `target/pit-reports`
 
 ## Graphical TDM models
 
-- Swagger Petstore (src/test/resources/petstore/schema-petstore.md)
+- Swagger Petstore 
+([open in mermaid.live](https://mermaid.live/edit/?code=https://github.com/giis-uniovi/tdrules-st-tdg/blob/main/st-tdg-test/src/test/resources/petstore/schema-petstore.md))
 
 ```mermaid
 ---
@@ -116,7 +117,8 @@ classDiagram
   ApiResponse: +post(/pet/{petId}/uploadImage)
 ```
 
-- Market (/src/test/resources/market/schema-testMarket.md)
+- Market 
+([open in mermaid.live](https://mermaid.live/edit/?code=https://github.com/giis-uniovi/tdrules-st-tdg/blob/main/st-tdg-test/src/test/resources/market/schema-testMarket.md))
 
 ```mermaid
 ---
@@ -189,7 +191,8 @@ classDiagram
   UserDTORes: +post(/register)
 ```
 
-- Gestao Hospital (src/test/resources/gestaoHospital/schema-hospital.md)
+- Gestao Hospital 
+([open in mermaid.live](https://mermaid.live/edit/?code=https://github.com/giis-uniovi/tdrules-st-tdg/blob/main/st-tdg-test/src/test/resources/gestaoHospital/schema-hospital.md))
 
 ```mermaid
 ---
