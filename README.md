@@ -118,7 +118,7 @@ classDiagram
 ```
 
 - Market 
-([open in mermaid.live](https://mermaid.live/edit/?https://raw.githubusercontent.com/giis-uniovi/tdrules-st-tdg/refs/heads/main/st-tdg-test/src/test/resources/market/schema-testMarket.md))
+([open in mermaid.live](https://mermaid.live/edit/?code=https://raw.githubusercontent.com/giis-uniovi/tdrules-st-tdg/refs/heads/main/st-tdg-test/src/test/resources/market/schema-testMarket.md))
 
 ```mermaid
 ---
