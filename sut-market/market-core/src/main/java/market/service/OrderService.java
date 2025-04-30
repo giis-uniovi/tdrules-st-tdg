@@ -1,6 +1,7 @@
 package market.service;
 
 import market.domain.Order;
+import market.domain.OrderedProduct;
 import market.exception.EmptyCartException;
 import market.exception.UnknownEntityException;
 import org.springframework.data.domain.Page;
@@ -39,4 +40,22 @@ public interface OrderService {
 	 * Updates a state of the order with the specified id
 	 */
 	void updateStatus(long orderId, boolean executed);
+	
+	/**
+	 * New method for test
+	 * Creates new order
+	 */
+	Order createOrder(String userLogin, Order order, String ccNumber);
+	
+	/**
+	 * New method for tests
+	 * Gets an order by id
+	 */
+	Order getOrder(long orderId);
+
+	/**
+	 * New method for tests
+	 * Updates an order inserting an ordered product
+	 */
+	Order updateOrder(Order order, OrderedProduct op);
 }

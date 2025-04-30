@@ -38,17 +38,17 @@
 <ddl command="post">/customer/cart/pay</ddl>
 </table>
 <table name="DistilleryDTOReq" type="table">
-<column name="id" type="int64" key="true" notnull="true" />
+<column name="title" type="string" key="true" notnull="true" />
 <column name="region" type="string" notnull="true" fk="RegionDTOReq.name" fkname="fk_DistilleryDTOReq_region" />
 <column name="description" type="string" notnull="true" />
-<column name="title" type="string" notnull="true" />
+<column name="id" type="int64" notnull="true" />
 <ddl command="post">/distillerydto</ddl>
 </table>
 <table name="DistilleryDTORes" type="table">
-<column name="id" type="int64" key="true" notnull="true" />
+<column name="title" type="string" key="true" notnull="true" />
 <column name="region" type="string" notnull="true" fk="RegionDTORes.name" fkname="fk_DistilleryDTORes_region" />
 <column name="description" type="string" notnull="true" />
-<column name="title" type="string" notnull="true" />
+<column name="id" type="int64" notnull="true" />
 <ddl command="post">/distillerydto</ddl>
 </table>
 <table name="OrderDTO" type="table">
@@ -65,10 +65,50 @@
 <column name="totalCost" type="double" notnull="true" />
 <ddl command="post">/customer/cart/pay</ddl>
 </table>
+<table name="OrderDTOReq" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="ccNumber" type="string" notnull="true" fk="CreditCardDTO.ccNumber" fkname="fk_OrderDTOReq_ccNumber" />
+<column name="userAccount" type="string" notnull="true" fk="UserDTORes.email" fkname="fk_OrderDTOReq_userAccount" />
+<column name="billNumber" type="int32" notnull="true" />
+<column name="dateCreated" type="date-time" notnull="true" />
+<column name="deliveryCost" type="int32" notnull="true" />
+<column name="deliveryIncluded" type="boolean" notnull="true" />
+<column name="executed" type="boolean" notnull="true" />
+<column name="payed" type="boolean" notnull="true" />
+<column name="productsCost" type="double" notnull="true" />
+<column name="totalCost" type="double" notnull="true" />
+<ddl command="post">/customer/orders/orderdto</ddl>
+</table>
+<table name="OrderDTORes" type="table">
+<column name="id" type="int64" key="true" notnull="true" />
+<column name="ccNumber" type="string" notnull="true" fk="CreditCardDTO.ccNumber" fkname="fk_OrderDTORes_ccNumber" />
+<column name="userAccount" type="string" notnull="true" fk="UserDTORes.email" fkname="fk_OrderDTORes_userAccount" />
+<column name="billNumber" type="int32" notnull="true" />
+<column name="dateCreated" type="date-time" notnull="true" />
+<column name="deliveryCost" type="int32" notnull="true" />
+<column name="deliveryIncluded" type="boolean" notnull="true" />
+<column name="executed" type="boolean" notnull="true" />
+<column name="payed" type="boolean" notnull="true" />
+<column name="productsCost" type="double" notnull="true" />
+<column name="totalCost" type="double" notnull="true" />
+<ddl command="post">/customer/orders/orderdto</ddl>
+</table>
 <table name="OrderedProductDTO" type="table">
 <column name="orderId" type="int64" key="true" notnull="true" fk="OrderDTO.id" fkname="fk_OrderedProductDTO_orderId" />
 <column name="productId" type="int64" key="true" notnull="true" fk="ProductDTORes.productId" fkname="fk_OrderedProductDTO_productId" />
 <column name="quantity" type="int32" notnull="true" />
+</table>
+<table name="OrderedProductDTOReq" type="table">
+<column name="orderId" type="int64" key="true" notnull="true" fk="OrderDTOReq.id" fkname="fk_OrderedProductDTOReq_orderId" />
+<column name="productId" type="int64" key="true" notnull="true" fk="ProductDTOReq.productId" fkname="fk_OrderedProductDTOReq_productId" />
+<column name="quantity" type="int32" notnull="true" />
+<ddl command="post">/orderedproductdto</ddl>
+</table>
+<table name="OrderedProductDTORes" type="table">
+<column name="orderId" type="int64" key="true" notnull="true" fk="OrderDTORes.id" fkname="fk_OrderedProductDTORes_orderId" />
+<column name="productId" type="int64" key="true" notnull="true" fk="ProductDTORes.productId" fkname="fk_OrderedProductDTORes_productId" />
+<column name="quantity" type="int32" notnull="true" />
+<ddl command="post">/orderedproductdto</ddl>
 </table>
 <table name="ProductDTOReq" type="table">
 <column name="productId" type="int64" key="true" notnull="true" />
@@ -101,18 +141,18 @@
 <ddl command="post">/products/productdto</ddl>
 </table>
 <table name="RegionDTOReq" type="table">
-<column name="id" type="int64" key="true" notnull="true" />
+<column name="name" type="string" key="true" notnull="true" />
 <column name="color" type="string" notnull="true" />
 <column name="description" type="string" notnull="true" />
-<column name="name" type="string" notnull="true" />
+<column name="id" type="int64" notnull="true" />
 <column name="subtitle" type="string" notnull="true" />
 <ddl command="post">/regiondto</ddl>
 </table>
 <table name="RegionDTORes" type="table">
-<column name="id" type="int64" key="true" notnull="true" />
+<column name="name" type="string" key="true" notnull="true" />
 <column name="color" type="string" notnull="true" />
 <column name="description" type="string" notnull="true" />
-<column name="name" type="string" notnull="true" />
+<column name="id" type="int64" notnull="true" />
 <column name="subtitle" type="string" notnull="true" />
 <ddl command="post">/regiondto</ddl>
 </table>

@@ -28,19 +28,7 @@ public class BaseMarket extends BaseAll {
 
 	// attributes that can be filtered during comparisons of assertions 
 	private static final String[] FILTERED_ATTRS = {"password", "dateCreated","number"};
-	// empty cart of an user
-	public static String queryCartByUser = "tds CartDTO where user='lucia@email.com'";
-	// carts with items (products added) of an user, products must be available
-	public static String queryCartByUserProductQuantity = "tds CartDTO,CartItemDTORes,ProductDTORes where CartDTO.user='pepe@email.com' and CartItemDTORes.productId=1 and CartItemDTORes.quantity=5 and ProductDTORes.available=1";
-	// order of an user
-	public static String queryOrderByUser = "tds OrderDTO where userAccount='pepe@email.com' ";
-	// products by age
-	public static String queryProductByAge = "tds ProductDTORes where age=10";
-	// users by name
-	public static String queryUserByName = "tds UserDTORes where name='Pepe'";
-	// user by email
-	public static String queryUserByEmail = "tds UserDTORes where email ='pepe@email.com'";
-	
+		
 	@Override
 	protected String getSutName() {
 		return "market";
@@ -66,7 +54,9 @@ public class BaseMarket extends BaseAll {
 		// Configure:
 		// - filter entities Link* and attributes _link*
 		// - the schema id resolver to use id attributes as uid 
-		//   except in entities CartItemDTO (pk are user + productId) and ProductDTO (pk is productId)	
+		//   except in entities CartItemDTO (pk are user + productId) and ProductDTO (pk is productId)
+		//   except in entities DistilleryDTO (pk can be id and title, but title is rid in ProductDTO) and 
+		//   RegionDTO (pk can be id and name, but name is rid in DistilleryDTO)   
 		OaSchemaApi api = new OaSchemaApi(MARKET_SCHEMA_LOCAL)
 				.setFilter(new OaSchemaFilter()
 						.add("*", "_link*")
@@ -74,9 +64,17 @@ public class BaseMarket extends BaseAll {
 				.setIdResolver(new OaSchemaIdResolver().setIdName("id")
 							.excludeEntity("CartItemDTOReq")
 							.excludeEntity("CartItemDTORes")
+							.excludeEntity("DistilleryDTOReq")
+							.excludeEntity("DistilleryDTORes")
 							.excludeEntity("OrderedProductDTO")
+							.excludeEntity("OrderedProductDTORes")
+							.excludeEntity("OrderedProductDTOReq")
 							.excludeEntity("ProductDTORes")
-							.excludeEntity("ProductDTOReq"))
+							.excludeEntity("ProductDTOReq")
+							.excludeEntity("RegionDTOReq")
+							.excludeEntity("RegionDTORes")
+							)
+				
 				;
 		return api.getSchema();
 	}
@@ -95,7 +93,7 @@ public class BaseMarket extends BaseAll {
 				.setProvider("UserDTORes", "email", "password")
 				.addConsumer(new String[] { "CartItemDTORes", "CartItemDTOReq", 
 						                    "ContactsDTORes", "ContactsDTOReq" }, "user")
-				.addConsumer(new String[] { "OrderDTO"} , "userAccount");
+				.addConsumer(new String[] { "OrderDTO", "OrderDTORes", "OrderDTOReq"} , "userAccount");
 		
 		return new DataLoader(model, new OaLiveAdapter(MARKET_URL_LIVE).setPathResolver(new CustomPathResolver()).setAuthStore(authenticator))
 				                            .setUidGen(new OaLiveUidGen())

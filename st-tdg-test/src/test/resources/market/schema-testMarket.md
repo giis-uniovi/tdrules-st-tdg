@@ -12,6 +12,14 @@ classDiagram
     class DistilleryDTOReq
     class DistilleryDTORes
   }
+  namespace post__customer_orders_orderdto {
+    class OrderDTOReq
+    class OrderDTORes
+  }
+  namespace post__orderedproductdto {
+    class OrderedProductDTOReq
+    class OrderedProductDTORes
+  }
   namespace post__products_productdto {
     class ProductDTOReq
     class ProductDTORes
@@ -47,8 +55,16 @@ classDiagram
   RegionDTORes <--"*" DistilleryDTORes
   CreditCardDTO <--"*" OrderDTO
   UserDTORes <--"*" OrderDTO
+  CreditCardDTO <--"*" OrderDTOReq
+  UserDTORes <--"*" OrderDTOReq
+  CreditCardDTO <--"*" OrderDTORes
+  UserDTORes <--"*" OrderDTORes
   OrderDTO <--"*" OrderedProductDTO
   ProductDTORes <--"*" OrderedProductDTO
+  OrderDTOReq <--"*" OrderedProductDTOReq
+  ProductDTOReq <--"*" OrderedProductDTOReq
+  OrderDTORes <--"*" OrderedProductDTORes
+  ProductDTORes <--"*" OrderedProductDTORes
   DistilleryDTOReq <--"*" ProductDTOReq
   DistilleryDTORes <--"*" ProductDTORes
   CartDTO: +put(/customer/cart)
@@ -60,6 +76,10 @@ classDiagram
   DistilleryDTOReq: +post(/distillerydto)
   DistilleryDTORes: +post(/distillerydto)
   OrderDTO: +post(/customer/cart/pay)
+  OrderDTOReq: +post(/customer/orders/orderdto)
+  OrderDTORes: +post(/customer/orders/orderdto)
+  OrderedProductDTOReq: +post(/orderedproductdto)
+  OrderedProductDTORes: +post(/orderedproductdto)
   ProductDTOReq: +post(/products/productdto)
   ProductDTORes: +post(/products/productdto)
   RegionDTOReq: +post(/regiondto)

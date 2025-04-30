@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlfpc>
+<version>0.0.0<development/></version>
+<sql>tds ProductDTOReq, DistilleryDTOReq where ProductDTOReq.distillery=DistilleryDTOReq.title and DistilleryDTOReq.region='Islay'</sql>
+<parsedsql>SELECT *
+   FROM ProductDTOReq
+     INNER JOIN DistilleryDTOReq ON ProductDTOReq.distillery = DistilleryDTOReq.title
+   WHERE ProductDTOReq.distillery = DistilleryDTOReq.title
+     AND DistilleryDTOReq.region = 'Islay'
+--COMMENT: Transform XJOIN for entity: DistilleryDTOReq ON ProductDTOReq.distillery=DistilleryDTOReq.title
+</parsedsql>
+<fpcrules>
+  <fpcrule><id>1</id><category>S</category><type>T</type><subtype>TT</subtype><location>1.w.1.[ProductDTOReq.distillery = DistilleryDTOReq.title]</location>
+    <sql>SELECT *
+   FROM ProductDTOReq
+     INNER JOIN DistilleryDTOReq ON ProductDTOReq.distillery = DistilleryDTOReq.title
+   WHERE (ProductDTOReq.distillery = DistilleryDTOReq.title)
+     AND (DistilleryDTOReq.region = 'Islay')</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(T) ProductDTOReq.distillery = DistilleryDTOReq.title is TRUE
+  --(T) DistilleryDTOReq.region = 'Islay' is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>2</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.1.[ProductDTOReq.distillery = DistilleryDTOReq.title]</location>
+    <sql>SELECT *
+   FROM ProductDTOReq
+     INNER JOIN DistilleryDTOReq ON ProductDTOReq.distillery = DistilleryDTOReq.title
+   WHERE NOT(ProductDTOReq.distillery = DistilleryDTOReq.title)
+     AND (DistilleryDTOReq.region = 'Islay')</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(F) ProductDTOReq.distillery = DistilleryDTOReq.title is FALSE
+  --(T) DistilleryDTOReq.region = 'Islay' is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>3</id><category>S</category><type>T</type><subtype>FT</subtype><location>1.w.2.[DistilleryDTOReq.region = 'Islay']</location>
+    <sql>SELECT *
+   FROM ProductDTOReq
+     INNER JOIN DistilleryDTOReq ON ProductDTOReq.distillery = DistilleryDTOReq.title
+   WHERE NOT(DistilleryDTOReq.region = 'Islay')
+     AND (ProductDTOReq.distillery = DistilleryDTOReq.title)</sql>
+    <description>--A set of joined tables such that:
+--The WHERE condition fulfills:
+  --(F) DistilleryDTOReq.region = 'Islay' is FALSE
+  --(T) ProductDTOReq.distillery = DistilleryDTOReq.title is TRUE</description>
+  </fpcrule>
+  <fpcrule><id>4</id><category>J</category><type>R</type><subtype>O</subtype><location>1.j.1.[INNER JOIN]</location>
+    <sql>SELECT *
+   FROM ProductDTOReq
+     RIGHT JOIN DistilleryDTOReq ON ProductDTOReq.distillery = DistilleryDTOReq.title
+   WHERE ((ProductDTOReq.distillery IS NULL) AND (DistilleryDTOReq.title IS NOT NULL))
+     AND (DistilleryDTOReq.region = 'Islay')</sql>
+    <description>
+--The JOIN tables fulfill:
+--COMMENT: Reduced conditions: [ProductDTOReq.distillery = DistilleryDTOReq.title] ; 
+  --summary: [ProductDTOReq] right [DistilleryDTOReq] ON ProductDTOReq.distillery = DistilleryDTOReq.title
+  --There exist some row in table DistilleryDTOReq
+  --which does not join to any table in ProductDTOReq
+--The following condition in the WHERE holds:
+  --WHERE DistilleryDTOReq.region = 'Islay'</description>
+  </fpcrule>
+</fpcrules>
+</sqlfpc>

@@ -154,8 +154,8 @@
     "name" : "DistilleryDTOReq",
     "entitytype" : "table",
     "attributes" : [ {
-      "name" : "id",
-      "datatype" : "int64",
+      "name" : "title",
+      "datatype" : "string",
       "uid" : "true",
       "notnull" : "true"
     }, {
@@ -169,8 +169,8 @@
       "datatype" : "string",
       "notnull" : "true"
     }, {
-      "name" : "title",
-      "datatype" : "string",
+      "name" : "id",
+      "datatype" : "int64",
       "notnull" : "true"
     } ],
     "ddls" : [ {
@@ -181,8 +181,8 @@
     "name" : "DistilleryDTORes",
     "entitytype" : "table",
     "attributes" : [ {
-      "name" : "id",
-      "datatype" : "int64",
+      "name" : "title",
+      "datatype" : "string",
       "uid" : "true",
       "notnull" : "true"
     }, {
@@ -196,8 +196,8 @@
       "datatype" : "string",
       "notnull" : "true"
     }, {
-      "name" : "title",
-      "datatype" : "string",
+      "name" : "id",
+      "datatype" : "int64",
       "notnull" : "true"
     } ],
     "ddls" : [ {
@@ -262,6 +262,120 @@
       "query" : "/customer/cart/pay"
     } ]
   }, {
+    "name" : "OrderDTOReq",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "ccNumber",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "CreditCardDTO.ccNumber",
+      "ridname" : "fk_OrderDTOReq_ccNumber"
+    }, {
+      "name" : "userAccount",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "UserDTORes.email",
+      "ridname" : "fk_OrderDTOReq_userAccount"
+    }, {
+      "name" : "billNumber",
+      "datatype" : "int32",
+      "notnull" : "true"
+    }, {
+      "name" : "dateCreated",
+      "datatype" : "date-time",
+      "notnull" : "true"
+    }, {
+      "name" : "deliveryCost",
+      "datatype" : "int32",
+      "notnull" : "true"
+    }, {
+      "name" : "deliveryIncluded",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "executed",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "payed",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "productsCost",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "totalCost",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/customer/orders/orderdto"
+    } ]
+  }, {
+    "name" : "OrderDTORes",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "id",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true"
+    }, {
+      "name" : "ccNumber",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "CreditCardDTO.ccNumber",
+      "ridname" : "fk_OrderDTORes_ccNumber"
+    }, {
+      "name" : "userAccount",
+      "datatype" : "string",
+      "notnull" : "true",
+      "rid" : "UserDTORes.email",
+      "ridname" : "fk_OrderDTORes_userAccount"
+    }, {
+      "name" : "billNumber",
+      "datatype" : "int32",
+      "notnull" : "true"
+    }, {
+      "name" : "dateCreated",
+      "datatype" : "date-time",
+      "notnull" : "true"
+    }, {
+      "name" : "deliveryCost",
+      "datatype" : "int32",
+      "notnull" : "true"
+    }, {
+      "name" : "deliveryIncluded",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "executed",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "payed",
+      "datatype" : "boolean",
+      "notnull" : "true"
+    }, {
+      "name" : "productsCost",
+      "datatype" : "double",
+      "notnull" : "true"
+    }, {
+      "name" : "totalCost",
+      "datatype" : "double",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/customer/orders/orderdto"
+    } ]
+  }, {
     "name" : "OrderedProductDTO",
     "entitytype" : "table",
     "attributes" : [ {
@@ -282,6 +396,58 @@
       "name" : "quantity",
       "datatype" : "int32",
       "notnull" : "true"
+    } ]
+  }, {
+    "name" : "OrderedProductDTOReq",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "orderId",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true",
+      "rid" : "OrderDTOReq.id",
+      "ridname" : "fk_OrderedProductDTOReq_orderId"
+    }, {
+      "name" : "productId",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true",
+      "rid" : "ProductDTOReq.productId",
+      "ridname" : "fk_OrderedProductDTOReq_productId"
+    }, {
+      "name" : "quantity",
+      "datatype" : "int32",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/orderedproductdto"
+    } ]
+  }, {
+    "name" : "OrderedProductDTORes",
+    "entitytype" : "table",
+    "attributes" : [ {
+      "name" : "orderId",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true",
+      "rid" : "OrderDTORes.id",
+      "ridname" : "fk_OrderedProductDTORes_orderId"
+    }, {
+      "name" : "productId",
+      "datatype" : "int64",
+      "uid" : "true",
+      "notnull" : "true",
+      "rid" : "ProductDTORes.productId",
+      "ridname" : "fk_OrderedProductDTORes_productId"
+    }, {
+      "name" : "quantity",
+      "datatype" : "int32",
+      "notnull" : "true"
+    } ],
+    "ddls" : [ {
+      "command" : "post",
+      "query" : "/orderedproductdto"
     } ]
   }, {
     "name" : "ProductDTOReq",
@@ -407,8 +573,8 @@
     "name" : "RegionDTOReq",
     "entitytype" : "table",
     "attributes" : [ {
-      "name" : "id",
-      "datatype" : "int64",
+      "name" : "name",
+      "datatype" : "string",
       "uid" : "true",
       "notnull" : "true"
     }, {
@@ -420,8 +586,8 @@
       "datatype" : "string",
       "notnull" : "true"
     }, {
-      "name" : "name",
-      "datatype" : "string",
+      "name" : "id",
+      "datatype" : "int64",
       "notnull" : "true"
     }, {
       "name" : "subtitle",
@@ -436,8 +602,8 @@
     "name" : "RegionDTORes",
     "entitytype" : "table",
     "attributes" : [ {
-      "name" : "id",
-      "datatype" : "int64",
+      "name" : "name",
+      "datatype" : "string",
       "uid" : "true",
       "notnull" : "true"
     }, {
@@ -449,8 +615,8 @@
       "datatype" : "string",
       "notnull" : "true"
     }, {
-      "name" : "name",
-      "datatype" : "string",
+      "name" : "id",
+      "datatype" : "int64",
       "notnull" : "true"
     }, {
       "name" : "subtitle",

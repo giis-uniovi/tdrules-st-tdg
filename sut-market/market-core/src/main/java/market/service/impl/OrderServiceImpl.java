@@ -114,7 +114,7 @@ public class OrderServiceImpl implements OrderService {
 			.setExecuted(false)
 			.build();
 	}
-
+	
 	private Bill createBill(Order order, String cardNumber) {
 		return new Bill.Builder()
 			.setOrder(order)
@@ -134,6 +134,64 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	private OrderedProduct createOrderedProduct(Order order, CartItem item) {
+		return new OrderedProduct.Builder()
+			.setProduct(item.getProduct())
+			.setOrder(order)
+			.setQuantity(item.getQuantity())
+			.build();
+	}
+
+	// Add for test
+	@Override
+	public Order createOrder(String userLogin, Order o,String ccNumber) {
+		Order order = new Order.Builder()
+				.setDeliveryIncluded(o.isDeliveryIncluded())
+				.setDeliveryCost(o.isDeliveryIncluded() ? o.getDeliveryCost() : 0)
+				.setProductsCost(0)
+				.setDateCreated(o.getDateCreated())
+				.setExecuted(o.isExecuted())
+				.setUserAccount(userAccountService.findByEmail(userLogin))
+				.build();
+		
+		Bill bill = createBill(order, ccNumber);
+		order.setBill(bill);
+		orderDAO.saveAndFlush(order);
+		
+		return order;
+	}
+	//add for test
+	@Transactional(readOnly = true)
+	@Override
+	public Order getOrder(long orderId) {
+		// todo: add user check
+		return orderDAO.findById(orderId).orElse(null);
+	}
+
+	//add for test
+	@Override
+	public Order updateOrder(Order order, OrderedProduct op) {
+		double increment = op.getQuantity()*op.getProduct().getPrice();
+		
+		Set<OrderedProduct> ordered = order.getOrderedProducts();
+		ordered.add(createOrderedProduct(order, op));
+		order.setOrderedProducts(ordered);
+		order.setProductsCost(order.getProductsCost()+ increment);
+		order.setBill(updateBill(order));
+		
+		orderDAO.saveAndFlush(order);
+		
+		return order;
+	}
+	
+	//add for test
+	private Bill updateBill(Order order) {
+		Bill b = order.getBill();
+		b.setTotalCost(order.getProductsCost() + order.getDeliveryCost());
+		return b;
+	}
+	
+	//add for test
+	private OrderedProduct createOrderedProduct(Order order, OrderedProduct item) {
 		return new OrderedProduct.Builder()
 			.setProduct(item.getProduct())
 			.setOrder(order)
