@@ -73,7 +73,7 @@ and the mutation report in `target/pit-reports`
 ## Graphical TDM models
 
 - Swagger Petstore 
-([open in mermaid.live](https://mermaid.live/edit/?code=https://github.com/giis-uniovi/tdrules-st-tdg/blob/main/st-tdg-test/src/test/resources/petstore/schema-petstore.md))
+([open in mermaid.live](https://mermaid.live/edit/?code=https://raw.githubusercontent.com/giis-uniovi/tdrules-st-tdg/refs/heads/main/st-tdg-test/src/test/resources/petstore/schema-petstore.md))
 
 ```mermaid
 ---
@@ -118,7 +118,7 @@ classDiagram
 ```
 
 - Market 
-([open in mermaid.live](https://mermaid.live/edit/?code=https://github.com/giis-uniovi/tdrules-st-tdg/blob/main/st-tdg-test/src/test/resources/market/schema-testMarket.md))
+([open in mermaid.live](https://mermaid.live/edit/?code=https://raw.githubusercontent.com/giis-uniovi/tdrules-st-tdg/refs/heads/main/st-tdg-test/src/test/resources/market/schema-testMarket.md))
 
 ```mermaid
 ---
@@ -212,7 +212,7 @@ classDiagram
 ```
 
 - Gestao Hospital 
-([open in mermaid.live](https://mermaid.live/edit/?code=https://github.com/giis-uniovi/tdrules-st-tdg/blob/main/st-tdg-test/src/test/resources/gestaoHospital/schema-hospital.md))
+([open in mermaid.live](https://mermaid.live/edit/?code=https://raw.githubusercontent.com/giis-uniovi/tdrules-st-tdg/refs/heads/main/st-tdg-test/src/test/resources/gestaoHospital/schema-hospital.md))
 
 ```mermaid
 ---
