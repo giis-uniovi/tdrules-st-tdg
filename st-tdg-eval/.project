@@ -22,6 +22,16 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>market</name>
+			<type>2</type>
+			<location>C:/Users/mjsca.DESKTOP-FKDCI3B/git/tdrules-st-tdg/sut-market</location>
+		</link>
+		<link>
+			<name>marketResources</name>
+			<type>2</type>
+			<location>C:/Users/mjsca.DESKTOP-FKDCI3B/git/tdrules-st-tdg/sut-market/src/main/resources</location>
+		</link>
+		<link>
 			<name>petstoreMainJava</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/sut-petstore/src/main/java</locationURI>

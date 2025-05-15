@@ -54,6 +54,27 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<!-- test: add for MUTANTION -->
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.15.0</version>
+				<configuration>
+					<targetClasses>
+						<param>market.domain.*</param>
+						<param>market.service.*</param>
+					</targetClasses>
+					<targetTests>
+						<param>market.service.*</param>
+					</targetTests>
+					<mutators>
+						<mutator>DEFAULTS</mutator>
+					</mutators>
+					<junit5Plugin>true</junit5Plugin> <!-- activa explícitamente plugin JUnit5 -->
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -72,7 +93,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.3.2</version>
+			<version>42.7.2</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -106,6 +127,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
+		
+		<!-- test: add for MUTATION -->
+
+		<!-- PITEST plugin para JUnit 5 -->
+		<dependency>
+			<groupId>org.pitest</groupId>
+			<artifactId>pitest-junit5-plugin</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+
+		<!-- JUnit 5 (Jupiter) -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.10.0</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 </project>
