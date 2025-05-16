@@ -22,14 +22,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>market</name>
+			<name>marketJava</name>
 			<type>2</type>
-			<location>C:/Users/mjsca.DESKTOP-FKDCI3B/git/tdrules-st-tdg/sut-market</location>
+			<locationURI>PARENT-1-PROJECT_LOC/sut-market/market-core/src/main/java</locationURI>
 		</link>
 		<link>
 			<name>marketResources</name>
 			<type>2</type>
-			<location>C:/Users/mjsca.DESKTOP-FKDCI3B/git/tdrules-st-tdg/sut-market/src/main/resources</location>
+			<locationURI>PARENT-1-PROJECT_LOC/sut-market/src/main/resources</locationURI>
 		</link>
 		<link>
 			<name>petstoreMainJava</name>
