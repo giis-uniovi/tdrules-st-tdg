@@ -23,6 +23,8 @@
 		<tdrules.version>4.5.0</tdrules.version>
 		
 		<qagrow.version>1.4.288</qagrow.version>
+		
+		<qacover.version>2.1.0</qacover.version>
 	</properties>
 
 	<modules>
@@ -51,6 +53,12 @@
 				<groupId>giis</groupId>
 				<artifactId>qagrow</artifactId>
 				<version>${qagrow.version}</version>
+			</dependency>
+			<!-- qacover evaluates coverage in the SUT server, but model module is included here to generate reports-->
+			<dependency>
+				<groupId>io.github.giis-uniovi</groupId>
+				<artifactId>qacover-model</artifactId>
+				<version>${qacover.version}</version>
 			</dependency>
 
 			<dependency>
@@ -92,11 +100,32 @@
 						<target>1.8</target>
 					</configuration>
 				</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${surefire.version}</version>
+				<configuration>
+					<failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
+					<testFailureIgnore>false</testFailureIgnore>
+				</configuration>
+			</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-antrun-plugin</artifactId>
 					<version>3.1.0</version>
 					<executions>
+						<execution>
+							<id>ensure-test-folder</id>
+							<phase>process-resources</phase>
+							<configuration>
+								<target>
+									<mkdir dir="target/surefire-reports" />
+								</target>
+							</configuration>
+							<goals>
+								<goal>run</goal>
+							</goals>
+						</execution>
 						<execution>
 							<id>junit-reports</id>
 							<phase>test</phase>

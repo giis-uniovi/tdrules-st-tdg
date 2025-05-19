@@ -41,6 +41,19 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>io.github.giis-uniovi</groupId>
+			<artifactId>qacover-model</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.github.giis-uniovi</groupId>
+			<artifactId>st-tdg-test</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
@@ -133,6 +146,9 @@
 				<artifactId>pitest-maven</artifactId>
 				<version>1.19.3</version>
 				<configuration>
+					<targetTests>
+						<param>test4giis.tdrules.tdg.st.eval.petstore.*</param>
+					</targetTests>
 					<targetClasses>
 						<param>io.swagger.petstore.data.Pet*</param>
 						<param>io.swagger.petstore.data.Order*</param>

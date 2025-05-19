@@ -75,6 +75,14 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
+		
+		<dependency>
+    		<groupId>io.github.giis-uniovi</groupId>
+    		<artifactId>qacover-core</artifactId>
+    		<classifier>uber</classifier>
+    		<version>2.1.0</version>
+		</dependency>
+
 	</dependencies>
 
 </project>

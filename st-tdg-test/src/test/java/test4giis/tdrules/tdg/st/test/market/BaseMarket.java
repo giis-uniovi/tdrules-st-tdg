@@ -24,7 +24,7 @@ import test4giis.tdrules.tdg.st.test.BaseAll;
  */
 public class BaseMarket extends BaseAll {
 	protected static final String MARKET_SCHEMA_LOCAL = "../sut-market/src/main/resources/testMarket.json";
-	private static final String MARKET_URL_LIVE = "http://localhost:8083";
+	protected static final String MARKET_URL_LIVE = "http://localhost:8083";
 
 	// attributes that can be filtered during comparisons of assertions 
 	private static final String[] FILTERED_ATTRS = {"password", "dateCreated","number"};

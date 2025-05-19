@@ -18,7 +18,7 @@ jobs:
     if: (github.event_name != 'pull_request' && ! github.event.pull_request.head.repo.fork) || (github.event_name == 'pull_request' && (github.event.pull_request.head.repo.fork || startsWith(github.head_ref, 'dependabot/')))
     strategy:
       matrix:
-        scope: [Petstore, Market, GestaoHospital, Eval]
+        scope: [Petstore, Market, GestaoHospital, PetstoreEval, MarketEval]
       fail-fast: false
       
     steps:
@@ -29,6 +29,7 @@ jobs:
           java-version: '11'
           cache: 'maven'
 
+      ###### Launch SUTs ######
       - name: Launch Petstore
         if: ${{ matrix.scope == 'Petstore' }}
         working-directory: ./sut-petstore
@@ -38,8 +39,14 @@ jobs:
           docker run -d -p 8081:8080 --name swagger-petstore swagger-petstore
           chmod u+x ../setup/wait-container-ready.sh
           ../setup/wait-container-ready.sh swagger-petstore "public ResponseContext findPetsByCategoryAndStatus"
+      - name: Configure Market for QACover
+        if: ${{ matrix.scope == 'MarketEval' }}
+        working-directory: ./sut-market/market-rest/src/main/resources
+        run: |
+          sed -i 's/jdbc:postgresql/jdbc:p6spy:postgresql/g' application.yml
+          sed -i 's/org.postgresql.Driver/com.p6spy.engine.spy.P6SpyDriver/g' application.yml
       - name: Launch Market
-        if: ${{ matrix.scope == 'Market' }}
+        if: ${{ matrix.scope == 'Market' || matrix.scope == 'MarketEval' }}
         working-directory: ./sut-market
         run: |
           #don't precompile, here, dockerfile does
@@ -68,20 +75,25 @@ jobs:
           key: cache-${{ matrix.scope }}-v1-${{ github.run_id }}
           restore-keys: cache-${{ matrix.scope }}-v1-
 
+      ###### Test and evaluation ######
       - name: Test All SUTs
-        if: ${{ matrix.scope != 'Eval' }}
+        if: ${{ matrix.scope == 'Petstore' || matrix.scope == 'Market' || matrix.scope == 'GestaoHospital' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn test -pl st-tdg-test -Dtest=**/*${{ matrix.scope }}* -Dmaven.test.failure.ignore=true -U --no-transfer-progress
-
-      - name: Evaluate Mutation Score
-        if: ${{ matrix.scope == 'Eval' }}
+        run: mvn test -pl st-tdg-test -Dtest=**/*${{ matrix.scope }}* -U -ntp
+      - name: Evaluate Petstore Tests
+        if: ${{ matrix.scope == 'PetstoreEval' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mvn -pl st-tdg-eval test -Dmaven.test.failure.ignore=true -U --no-transfer-progress
-          mvn -pl st-tdg-eval test-compile org.pitest:pitest-maven:mutationCoverage
+          mvn -pl st-tdg-eval test -Dtest=**/eval/petstore/Test* -U -am -ntp
+          mvn -pl st-tdg-eval test-compile org.pitest:pitest-maven:mutationCoverage -Dtest=**/eval/petstore/Test* -am -ntp
+      - name: Evaluate Market Tests
+        if: ${{ matrix.scope == 'MarketEval' }}
+        run: |
+          sudo mvn -pl st-tdg-eval test -Dtest=**/eval/market/Test* -U -am -ntp
 
+      ###### Logging and reporting ######
       - if: ${{ always() && matrix.scope == 'Petstore' }}
         run: docker logs swagger-petstore > st-tdg-test/target/docker-petstore-server.log
       - if: ${{ always() && matrix.scope == 'Market' }}
@@ -111,6 +123,8 @@ jobs:
             **/target/surefire-reports
             **/target/pit-reports
             **/target/out
+            **/target/market
+            **/target/market-qacover
             **/target/*.html
             **/target/*.log
 
@@ -154,7 +168,7 @@ jobs:
           #diff-links-files: "/**/target/*.html"
 
       - name: Copy pit reports
-        run: cp -r test-report-files-Eval/st-tdg-eval/target/pit-reports reports/pit-reports
+        run: cp -r test-report-files-PetstoreEval/st-tdg-eval/target/pit-reports reports/pit-reports
       - name: Index file to html reports
         if: always()
         run: |
@@ -175,6 +189,8 @@ jobs:
             reports
             **/target/surefire-reports
             **/target/out
+            **/target/market
+            **/target/market-qacover
             **/target/*.html
             **/target/*.log
             

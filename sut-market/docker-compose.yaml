@@ -33,6 +33,9 @@ services:
         environment:
             - SPRING_PROFILES_ACTIVE=prod
             - DB_HOST=db
+        volumes:
+            # Coverage rules, note that are mapped to this SUT target folder
+            - ./market-rest/target/qacover:/app/target/qacover
 volumes:
     postgres-data:
         driver: local
