@@ -1,5 +1,8 @@
 package test4giis.tdrules.tdg.st.test.petstore;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import giis.tdrules.client.oa.OaSchemaApi;
 import giis.tdrules.client.oa.OaSchemaIdResolver;
 import giis.tdrules.openapi.model.TdSchema;
@@ -25,9 +28,14 @@ import test4giis.tdrules.tdg.st.test.BaseAll;
  * Other test classes contain different variants to include data generation and a live SUT.
  */
 public class BasePetstore  extends BaseAll{
+	protected Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	protected static final String PETSTORE_SCHEMA_LOCAL = "../sut-petstore/src/main/resources/openapi.yaml";
 	protected static final String PETSTORE_SCHEMA_LIVE = "http://localhost:8081/api/v3/openapi.json";
 	private static final String PETSTORE_URL_LIVE = "http://localhost:8081/api/v3";
+	
+	// Cache for the schema to avoid multiple calls per test.
+	private static TdSchema schemaCache = null;
 	
 	@Override
 	protected String getSutName() {
@@ -51,6 +59,16 @@ public class BasePetstore  extends BaseAll{
 
 	@Override
 	protected TdSchema getSchema() {
+		if (schemaCache == null) {
+			log.info("*** Begin: Transform the Petstore schema and save to cache");
+			schemaCache = getPetstoreSchema();
+			log.info("*** End: Transform the Petstore schema and save to cache");
+		} else {
+			log.info("*** Get the Petstore schema from cache");
+		}
+		return schemaCache;
+	}
+	private TdSchema getPetstoreSchema() {
 		// Configures the schema idResolver to use id attribute as uid, but there are exceptions:
 		// - Tag entity has an id, but looking at the source code, a post endpoint inserts unconditionally,
 		//   allowing repeated id values. Considers this id as no uid

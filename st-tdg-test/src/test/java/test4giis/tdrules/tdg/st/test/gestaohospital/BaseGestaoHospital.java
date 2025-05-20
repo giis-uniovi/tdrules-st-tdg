@@ -18,6 +18,9 @@ public class BaseGestaoHospital extends BaseAll{
 	protected static final String GESTAOHOSPITAL_SCHEMA_LIVE = "http://localhost:8085/v2/api-docs";
 	private static final String GESTAOHOSPITAL_URL_LIVE = "http://localhost:8085";
 	
+	// Cache for the schema to avoid multiple calls per test.
+	private static TdSchema schemaCache = null;
+	
 	@Override
 	protected String getSutName() {
 		return "gestaoHospital";
@@ -40,6 +43,16 @@ public class BaseGestaoHospital extends BaseAll{
 
 	@Override
 	protected TdSchema getSchema() {
+		if (schemaCache == null) {
+			log.info("*** Begin: Transform the Gestao Hospital schema and save to cache");
+			schemaCache = getGestaoHospitalSchema();
+			log.info("*** End: Transform the Gestao Hospital schema and save to cache");
+		} else {
+			log.info("*** Get the Gestao Hospital schema from cache");
+		}
+		return schemaCache;
+	}
+	protected TdSchema getGestaoHospitalSchema() {
 		//Configure the schema id resolver to use id attributes as uid.
 		OaSchemaApi api = new OaSchemaApi(GESTAOHOSPITAL_SCHEMA_LOCAL)
 				.setIdResolver(new OaSchemaIdResolver().setIdName("id"));

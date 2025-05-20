@@ -28,18 +28,16 @@ public class BasePetstoreEval extends BasePetstore {
 
 	protected SoftVisualAssert sva = new SoftVisualAssert().setFramework(Framework.JUNIT4);
 
-	protected static TdSchema model; // readonly, created before all tests
-
 	@Override
 	protected boolean isLiveBackend() {
 		return false; // this eval runs a custom mock controller
 	}
 	
 	protected void load(ApiWriter writer, String query) {
-		model = getSchema();
+		TdSchema schema = getSchema();
 		
 		// Check the schema, because their changes may invalidate all results
-		String modelStr = new giis.tdrules.model.io.ModelJsonSerializer().serialize(model, true);
+		String modelStr = new giis.tdrules.model.io.ModelJsonSerializer().serialize(schema, true);
 		FileUtil.fileWrite("target/schema-petstore.json", modelStr);
 		VisualAssert va = new VisualAssert().setFramework(Framework.JUNIT4);
 		va.assertEquals(FileUtil.fileRead("src/test/resources/schema-petstore.json"), modelStr);
@@ -47,12 +45,12 @@ public class BasePetstoreEval extends BasePetstore {
 
 		// The path resolver is created using a controller mock (writer)
 		// and the data loader using a dictionary
-		DataLoader loader = new DataLoader(model, new OaLiveAdapter("").setApiWriter(writer))
+		DataLoader loader = new DataLoader(schema, new OaLiveAdapter("").setApiWriter(writer))
 				.setAttrGen(getPetstoreEvalDictionary().setMinYear(2024));
 
 		// Generation and loading: Each test first delete all data previous to the generation and load
 		writer.delete("/test/deleteAll");
-		QAGrowApiProcess qagrow = new QAGrowApiProcess(model, getRulesApi(), loader);
+		QAGrowApiProcess qagrow = new QAGrowApiProcess(schema, getRulesApi(), loader);
 		qagrow.genData4ApiQuery(query);
 	}
 

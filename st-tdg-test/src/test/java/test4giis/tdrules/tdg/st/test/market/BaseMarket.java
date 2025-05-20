@@ -29,6 +29,9 @@ public class BaseMarket extends BaseAll {
 	// attributes that can be filtered during comparisons of assertions 
 	private static final String[] FILTERED_ATTRS = {"password", "dateCreated","number"};
 		
+	// Cache for the schema to avoid multiple calls per test.
+	private static TdSchema schemaCache = null;
+	
 	@Override
 	protected String getSutName() {
 		return "market";
@@ -51,6 +54,16 @@ public class BaseMarket extends BaseAll {
 	
 	@Override
 	protected TdSchema getSchema() {
+		if (schemaCache == null) {
+			log.info("*** Begin: Transform the Market schema and save to cache");
+			schemaCache = getMarketSchema();
+			log.info("*** End: Transform the Market schema and save to cache");
+		} else {
+			log.info("*** Get the Market schema from cache");
+		}
+		return schemaCache;
+	}
+	protected TdSchema getMarketSchema() {
 		// Configure:
 		// - filter entities Link* and attributes _link*
 		// - the schema id resolver to use id attributes as uid 
