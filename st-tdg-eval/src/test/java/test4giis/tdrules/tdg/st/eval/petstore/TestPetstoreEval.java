@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  * A mock controller has been created for this purpose.
  */
 @Slf4j
-public class TestPetstore extends Base {
+public class TestPetstoreEval extends BasePetstoreEval {
 
 	private MockController mvc = new MockController();
 	private SoftVisualAssert sva = new SoftVisualAssert().setFramework(Framework.JUNIT4);

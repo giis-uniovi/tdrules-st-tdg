@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  * Test Data Generation (TDG)
  */
 @Slf4j
-public class Base {
+public class BasePetstoreEval {
 	protected static final String PETSTORE_SCHEMA_LOCAL = "../sut-petstore/src/main/resources/openapi.yaml";
 
 	protected static TdSchema model; // readonly, created before all tests
