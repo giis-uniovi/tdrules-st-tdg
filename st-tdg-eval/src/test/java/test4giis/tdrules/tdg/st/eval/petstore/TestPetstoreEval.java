@@ -3,10 +3,8 @@ package test4giis.tdrules.tdg.st.eval.petstore;
 import org.junit.Test;
 
 import giis.tdrules.store.loader.oa.ApiResponse;
-import giis.tdrules.store.loader.oa.Reserializer;
 import giis.visualassert.Framework;
 import giis.visualassert.SoftVisualAssert;
-import giis.visualassert.portable.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -23,14 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TestPetstoreEval extends BasePetstoreEval {
 
-	private MockController mvc = new MockController();
-	private SoftVisualAssert sva = new SoftVisualAssert().setFramework(Framework.JUNIT4);
-
 	// All tests that are readonly follow the same pattern, by defining a static
 	// variable to prevent multiple data loads when mutants are evaluated.
 	// The result assertions check both the output produced by the tested method and
 	// the data loaded. All these outputs are saved in files at target folder and
 	// compared against the expected files at src/test/resources folder.
+	// All tests use a mock controller (mvc) declared in the parent class
 
 	private static boolean testFindPetByStatusLoaded = false;
 
@@ -86,63 +82,12 @@ public class TestPetstoreEval extends BasePetstoreEval {
 	@Test
 	public void testUpdateDeliveryToCustomer() {
 		load(mvc, "tds Customer, \"Order\", Pet where Customer.id=1 and \"Order\".status='approved'");
+		SoftVisualAssert sva = new SoftVisualAssert().setFramework(Framework.JUNIT4);
 		sva.assertClear();
 		assertResults(true, false, false, null);
 		ApiResponse pets = mvc.post("/store/updateDeliveryToCustomer?customerId=1", "", true);
 		assertResults(false, true, true, pets);
 		sva.assertAll();
-	}
-
-	// to check get operations that do not modify the database
-	private void assertReadResults(ApiResponse result) {
-		sva.assertClear();
-		assertResults(true, false, true, result);
-		sva.assertAll();
-	}
-	
-	private void assertResults(boolean checkBefore, boolean checkAfter, boolean checkResult, ApiResponse result) {
-		if (checkBefore) {
-			ApiResponse data = mvc.get("/test/getAll");
-			saveOutput(getResultString(data, "data"), "data");
-			assertFiles(sva, "data");
-		}
-		if (checkAfter) {
-			ApiResponse data = mvc.get("/test/getAll");
-			saveOutput(getResultString(data, "dataout"), "dataout");
-			assertFiles(sva, "dataout");
-		}
-		if (checkResult) {
-			saveOutput(getResultString(result, "list"), "output");
-			assertFiles(sva, "output");
-		}
-	}
-	
-	private String getResultString(ApiResponse result, String format) {
-		String ret = "";
-		if (result.getStatus() == 200) {
-			if ("data".equals(format) || "dataout".equals(format))
-				ret = new Reserializer().reserializeData(result.getBody());
-			else if ("list".equals(format))
-				ret = new Reserializer().reserializeList(result.getBody());
-			else
-				ret = result.getBody();
-		} else {
-			ret = result.getStatus() + " " + result.getBody();
-		}
-		return ret;
-	}
-
-	private void saveOutput(String content, String type) {
-		log.info("*** Test {}:\n{}", type, content.trim());
-		FileUtil.fileWrite("target/" + testName.getMethodName() + "-" + type + ".txt", content);
-	}
-
-	private void assertFiles(SoftVisualAssert sva, String type) {
-		String expected = FileUtil.fileRead("src/test/resources/" + testName.getMethodName() + "-" + type + ".txt",
-				false);
-		String actual = FileUtil.fileRead("target/" + testName.getMethodName() + "-" + type + ".txt", false);
-		sva.assertEquals(expected == null ? "" : expected.replace("\r", ""),
-				actual == null ? "" : actual.replace("\r", ""));
 	}
 
 }
