@@ -90,8 +90,13 @@ jobs:
           mvn -pl st-tdg-eval test-compile org.pitest:pitest-maven:mutationCoverage -Dtest=**/eval/petstore/Test* -am -ntp
       - name: Evaluate Market Tests
         if: ${{ matrix.scope == 'MarketEval' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Generated qacover rules in server are in mapped volumes but created as root. As tests have to delete these files in the setup, mvn runs as root.
+        # But, if there are branch snapshtos, the github token must be accesible (-E)
+        # and the maven settings must contain the credentials (use the setup created by the java action for the runner default GHA user)
         run: |
-          sudo mvn -pl st-tdg-eval test -Dtest=**/eval/market/Test* -U -am -ntp
+          sudo -E mvn -s /home/runner/.m2/settings.xml -pl st-tdg-eval test -Dtest=**/eval/market/Test* -U -am -ntp
 
       ###### Logging and reporting ######
       - if: ${{ always() && matrix.scope == 'Petstore' }}
