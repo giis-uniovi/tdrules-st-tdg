@@ -1,0 +1,14 @@
+{
+  "email" : "lucia@email.com",
+  "name" : "Lucia",
+  "phone" : "+12123456789",
+  "address" : "2",
+  "_links" : {
+    "Shopping cart" : {
+      "href" : "http://localhost:8083/customer/cart"
+    },
+    "Manage contacts" : {
+      "href" : "http://localhost:8083"
+    }
+  }
+}
