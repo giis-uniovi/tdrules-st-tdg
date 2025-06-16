@@ -1,0 +1,18 @@
+{
+  "user" : "lucia@email.com",
+  "totalItems" : 0,
+  "productsCost" : 0.0,
+  "deliveryCost" : 400,
+  "deliveryIncluded" : true,
+  "totalCost" : 400.0,
+  "cartItems" : [ ],
+  "empty" : true,
+  "_links" : {
+    "Customer contacts" : {
+      "href" : "http://localhost:8083/customer/contacts"
+    },
+    "Proceed to payment" : {
+      "href" : "http://localhost:8083/customer/cart/pay"
+    }
+  }
+}
