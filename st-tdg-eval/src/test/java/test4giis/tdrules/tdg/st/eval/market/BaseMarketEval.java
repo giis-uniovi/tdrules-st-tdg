@@ -106,6 +106,27 @@ public class BaseMarketEval extends BaseMarket {
 		return response;
 	}
 	
+	protected ApiResponse callSutDelete(String path, String user, String passwd, boolean init) throws IOException {
+		if (init) {
+			// Before invoking the SUT, clear-out rules and reports previously generated
+			cleanDirectory(getSutRulesFolder(), true);
+			cleanDirectory(getRulesFolder(), false);
+			cleanDirectory(getReportsFolder(), false);
+		}
+		
+		// after execution copies the rules for further reporting
+		ApiWriter api = new ApiWriter();
+		
+		// include authentication
+		if (!user.isEmpty())
+			api.addBasicAuth(user, passwd);
+		
+		ApiResponse response = api.delete(MARKET_URL_LIVE + path);
+		if (init)
+			FileUtils.copyDirectory(new File(getSutRulesFolder()), new File(getRulesFolder()), false);
+		return response;
+	}
+	
 	// to check get operations that do not modify the database
 	protected void assertReadResults(ApiResponse result) throws JsonMappingException, JsonProcessingException {
 		SoftVisualAssert sva = new SoftVisualAssert().setFramework(Framework.JUNIT4);
