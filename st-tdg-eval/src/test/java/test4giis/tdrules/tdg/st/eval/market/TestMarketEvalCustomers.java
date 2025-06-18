@@ -11,7 +11,7 @@ import giis.tdrules.store.loader.oa.ApiResponse;
  * 
  * Tests related to Customers (register and access)
  * 
- * Results are shown for sql fpc rules:
+ * Results are shown for mutation rules:
  * - Actual and expected outputs are under a market folder at target 
  *   and src/test/resources, respectively
  * - Generated rules and reports are under target/market-qacover.
@@ -21,12 +21,14 @@ import giis.tdrules.store.loader.oa.ApiResponse;
  */
 public class TestMarketEvalCustomers extends BaseMarketEval {
 
+	// parameter to indicate if initializing or accumulating results
+	boolean init = true;
+	
 	/**
 	 * get an user registered
 	 */
 	@Test
 	public void testCustomerAccess() throws IOException {
-		boolean init = true;
 		load("tds UserDTORes where email = 'lucia@email.com' and password = '123456'");
 		
 		ApiResponse data = callSutGet("/customer","lucia@email.com","123456", init);
@@ -44,7 +46,7 @@ public class TestMarketEvalCustomers extends BaseMarketEval {
 				                             	   +" \"email\": \"lucia@email.com\","
 		                                   		   +" \"name\": \"Lucia\","
 		                                   		   +" \"password\": \"123456\","
-		                                   		   + "\"phone\": \"+34666666666\" }", false,"","", true);
+		                                   		   + "\"phone\": \"+34666666666\" }", false,"","", init);
 		report();
 		System.out.println("**** " + data.getBody());
 		assertReadResults(data);
@@ -61,7 +63,7 @@ public class TestMarketEvalCustomers extends BaseMarketEval {
 				                             	   +" \"email\": \"lucia@email.com\","
 		                                   		   +" \"name\": \"Lucy\","
 		                                   		   +" \"password\": \"1234567\","
-		                                   		   + "\"phone\": \"+34666666667\" }", false,"","", true);
+		                                   		   + "\"phone\": \"+34666666667\" }", false,"","", init);
 		report();
 		System.out.println("**** " + data.getBody());
 		assertReadResults(data);

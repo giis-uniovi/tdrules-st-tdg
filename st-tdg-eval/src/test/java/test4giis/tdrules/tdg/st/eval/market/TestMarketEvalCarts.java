@@ -9,9 +9,9 @@ import giis.tdrules.store.loader.oa.ApiResponse;
  * Tests to generate, load and evaluate Test Data Generation (TDG) for
  * the market SUT using API requests that exercise the business logic.
  * 
- * Tests related to Customers (register and access)
+ * Tests related to Carts (add products, update information of carts and delete carts)
  * 
- * Results are shown for sql fpc rules:
+ * Results are shown for mutation rules:
  * - Actual and expected outputs are under a market folder at target 
  *   and src/test/resources, respectively
  * - Generated rules and reports are under target/market-qacover.
@@ -21,18 +21,17 @@ import giis.tdrules.store.loader.oa.ApiResponse;
  */
 public class TestMarketEvalCarts extends BaseMarketEval {
 	
+	// parameter to indicate if initializing or accumulating results
+		boolean init = true;
+		
 	/*
 	 * From an user with an empty cart:
-	 * add units of two product available
 	 * add units of a product unavailable
+	 * add units of two product available
 	 * modify the number of units (increasing and decreasing)
-	 * from delivery included to not included
-	 * from not included to included
-	 * pay
 	 * */
 	@Test
 	public void testAddProducts() throws IOException {
-		boolean init = true;
 		// include product 1 available
 		// register user and generate a empty cart
 		String [] queries = {"tds ProductDTORes where name='pr1' and available = 1",
@@ -41,16 +40,16 @@ public class TestMarketEvalCarts extends BaseMarketEval {
 		load(queries);
 		
 		// add product 3 (unavailable), quantity 2 units
-		// As it is not possible to insert, cart is empty 
+		// since it is not possible to insert, output is an empty cart 
 		ApiResponse data = callSutPost("/customer/cart",
 						               "{\"productId\":\"3\", \"quantity\":\"2\"}",true,
-						               "lucia@email.com","123456", !init);
+						               "lucia@email.com","123456", init);
 		assertModel(testName.getMethodName() + "-0.txt",getResultString(data, "object"));
 		
 		// add product 1, quantity 6
 		data = callSutPost("/customer/cart",
 				                       "{\"productId\":\"1\", \"quantity\":\"6\"}",true,
-				                       "lucia@email.com","123456", init);
+				                       "lucia@email.com","123456", !init);
 		assertModel(testName.getMethodName() + "-1.txt",getResultString(data, "object"));
 		
 		// update units of product 1 decreasing 1 unit
@@ -88,12 +87,17 @@ public class TestMarketEvalCarts extends BaseMarketEval {
 	}
 	
 	/*
-	 * From an user with a cart with products
-	 * delete a product
+	 * From an user with a non-empty cart:
+	 * get the cart
+	 * from delivery included to not included
+	 * from not included to included
+	 * pay
+	 * 
+	 * after paying, get the cart (it is empty)
+	 * 
 	 * */
 	@Test
 	public void testUpdateCart() throws IOException {
-		boolean init = true;
 		// include product 1 available
 		// register user and generate a empty cart
 		String [] queries = {"tds UserDTORes where email = 'lucia@email.com' and password='123456'",
@@ -135,4 +139,41 @@ public class TestMarketEvalCarts extends BaseMarketEval {
 
 	}
 	
+	/*
+	 * From an user with a non-empty cart:
+	 * get the cart
+	 * delete the cart
+	 * get the cart (empty)
+	 * try to pay
+	 * */
+	@Test
+	public void testDeleteCart() throws IOException {
+		// include product 1 available
+		// register user and generate a empty cart
+		String [] queries = {"tds UserDTORes where email = 'lucia@email.com' and password='123456'",
+							 "tds CartDTO,CartItemDTORes,ProductDTORes "
+						   + " where CartDTO.user='lucia@email.com' and "
+						   + "       CartItemDTORes.productId=1 and CartItemDTORes.quantity=5 and "
+						   + "       ProductDTORes.available=1 "};
+		load(queries);
+
+		ApiResponse data = callSutGet("/customer/cart","lucia@email.com","123456", init);
+		
+		assertModel(testName.getMethodName() + "-1.txt",getResultString(data, "object"));
+		
+		// delete the cart
+		data = callSutDelete("/customer/cart",
+						               "lucia@email.com","123456", !init);
+		assertModel(testName.getMethodName() + "-0.txt",getResultString(data, "object"));
+				
+		// pay
+		data = callSutPost("/customer/cart/pay", 
+										"{\"ccNumber\":\"4030000010001234\"}", false,
+										"lucia@email.com","123456", !init);
+		assertModel(testName.getMethodName() + "-2.txt",getResultString(data, "object"));
+		
+		report();
+		assertReadResults(data);
+
+	}
 }
