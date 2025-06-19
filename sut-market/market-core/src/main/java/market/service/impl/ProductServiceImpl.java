@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findAll() {
 		return productDAO.findAll().stream()
-			.sorted(Comparator.comparing(Product::getName))
+			.sorted(Comparator.comparing(Product::getId))
 			.collect(Collectors.toList());
 	}
 
