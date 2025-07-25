@@ -68,9 +68,9 @@ public class BaseMarketEval extends BaseMarket {
 	protected ApiResponse callSutGet(String path, String user, String passwd, boolean init) throws IOException {
 		if (init) {
 			// Before invoking the SUT, clear-out rules and reports previously generated
-			cleanDirectory(getSutRulesFolder(), true);
-			cleanDirectory(getRulesFolder(), false);
-			cleanDirectory(getReportsFolder(), false);
+			cleanDirectory(getSutRulesFolder(), init);
+			cleanDirectory(getRulesFolder(), init);
+			cleanDirectory(getReportsFolder(), init);
 		}
 		
 		// after execution copies the rules for further reporting
@@ -88,9 +88,9 @@ public class BaseMarketEval extends BaseMarket {
 	protected ApiResponse callSutPost(String path, String requestBody, boolean usePut, String user, String passwd, boolean init) throws IOException {
 		if (init) {
 			// Before invoking the SUT, clear-out rules and reports previously generated
-			cleanDirectory(getSutRulesFolder(), true);
-			cleanDirectory(getRulesFolder(), false);
-			cleanDirectory(getReportsFolder(), false);
+			cleanDirectory(getSutRulesFolder(), init);
+			cleanDirectory(getRulesFolder(), init);
+			cleanDirectory(getReportsFolder(), init);
 		}
 		
 		// after execution copies the rules for further reporting
