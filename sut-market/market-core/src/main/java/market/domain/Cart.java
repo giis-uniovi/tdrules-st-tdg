@@ -119,10 +119,11 @@ public class Cart implements Serializable {
 	}
 
 	public List<CartItem> getCartItems() {
+		// Tests: sustitución de return Collections.unmodifiableList(cartItems); para que devuelva los items ordenados por su id
 		return cartItems.stream()
 		        .sorted(Comparator.comparingLong(item -> item.getProduct().getId()))
 		        .collect(Collectors.toUnmodifiableList());
-		//return Collections.unmodifiableList(cartItems);
+		
 	}
 
 	public boolean isDeliveryIncluded() {

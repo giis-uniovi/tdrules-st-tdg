@@ -32,6 +32,7 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	@Override
 	public List<Product> findAll() {
+		// test: sustitución getName por getId para qe se ordenen los items por id
 		return productDAO.findAll().stream()
 			.sorted(Comparator.comparing(Product::getId))
 			.collect(Collectors.toList());
