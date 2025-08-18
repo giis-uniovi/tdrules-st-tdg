@@ -152,7 +152,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       # Downloads all artifacts with test report files
-      - uses: actions/download-artifact@v4.3.0
+      - uses: actions/download-artifact@v5.0.0
         if: always()
         with:
           path: .
