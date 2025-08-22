@@ -22,7 +22,7 @@
 		
 		<tdrules.version>4.6.1</tdrules.version>
 		
-		<qagrow.version>1.4.297</qagrow.version>
+		<qagrow.version>1.4.300</qagrow.version>
 		
 		<qacover.version>2.1.0</qacover.version>
 	</properties>
