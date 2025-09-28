@@ -22,7 +22,7 @@
 		
 		<tdrules.version>4.6.1</tdrules.version>
 		
-		<qagrow.version>1.4.300</qagrow.version>
+		<qagrow.version>1.4.301</qagrow.version>
 		
 		<qacover.version>2.1.0</qacover.version>
 	</properties>
@@ -69,7 +69,7 @@
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-slf4j2-impl</artifactId>
-				<version>2.25.1</version>
+				<version>2.25.2</version>
 				<scope>test</scope>
 			</dependency>
 
@@ -94,7 +94,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.14.0</version>
+					<version>3.14.1</version>
 					<configuration>
 						<source>1.8</source>
 						<target>1.8</target>
