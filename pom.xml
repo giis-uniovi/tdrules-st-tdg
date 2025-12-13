@@ -20,7 +20,7 @@
 
 		<surefire.version>3.5.4</surefire.version>
 		
-		<tdrules.version>4.6.1</tdrules.version>
+		<tdrules.version>4.6.2</tdrules.version>
 		
 		<qagrow.version>1.4.304</qagrow.version>
 		
