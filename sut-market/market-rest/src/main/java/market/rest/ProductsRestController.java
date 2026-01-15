@@ -6,8 +6,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.stream.Collectors;
+import java.util.List;
 
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import market.domain.Product;
 import market.dto.ProductDTO;
+import market.dto.ProductTotalDTO;
 import market.dto.assembler.ProductDtoAssembler;
 import market.exception.UnknownEntityException;
 import market.service.ProductService;
@@ -81,4 +84,17 @@ public class ProductsRestController {
 		dto.add(linkTo(methodOn(getClass()).getProducts()).withRel("All products"));
 		return dto;
 	}
+	
+	/**
+	 * New endpoint (GET) for testing: add to get the total number of sold products 
+	 */
+	@GetMapping("/soldProducts")
+	public ResponseEntity<List<ProductTotalDTO>> getTotalSoldProducts() {
+	    List<ProductTotalDTO> totals = productService.getTotalSoldProducts();
+	    // rows are sorted by id
+	    totals.sort(Comparator.comparingInt(ProductTotalDTO::getId));
+	    return ResponseEntity.ok(totals);
+	}
+	
+	
 }
