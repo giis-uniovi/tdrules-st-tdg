@@ -1,0 +1,26 @@
+{
+  "user" : "lucia@email.com",
+  "totalItems" : 1,
+  "productsCost" : 244.79999999999998,
+  "deliveryCost" : 400,
+  "deliveryIncluded" : true,
+  "totalCost" : 644.8,
+  "cartItems" : [ {
+    "productId" : 1,
+    "quantity" : 6,
+    "_links" : {
+      "View product" : {
+        "href" : "http://localhost:8083/products/1"
+      }
+    }
+  } ],
+  "empty" : false,
+  "_links" : {
+    "Customer contacts" : {
+      "href" : "http://localhost:8083/customer/contacts"
+    },
+    "Proceed to payment" : {
+      "href" : "http://localhost:8083/customer/cart/pay"
+    }
+  }
+}

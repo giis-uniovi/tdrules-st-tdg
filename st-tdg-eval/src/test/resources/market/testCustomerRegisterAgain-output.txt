@@ -1,0 +1,1 @@
+406 {"message":"Argument validation error","description":"uri=/register","entityName":"UserAccount","fieldErrors":[{"field":"email","message":"Account with this email already exists"}]}

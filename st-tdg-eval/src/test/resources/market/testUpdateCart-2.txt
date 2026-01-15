@@ -1,0 +1,34 @@
+{
+  "user" : "lucia@email.com",
+  "totalItems" : 2,
+  "productsCost" : 658.0,
+  "deliveryCost" : 400,
+  "deliveryIncluded" : false,
+  "totalCost" : 1058.0,
+  "cartItems" : [ {
+    "productId" : 1,
+    "quantity" : 5,
+    "_links" : {
+      "View product" : {
+        "href" : "http://localhost:8083/products/1"
+      }
+    }
+  }, {
+    "productId" : 2,
+    "quantity" : 5,
+    "_links" : {
+      "View product" : {
+        "href" : "http://localhost:8083/products/2"
+      }
+    }
+  } ],
+  "empty" : false,
+  "_links" : {
+    "Customer contacts" : {
+      "href" : "http://localhost:8083/customer/contacts"
+    },
+    "Proceed to payment" : {
+      "href" : "http://localhost:8083/customer/cart/pay"
+    }
+  }
+}

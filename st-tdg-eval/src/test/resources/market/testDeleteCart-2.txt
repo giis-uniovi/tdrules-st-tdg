@@ -1,0 +1,1 @@
+406 {"message":"Argument validation error","description":"uri=/customer/cart/pay","entityName":"cart","fieldErrors":[{"field":"items","message":"Cannot place the order: cart is empty"}]}
