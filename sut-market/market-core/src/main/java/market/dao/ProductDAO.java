@@ -3,12 +3,16 @@ package market.dao;
 import market.domain.Distillery;
 import market.domain.Product;
 import market.domain.Region;
+import market.dto.ProductTotalDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
 
 public interface ProductDAO extends CrudRepository<Product, Long>, JpaRepository<Product, Long> {
 
@@ -18,4 +22,11 @@ public interface ProductDAO extends CrudRepository<Product, Long>, JpaRepository
 	Page<Product> findByRegionOrderByName(@Param("region") Region region, Pageable request);
 
 	Page<Product> findByAvailableOrderByName(boolean available, Pageable request);
+	
+	// testing: add to get the total number of sold products
+	@Query("SELECT p.id as id, p.name as name, SUM(op.quantity) as totalQuantity " +
+	       "FROM OrderedProduct op JOIN op.product p " +
+	       "GROUP BY p.id, p.name")
+	List<ProductTotalDTO> findTotalSoldProducts();
+
 }
