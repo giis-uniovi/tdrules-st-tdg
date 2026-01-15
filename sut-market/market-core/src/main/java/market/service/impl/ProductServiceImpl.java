@@ -8,6 +8,7 @@ import market.exception.UnknownEntityException;
 import market.service.DistilleryService;
 import market.service.ProductService;
 import market.dto.ProductTotalDTO;
+import market.dto.SalesByRegionDistilleryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -131,7 +132,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	//testing: add to get the total number of sold products
+	@Override
 	public List<ProductTotalDTO> getTotalSoldProducts() {
 		return productDAO.findTotalSoldProducts();
+	}
+	
+	//testing: add to get the total sales by region and distillery
+	@Override
+	public List<SalesByRegionDistilleryDTO> getSalesByRegionDistillery() {
+		return productDAO.findSalesByRegionDistillery();
 	}
 }

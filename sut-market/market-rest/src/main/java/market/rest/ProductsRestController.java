@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import market.domain.Product;
 import market.dto.ProductDTO;
 import market.dto.ProductTotalDTO;
+import market.dto.SalesByRegionDistilleryDTO;
 import market.dto.assembler.ProductDtoAssembler;
 import market.exception.UnknownEntityException;
 import market.service.ProductService;
@@ -94,6 +95,18 @@ public class ProductsRestController {
 	    // rows are sorted by id
 	    totals.sort(Comparator.comparingInt(ProductTotalDTO::getId));
 	    return ResponseEntity.ok(totals);
+	}
+	
+	/**
+	 * New endpoint (GET) for testing: add to get the total sales by region and distillery
+	 */
+	@GetMapping("/salesByRegionDistillery")
+	public ResponseEntity<List<market.dto.SalesByRegionDistilleryDTO>> getSalesByRegionDistillery() {
+	    List<SalesByRegionDistilleryDTO> sales = productService.getSalesByRegionDistillery();
+	    // rows are sorted by regionId and distilleryId (getters return primitive int)
+	    sales.sort(Comparator.comparingInt(SalesByRegionDistilleryDTO::getRegionId)
+	                         .thenComparingInt(SalesByRegionDistilleryDTO::getDistilleryId));
+	    return ResponseEntity.ok(sales);
 	}
 	
 	

@@ -29,4 +29,10 @@ public interface ProductDAO extends CrudRepository<Product, Long>, JpaRepository
 	       "GROUP BY p.id, p.name")
 	List<ProductTotalDTO> findTotalSoldProducts();
 
+	// testing: add to get the total sales grouped by region and distillery
+	@Query("SELECT r.id as regionId, r.name as regionName, d.id as distilleryId, d.title as distilleryTitle, SUM(op.quantity) as totalSold " +
+	       "FROM OrderedProduct op JOIN op.product p JOIN p.distillery d JOIN d.region r " +
+	       "GROUP BY r.id, r.name, d.id, d.title")
+	List<market.dto.SalesByRegionDistilleryDTO> findSalesByRegionDistillery();
+
 }
