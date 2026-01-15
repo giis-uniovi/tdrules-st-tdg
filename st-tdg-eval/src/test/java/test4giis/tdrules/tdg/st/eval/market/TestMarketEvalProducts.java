@@ -44,4 +44,23 @@ public class TestMarketEvalProducts extends BaseMarketEval {
 		assertReadResults(data);
 	}
 	
+	/**
+	 * Get sales by region and distillery 
+	 * */
+	@Test
+	public void testSalesByRegionDistillery() throws IOException {
+		String [] queries = {"tds ProductDTORes where name='pr1' and available = 1",
+				 "tds UserDTORes where email = 'lucia@email.com' and password='123456'",
+				 "tds OrderDTORes,OrderedProductDTORes,ProductDTORes,DistilleryDTORes,RegionDTORes "
+               + " group by RegionDTORes.name, DistilleryDTORes.title "};
+		load(queries);
+		
+		// get the sold products
+		ApiResponse data = callSutGet("/products/salesByRegionDistillery","lucia@email.com","123456", init);
+		assertModel(testName.getMethodName() + ".txt",getResultString(data, "object"));
+		
+		report();
+		assertReadResults(data);
+	}
+	
 }
