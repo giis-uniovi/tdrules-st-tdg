@@ -2,6 +2,7 @@ package test4giis.tdrules.tdg.st.eval.market;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
 
@@ -14,7 +15,6 @@ import giis.tdrules.store.loader.DataLoader;
 import giis.tdrules.store.loader.gen.IAttrGen;
 import giis.tdrules.store.loader.oa.ApiResponse;
 import giis.tdrules.store.loader.oa.ApiWriter;
-import giis.tdrules.store.loader.oa.Reserializer;
 import giis.visualassert.Framework;
 import giis.visualassert.SoftVisualAssert;
 import giis.visualassert.portable.FileUtil;
@@ -45,6 +45,10 @@ public class BaseMarketEval extends BaseMarket {
 	}
 	
 	protected void load(String query) throws IOException {
+		load (new String[] {query});
+	}
+	
+	protected void load(String queries[]) throws IOException {
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		TdSchema schema = getSchema();
@@ -53,20 +57,73 @@ public class BaseMarketEval extends BaseMarket {
 		cleanDirectory(getSutRulesFolder(), true);
 
 		QAGrowApiProcess qagrow = new QAGrowApiProcess(schema, getRulesApi(), dg, dict);
-		qagrow.genData4ApiQuery(query);
+		qagrow.genData4ApiQueries(Arrays.asList(queries));
 		
 	}
 	
-	protected ApiResponse callSut(String path) throws IOException {
-		// Before invoking the SUT, clear-out rules and reports previously generated
-		cleanDirectory(getSutRulesFolder(), true);
-		cleanDirectory(getRulesFolder(), false);
-		cleanDirectory(getReportsFolder(), false);
+	protected ApiResponse callSutGet(String path, boolean init) throws IOException {
+		return callSutGet(path, "", "", init);
+	}
+	
+	protected ApiResponse callSutGet(String path, String user, String passwd, boolean init) throws IOException {
+		if (init) {
+			// Before invoking the SUT, clear-out rules and reports previously generated
+			cleanDirectory(getSutRulesFolder(), false);
+			cleanDirectory(getRulesFolder(), false);
+			cleanDirectory(getReportsFolder(), false);
+		}
 		
 		// after execution copies the rules for further reporting
 		ApiWriter api = new ApiWriter();
+		
+		// include authentication
+		if (user != null && !user.isEmpty())
+			api.addBasicAuth(user, passwd);
+		
 		ApiResponse response = api.get(MARKET_URL_LIVE + path);
 		FileUtils.copyDirectory(new File(getSutRulesFolder()), new File(getRulesFolder()), false);
+		return response;
+	}
+	
+	protected ApiResponse callSutPost(String path, String requestBody, boolean usePut, String user, String passwd, boolean init) throws IOException {
+		if (init) {
+			// Before invoking the SUT, clear-out rules and reports previously generated
+			cleanDirectory(getSutRulesFolder(), false);
+			cleanDirectory(getRulesFolder(), false);
+			cleanDirectory(getReportsFolder(), false);
+		}
+		
+		// after execution copies the rules for further reporting
+		ApiWriter api = new ApiWriter();
+		
+		// include authentication
+		if (!user.isEmpty())
+			api.addBasicAuth(user, passwd);
+		
+		ApiResponse response = api.post(MARKET_URL_LIVE + path, requestBody, usePut);
+		if (init)
+			FileUtils.copyDirectory(new File(getSutRulesFolder()), new File(getRulesFolder()), false);
+		return response;
+	}
+	
+	protected ApiResponse callSutDelete(String path, String user, String passwd, boolean init) throws IOException {
+		if (init) {
+			// Before invoking the SUT, clear-out rules and reports previously generated
+			cleanDirectory(getSutRulesFolder(), true);
+			cleanDirectory(getRulesFolder(), false);
+			cleanDirectory(getReportsFolder(), false);
+		}
+		
+		// after execution copies the rules for further reporting
+		ApiWriter api = new ApiWriter();
+		
+		// include authentication
+		if (!user.isEmpty())
+			api.addBasicAuth(user, passwd);
+		
+		ApiResponse response = api.delete(MARKET_URL_LIVE + path);
+		if (init)
+			FileUtils.copyDirectory(new File(getSutRulesFolder()), new File(getRulesFolder()), false);
 		return response;
 	}
 	
@@ -87,11 +144,11 @@ public class BaseMarketEval extends BaseMarket {
 	
 	protected String getResultString(ApiResponse result, String format) throws JsonMappingException, JsonProcessingException {
 		String ret = "";
-		if (result.getStatus() == 200) {
+		if (result.getStatus() == 200 || result.getStatus() == 201) {
 			if ("object".equals(format)) {
-				ret = new ObjectMapper().readTree(result.getBody()).toPrettyString();
+				ret = new ObjectMapper().readTree(filterAttributes(result.getBody(),FILTERED_ATTRS)).toPrettyString();
 			} else if ("data".equals(format))
-				ret = new Reserializer().reserializeData(result.getBody());
+				ret = reserializeStoredData(filterAttributes(result.getBody(),FILTERED_ATTRS));
 			else
 				ret = result.getBody();
 		} else {
