@@ -5,6 +5,8 @@ updates:
     schedule:
       interval: weekly
       day: "friday"
+    assignees:
+      - "ClaudiodelaRiva"
     open-pull-requests-limit: 20
 
   - package-ecosystem: github-actions
@@ -12,5 +14,7 @@ updates:
     schedule:
       interval: weekly
       day: "friday"
+    assignees:
+      - "ClaudiodelaRiva"
     open-pull-requests-limit: 20
     
