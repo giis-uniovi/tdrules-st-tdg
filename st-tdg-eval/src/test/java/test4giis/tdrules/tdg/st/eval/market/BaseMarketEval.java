@@ -66,40 +66,23 @@ public class BaseMarketEval extends BaseMarket {
 	}
 	
 	protected ApiResponse callSutGet(String path, String user, String passwd, boolean init) throws IOException {
-		if (init) {
-			// Before invoking the SUT, clear-out rules and reports previously generated
-			cleanDirectory(getSutRulesFolder(), false);
-			cleanDirectory(getRulesFolder(), false);
-			cleanDirectory(getReportsFolder(), false);
-		}
+		beforeCallSut(init);
 		
 		// after execution copies the rules for further reporting
-		ApiWriter api = new ApiWriter();
-		
-		// include authentication
-		if (user != null && !user.isEmpty())
-			api.addBasicAuth(user, passwd);
-		
+		ApiWriter api = getApiWriter(user, passwd); 
+
 		ApiResponse response = api.get(MARKET_URL_LIVE + path);
-		FileUtils.copyDirectory(new File(getSutRulesFolder()), new File(getRulesFolder()), false);
+		afterCallSut(init);
+		
 		return response;
 	}
 	
 	protected ApiResponse callSutPost(String path, String requestBody, boolean usePut, String user, String passwd, boolean init) throws IOException {
-		if (init) {
-			// Before invoking the SUT, clear-out rules and reports previously generated
-			cleanDirectory(getSutRulesFolder(), false);
-			cleanDirectory(getRulesFolder(), false);
-			cleanDirectory(getReportsFolder(), false);
-		}
+		beforeCallSut(init);
 		
 		// after execution copies the rules for further reporting
-		ApiWriter api = new ApiWriter();
-		
-		// include authentication
-		if (!user.isEmpty())
-			api.addBasicAuth(user, passwd);
-		
+		ApiWriter api = getApiWriter(user, passwd); 
+
 		ApiResponse response = api.post(MARKET_URL_LIVE + path, requestBody, usePut);
 		if (init)
 			FileUtils.copyDirectory(new File(getSutRulesFolder()), new File(getRulesFolder()), false);
@@ -107,25 +90,41 @@ public class BaseMarketEval extends BaseMarket {
 	}
 	
 	protected ApiResponse callSutDelete(String path, String user, String passwd, boolean init) throws IOException {
+		beforeCallSut(init);
+		
+		// after execution copies the rules for further reporting
+		ApiWriter api = getApiWriter(user, passwd); 
+		
+		ApiResponse response = api.delete(MARKET_URL_LIVE + path);
+		
+		afterCallSut(init);
+		
+		return response;
+	}
+	
+	private void beforeCallSut(boolean init) {
 		if (init) {
 			// Before invoking the SUT, clear-out rules and reports previously generated
-			cleanDirectory(getSutRulesFolder(), true);
+			cleanDirectory(getSutRulesFolder(), false);
 			cleanDirectory(getRulesFolder(), false);
 			cleanDirectory(getReportsFolder(), false);
 		}
-		
-		// after execution copies the rules for further reporting
+	}
+	
+	private ApiWriter getApiWriter(String user, String passwd) {
 		ApiWriter api = new ApiWriter();
-		
+				
 		// include authentication
 		if (!user.isEmpty())
 			api.addBasicAuth(user, passwd);
 		
-		ApiResponse response = api.delete(MARKET_URL_LIVE + path);
+		return api;
+	}
+	
+	private void afterCallSut(boolean init) throws IOException {
 		if (init)
 			FileUtils.copyDirectory(new File(getSutRulesFolder()), new File(getRulesFolder()), false);
-		return response;
-	}
+	}	
 	
 	// to check get operations that do not modify the database
 	protected void assertReadResults(ApiResponse result) throws JsonMappingException, JsonProcessingException {
@@ -179,6 +178,11 @@ public class BaseMarketEval extends BaseMarket {
 		String actual = FileUtil.fileRead("target/market/" + testName.getMethodName() + "-" + type + ".txt", false);
 		sva.assertEquals(expected == null ? "" : expected.replace("\r", ""),
 				actual == null ? "" : actual.replace("\r", ""));
+	}
+	
+	protected void saveResults (ApiResponse data)  throws IOException {
+		report();
+		assertReadResults(data);
 	}
 
 }

@@ -21,10 +21,6 @@ import giis.tdrules.store.loader.oa.ApiResponse;
  */
 public class TestMarketEvalOrders extends BaseMarketEval {
 	
-	// parameter to indicate if initializing or accumulating results
-	// after each test, init is false to accumulate result with the rest of them
-	boolean init = true;
-		
 	/*
 	 * From an user with at least an order, get orders
 	 * */
@@ -41,15 +37,14 @@ public class TestMarketEvalOrders extends BaseMarketEval {
 		load(queries);
 		
 		// get the orders
-		ApiResponse data = callSutGet("/customer/orders","lucia@email.com","123456", init);
+		ApiResponse data = callSutGet("/customer/orders","lucia@email.com","123456", true);
 		assertModel(testName.getMethodName() + "-1.txt",getResultString(data, "object"));
 		
-		report();
-		assertReadResults(data);
+		saveResults(data);
 	}
 	
 	/*
-	 * From an user with at least an order, get orders
+	 * From an user with at least an order, get the order with id 1
 	 * */
 	@Test
 	public void testGetAnOrder() throws IOException {
@@ -64,11 +59,10 @@ public class TestMarketEvalOrders extends BaseMarketEval {
 		load(queries);
 		
 		// get order 1
-		ApiResponse data = callSutGet("/customer/orders/1","lucia@email.com","123456", init);
+		ApiResponse data = callSutGet("/customer/orders/1","lucia@email.com","123456", true);
 		assertModel(testName.getMethodName() + "-1.txt",getResultString(data, "object"));
 		
-		report();
-		assertReadResults(data);
+		saveResults(data);
 	}
 	
 	/*
@@ -85,11 +79,10 @@ public class TestMarketEvalOrders extends BaseMarketEval {
 		load(queries);
 		
 		// get the orders
-		ApiResponse data = callSutGet("/customer/orders/non-executed-by-user","lucia@email.com","123456", init);
+		ApiResponse data = callSutGet("/customer/orders/non-executed-by-user","lucia@email.com","123456", true);
 		assertModel(testName.getMethodName() + "-1.txt",getResultString(data, "object"));
 		
-		report();
-		assertReadResults(data);
+		saveResults(data);
 	}
 	
 	/*
@@ -114,11 +107,10 @@ public class TestMarketEvalOrders extends BaseMarketEval {
 		load(queries);
 		
 		// get the orders
-		ApiResponse data = callSutGet("/customer/orders/sameAddress?deliveryincluded=false&executed=false","lucia@email.com","123456", init);
+		ApiResponse data = callSutGet("/customer/orders/sameAddress?deliveryincluded=false&executed=false","lucia@email.com","123456", true);
 		assertModel(testName.getMethodName() + "-1.txt",getResultString(data, "object"));
 		
-		report();
-		assertReadResults(data);
+		saveResults(data);
 	}
 
 	/**
@@ -132,19 +124,9 @@ public class TestMarketEvalOrders extends BaseMarketEval {
 		load(queries);
 		
 		// get the orders
-		ApiResponse data = callSutGet("/customer/orders/total-by-user","lucia@email.com","123456", init);
+		ApiResponse data = callSutGet("/customer/orders/total-by-user","lucia@email.com","123456", true);
 		assertModel(testName.getMethodName() + "-1.txt",getResultString(data, "object"));
 		
-		report();
-		assertReadResults(data);
+		saveResults(data);
 	}
-	
-	/* órdenes de con envío incluido con importe superior a ...*
-	 * 
-	 * órdenes sin importe incluido del mismo zip
-	 * información de diferentes customers
-	 * informacion de tarjetas y pedidos de un customer
-	 * 
-	 *
-	 * */
 }

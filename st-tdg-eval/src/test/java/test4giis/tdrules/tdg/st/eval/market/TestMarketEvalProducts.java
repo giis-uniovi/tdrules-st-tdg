@@ -21,10 +21,6 @@ import giis.tdrules.store.loader.oa.ApiResponse;
  */
 public class TestMarketEvalProducts extends BaseMarketEval {
 	
-	// parameter to indicate if initializing or accumulating results
-	// after each test, init is false to accumulate result with the rest of them
-	boolean init = true;
-		
 	/**
 	 * Get total of sold products 
 	 * */
@@ -37,11 +33,10 @@ public class TestMarketEvalProducts extends BaseMarketEval {
 		load(queries);
 		
 		// get the sold products
-		ApiResponse data = callSutGet("/products/soldProducts","lucia@email.com","123456", init);
+		ApiResponse data = callSutGet("/products/soldProducts","lucia@email.com","123456", true);
 		assertModel(testName.getMethodName() + "-1.txt",getResultString(data, "object"));
 		
-		report();
-		assertReadResults(data);
+		saveResults(data);
 	}
 	
 	/**
@@ -56,11 +51,10 @@ public class TestMarketEvalProducts extends BaseMarketEval {
 		load(queries);
 		
 		// get the sold products
-		ApiResponse data = callSutGet("/products/salesByRegionDistillery","lucia@email.com","123456", init);
+		ApiResponse data = callSutGet("/products/salesByRegionDistillery","lucia@email.com","123456", true);
 		assertModel(testName.getMethodName() + ".txt",getResultString(data, "object"));
 		
-		report();
-		assertReadResults(data);
+		saveResults(data);
 	}
 	
 }

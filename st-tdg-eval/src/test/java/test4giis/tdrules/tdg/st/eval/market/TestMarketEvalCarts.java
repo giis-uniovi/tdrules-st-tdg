@@ -20,10 +20,6 @@ import giis.tdrules.store.loader.oa.ApiResponse;
  * 
  */
 public class TestMarketEvalCarts extends BaseMarketEval {
-	
-	// parameter to indicate if initializing or accumulating results
-	boolean init = true;
-		
 	/*
 	 * From an user with an empty cart:
 	 * add units of a product unavailable
@@ -43,27 +39,27 @@ public class TestMarketEvalCarts extends BaseMarketEval {
 		// since it is not possible to insert, output is an empty cart 
 		ApiResponse data = callSutPost("/customer/cart",
 						               "{\"productId\":\"3\", \"quantity\":\"2\"}",true,
-						               "lucia@email.com","123456", init);
+						               "lucia@email.com","123456", true);
 		assertModel(testName.getMethodName() + "-0.txt",getResultString(data, "object"));
 		
 		// add product 1, quantity 6
 		data = callSutPost("/customer/cart",
 				                       "{\"productId\":\"1\", \"quantity\":\"6\"}",true,
-				                       "lucia@email.com","123456", !init);
+				                       "lucia@email.com","123456", false);
 		assertModel(testName.getMethodName() + "-1.txt",getResultString(data, "object"));
 		
 		// update units of product 1 decreasing 1 unit
 		// product 1, quantity 4
 		data = callSutPost("/customer/cart",
 				                       "{\"productId\":\"1\", \"quantity\":\"4\"}",true,
-				                       "lucia@email.com","123456", !init);
+				                       "lucia@email.com","123456", false);
 		assertModel(testName.getMethodName() + "-2.txt",getResultString(data, "object"));
 		
 		// update units of product 1 increasing 1 unit
 		// product 1, quantity 5
 		data = callSutPost("/customer/cart",
 						               "{\"productId\":\"1\", \"quantity\":\"5\"}",true,
-						               "lucia@email.com","123456", !init);
+						               "lucia@email.com","123456", false);
 		assertModel(testName.getMethodName() + "-3.txt",getResultString(data, "object"));
 		
 		// add product 3 (unavailable), quantity 2 units
@@ -71,19 +67,17 @@ public class TestMarketEvalCarts extends BaseMarketEval {
 		// As it is not possible to insert, output of endpoint is the same as above, 
 		data = callSutPost("/customer/cart",
 						               "{\"productId\":\"3\", \"quantity\":\"2\"}",true,
-						               "lucia@email.com","123456", !init);
+						               "lucia@email.com","123456", false);
 		assertModel(testName.getMethodName() + "-3.txt",getResultString(data, "object"));
 		
 		// add product 2, quantity 1 unit
 		// product 3, quantity 1
 		data = callSutPost("/customer/cart",
 						               "{\"productId\":\"2\", \"quantity\":\"1\"}",true,
-						               "lucia@email.com","123456", !init);
+						               "lucia@email.com","123456", false);
 		assertModel(testName.getMethodName() + "-4.txt",getResultString(data, "object"));
 		
-		report();
-		assertReadResults(data);
-		
+		saveResults(data);		
 	}
 	
 	/*
@@ -107,36 +101,34 @@ public class TestMarketEvalCarts extends BaseMarketEval {
 						   + "       ProductDTORes.available=1 "};
 		load(queries);
 
-		ApiResponse data = callSutGet("/customer/cart","lucia@email.com","123456", init);
+		ApiResponse data = callSutGet("/customer/cart","lucia@email.com","123456", true);
 		
 		assertModel(testName.getMethodName() + "-1.txt",getResultString(data, "object"));
 		
 		// change to not delivery included
 		data = callSutPost("/customer/cart/delivery?included=false","",true,
-						               "lucia@email.com","123456", !init);
+						               "lucia@email.com","123456", false);
 		assertModel(testName.getMethodName() + "-2.txt",getResultString(data, "object"));
 				
 		// change to delivery included
 		data = callSutPost("/customer/cart/delivery?included=true","",true,
-						               "lucia@email.com","123456", !init);
+						               "lucia@email.com","123456", false);
 		assertModel(testName.getMethodName() + "-3.txt",getResultString(data, "object"));
 		
 		
 		// pay
 		data = callSutPost("/customer/cart/pay", 
 										"{\"ccNumber\":\"4030000010001234\"}", false,
-										"lucia@email.com","123456", !init);
+										"lucia@email.com","123456", false);
 		assertModel(testName.getMethodName() + "-4.txt",getResultString(data, "object"));
 
 		
 
 		// after paying, the cart is empty
-		data = callSutGet("/customer/cart", "lucia@email.com","123456", !init);
+		data = callSutGet("/customer/cart", "lucia@email.com","123456", false);
 		assertModel(testName.getMethodName() + "-0.txt",getResultString(data, "object"));
 		
-		report();
-		assertReadResults(data);
-
+		saveResults(data);
 	}
 	
 	/*
@@ -157,23 +149,21 @@ public class TestMarketEvalCarts extends BaseMarketEval {
 						   + "       ProductDTORes.available=1 "};
 		load(queries);
 
-		ApiResponse data = callSutGet("/customer/cart","lucia@email.com","123456", init);
+		ApiResponse data = callSutGet("/customer/cart","lucia@email.com","123456", true);
 		
 		assertModel(testName.getMethodName() + "-1.txt",getResultString(data, "object"));
 		
 		// delete the cart
 		data = callSutDelete("/customer/cart",
-						               "lucia@email.com","123456", !init);
+						               "lucia@email.com","123456", false);
 		assertModel(testName.getMethodName() + "-0.txt",getResultString(data, "object"));
 				
 		// pay
 		data = callSutPost("/customer/cart/pay", 
 										"{\"ccNumber\":\"4030000010001234\"}", false,
-										"lucia@email.com","123456", !init);
+										"lucia@email.com","123456", false);
 		assertModel(testName.getMethodName() + "-2.txt",getResultString(data, "object"));
 		
-		report();
-		assertReadResults(data);
-
+		saveResults(data);
 	}
 }

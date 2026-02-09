@@ -42,13 +42,10 @@ public class TestMarketEval extends BaseMarketEval {
 	
 	@Test
 	public void testProductsDemo() throws IOException {
-		boolean init = true;
 		load("tds ProductDTORes, DistilleryDTORes, RegionDTORes where available = 1 and distillery ='Ardbeg'");
 		// nota, buscar RegionDTORes.color='green' no obtiene regiones con diferentes colores
-		ApiResponse data = callSutGet("/products/1", init);
-		report();
-		System.out.println("**** " + data.getBody());
-		assertReadResults(data);
+		ApiResponse data = callSutGet("/products/1", true);
+		saveResults(data);
 	}
 	
 	
