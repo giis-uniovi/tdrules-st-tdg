@@ -2,6 +2,7 @@ package test4giis.tdrules.tdg.st.eval.market;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
 
@@ -14,7 +15,6 @@ import giis.tdrules.store.loader.DataLoader;
 import giis.tdrules.store.loader.gen.IAttrGen;
 import giis.tdrules.store.loader.oa.ApiResponse;
 import giis.tdrules.store.loader.oa.ApiWriter;
-import giis.tdrules.store.loader.oa.Reserializer;
 import giis.visualassert.Framework;
 import giis.visualassert.SoftVisualAssert;
 import giis.visualassert.portable.FileUtil;
@@ -45,6 +45,10 @@ public class BaseMarketEval extends BaseMarket {
 	}
 	
 	protected void load(String query) throws IOException {
+		load (new String[] {query});
+	}
+	
+	protected void load(String queries[]) throws IOException {
 		IAttrGen dict=getDictionaryAttrGen();
 		DataLoader dg = getLiveDataLoader().setAttrGen(dict);
 		TdSchema schema = getSchema();
@@ -53,22 +57,74 @@ public class BaseMarketEval extends BaseMarket {
 		cleanDirectory(getSutRulesFolder(), true);
 
 		QAGrowApiProcess qagrow = new QAGrowApiProcess(schema, getRulesApi(), dg, dict);
-		qagrow.genData4ApiQuery(query);
+		qagrow.genData4ApiQueries(Arrays.asList(queries));
 		
 	}
 	
-	protected ApiResponse callSut(String path) throws IOException {
-		// Before invoking the SUT, clear-out rules and reports previously generated
-		cleanDirectory(getSutRulesFolder(), true);
-		cleanDirectory(getRulesFolder(), false);
-		cleanDirectory(getReportsFolder(), false);
+	protected ApiResponse callSutGet(String path, boolean init) throws IOException {
+		return callSutGet(path, "", "", init);
+	}
+	
+	protected ApiResponse callSutGet(String path, String user, String passwd, boolean init) throws IOException {
+		beforeCallSut(init);
 		
 		// after execution copies the rules for further reporting
-		ApiWriter api = new ApiWriter();
+		ApiWriter api = getApiWriter(user, passwd); 
+
 		ApiResponse response = api.get(MARKET_URL_LIVE + path);
-		FileUtils.copyDirectory(new File(getSutRulesFolder()), new File(getRulesFolder()), false);
+		afterCallSut(init);
+		
 		return response;
 	}
+	
+	protected ApiResponse callSutPost(String path, String requestBody, boolean usePut, String user, String passwd, boolean init) throws IOException {
+		beforeCallSut(init);
+		
+		// after execution copies the rules for further reporting
+		ApiWriter api = getApiWriter(user, passwd); 
+
+		ApiResponse response = api.post(MARKET_URL_LIVE + path, requestBody, usePut);
+		if (init)
+			FileUtils.copyDirectory(new File(getSutRulesFolder()), new File(getRulesFolder()), false);
+		return response;
+	}
+	
+	protected ApiResponse callSutDelete(String path, String user, String passwd, boolean init) throws IOException {
+		beforeCallSut(init);
+		
+		// after execution copies the rules for further reporting
+		ApiWriter api = getApiWriter(user, passwd); 
+		
+		ApiResponse response = api.delete(MARKET_URL_LIVE + path);
+		
+		afterCallSut(init);
+		
+		return response;
+	}
+	
+	private void beforeCallSut(boolean init) {
+		if (init) {
+			// Before invoking the SUT, clear-out rules and reports previously generated
+			cleanDirectory(getSutRulesFolder(), false);
+			cleanDirectory(getRulesFolder(), false);
+			cleanDirectory(getReportsFolder(), false);
+		}
+	}
+	
+	private ApiWriter getApiWriter(String user, String passwd) {
+		ApiWriter api = new ApiWriter();
+				
+		// include authentication
+		if (!user.isEmpty())
+			api.addBasicAuth(user, passwd);
+		
+		return api;
+	}
+	
+	private void afterCallSut(boolean init) throws IOException {
+		if (init)
+			FileUtils.copyDirectory(new File(getSutRulesFolder()), new File(getRulesFolder()), false);
+	}	
 	
 	// to check get operations that do not modify the database
 	protected void assertReadResults(ApiResponse result) throws JsonMappingException, JsonProcessingException {
@@ -87,11 +143,11 @@ public class BaseMarketEval extends BaseMarket {
 	
 	protected String getResultString(ApiResponse result, String format) throws JsonMappingException, JsonProcessingException {
 		String ret = "";
-		if (result.getStatus() == 200) {
+		if (result.getStatus() == 200 || result.getStatus() == 201) {
 			if ("object".equals(format)) {
-				ret = new ObjectMapper().readTree(result.getBody()).toPrettyString();
+				ret = new ObjectMapper().readTree(filterAttributes(result.getBody(),FILTERED_ATTRS)).toPrettyString();
 			} else if ("data".equals(format))
-				ret = new Reserializer().reserializeData(result.getBody());
+				ret = reserializeStoredData(filterAttributes(result.getBody(),FILTERED_ATTRS));
 			else
 				ret = result.getBody();
 		} else {
@@ -122,6 +178,11 @@ public class BaseMarketEval extends BaseMarket {
 		String actual = FileUtil.fileRead("target/market/" + testName.getMethodName() + "-" + type + ".txt", false);
 		sva.assertEquals(expected == null ? "" : expected.replace("\r", ""),
 				actual == null ? "" : actual.replace("\r", ""));
+	}
+	
+	protected void saveResults (ApiResponse data)  throws IOException {
+		report();
+		assertReadResults(data);
 	}
 
 }

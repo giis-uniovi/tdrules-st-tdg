@@ -1,0 +1,20 @@
+{
+  "userAccount" : "lucia@email.com",
+  "id" : 1,
+  "productsCost" : 658.0,
+  "deliveryCost" : 400,
+  "deliveryIncluded" : true,
+  "totalCost" : 1058.0,
+  "payed" : true,
+  "executed" : false,
+  "ccNumber" : "4030000010001234",
+  "orderedProducts" : [ {
+    "orderId" : 1,
+    "quantity" : 5,
+    "productId" : 1
+  }, {
+    "orderId" : 1,
+    "quantity" : 5,
+    "productId" : 2
+  } ]
+}

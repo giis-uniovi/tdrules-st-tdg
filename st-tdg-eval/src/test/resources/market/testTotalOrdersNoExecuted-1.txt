@@ -1,0 +1,9 @@
+[ {
+  "count" : 2,
+  "email" : "us101@email.com",
+  "totalAmount" : 121782.0
+}, {
+  "count" : 2,
+  "email" : "us01@email.com",
+  "totalAmount" : 225324.0
+} ]

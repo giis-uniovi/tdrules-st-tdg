@@ -2,10 +2,14 @@ package market.service;
 
 import market.domain.Order;
 import market.domain.OrderedProduct;
+import market.dto.AddressOrderDTO;
+import market.dto.OrderDTO;
+import market.dto.UserOrderTotalDTO;
 import market.exception.EmptyCartException;
 import market.exception.UnknownEntityException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,4 +62,14 @@ public interface OrderService {
 	 * Updates an order inserting an ordered product
 	 */
 	Order updateOrder(Order order, OrderedProduct op);
+
+	//testing: add to get the total costs and the numbre of orders of users
+	List<UserOrderTotalDTO> getTotalAmountByUser();
+	
+	//testing: add to get the total costs and the numbre of orders of users
+	List<UserOrderTotalDTO> getTotalNonExecutedOrdersByUser();
+	
+	//testing: add to get orders with delivery included/not included executed/not executed
+	List<AddressOrderDTO> getOrdersSameAddress(boolean included, boolean executed);
+	
 }

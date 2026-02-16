@@ -1,0 +1,40 @@
+[ {
+  "userAccount" : "lucia@email.com",
+  "id" : 3,
+  "productsCost" : 0.0,
+  "deliveryCost" : 1406,
+  "deliveryIncluded" : true,
+  "totalCost" : 1406.0,
+  "payed" : true,
+  "executed" : false,
+  "ccNumber" : "5100000010001004",
+  "orderedProducts" : [ ],
+  "links" : [ ]
+}, {
+  "userAccount" : "lucia@email.com",
+  "id" : 1,
+  "productsCost" : 255456.0,
+  "deliveryCost" : 1206,
+  "deliveryIncluded" : true,
+  "totalCost" : 256662.0,
+  "payed" : true,
+  "executed" : false,
+  "ccNumber" : "4030000010001234",
+  "orderedProducts" : [ {
+    "orderId" : 1,
+    "quantity" : 1503,
+    "productId" : 2,
+    "links" : [ ]
+  }, {
+    "orderId" : 1,
+    "quantity" : 1803,
+    "productId" : 3,
+    "links" : [ ]
+  }, {
+    "orderId" : 1,
+    "quantity" : 1703,
+    "productId" : 1,
+    "links" : [ ]
+  } ],
+  "links" : [ ]
+} ]

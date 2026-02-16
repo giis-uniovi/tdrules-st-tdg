@@ -27,7 +27,7 @@ public class BaseMarket extends BaseAll {
 	protected static final String MARKET_URL_LIVE = "http://localhost:8083";
 
 	// attributes that can be filtered during comparisons of assertions 
-	private static final String[] FILTERED_ATTRS = {"password", "dateCreated","number"};
+	protected static final String[] FILTERED_ATTRS = {"password", "dateCreated","number","billNumber"};
 		
 	// Cache for the schema to avoid multiple calls per test.
 	private static TdSchema schemaCache = null;
@@ -104,6 +104,7 @@ public class BaseMarket extends BaseAll {
 		TdSchema model = getSchema();
 		OaBasicAuthStore authenticator = new OaBasicAuthStore()
 				.setProvider("UserDTORes", "email", "password")
+				.addConsumer(new String[] { "UserDTORes" }, "email")
 				.addConsumer(new String[] { "CartItemDTORes", "CartItemDTOReq", 
 						                    "ContactsDTORes", "ContactsDTOReq" }, "user")
 				.addConsumer(new String[] { "OrderDTO", "OrderDTORes", "OrderDTOReq"} , "userAccount");
@@ -142,10 +143,10 @@ public class BaseMarket extends BaseAll {
 		String dataLive = getAllLiveData();
 		log.info("Actual data stored in the backend\n{}", reserializeStoredData(dataLive));
 		// before comparing, filter attributes
-		super.assertModel(fileName, filterAttributes(dataLive,FILTERED_ATTRS));  
+		super.assertModel(fileName, reserializeStoredData(filterAttributes(dataLive,FILTERED_ATTRS)));  
 	}
 	
-	private String filterAttributes(String strJson, String... ignoreAttributes) {
+	protected String filterAttributes(String strJson, String... ignoreAttributes) {
 		ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		StringBuilder sb = new StringBuilder();
 		
@@ -159,7 +160,7 @@ public class BaseMarket extends BaseAll {
 			throw new RuntimeException(e);
 		}
 		
-		return reserializeStoredData(sb.toString());
+		return sb.toString();
     }
 	
 	// update json deleting attributeName and its value  

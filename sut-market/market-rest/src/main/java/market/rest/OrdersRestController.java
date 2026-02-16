@@ -8,16 +8,20 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import market.domain.Order;
+import market.dto.AddressOrderDTO;
 import market.dto.OrderDTO;
+import market.dto.UserOrderTotalDTO;
 import market.dto.assembler.OrderDtoAssembler;
 import market.exception.UnknownEntityException;
 import market.properties.MarketProperties;
@@ -77,4 +81,33 @@ public class OrdersRestController {
 		
 		return orderDtoAssembler.toModel(order);
 	}
+	
+	/**
+	 * New endpoint (GET) for testing: add to get the total costs  and number of orders 
+	 * of an user
+	 */
+	@GetMapping("/total-by-user")
+    public ResponseEntity<List<UserOrderTotalDTO>> getTotalOrdersByUser() {
+        List<UserOrderTotalDTO> totals = orderService.getTotalAmountByUser();
+        return ResponseEntity.ok(totals);
+    }
+	
+	/**
+	 * New endpoint (GET) for testing: add to get the total costs and number of orders non executed
+	 * of an user
+	 */
+	@GetMapping("/non-executed-by-user")
+    public ResponseEntity<List<UserOrderTotalDTO>> getTotalNonExecutedOrdersByUser() {
+        List<UserOrderTotalDTO> totals = orderService.getTotalNonExecutedOrdersByUser();
+        return ResponseEntity.ok(totals);
+    }
+	
+	/**
+	 * New endpoint (GET) for testing: add to get orders with the same address
+	 */
+	@GetMapping(value = "sameAddress")
+	public ResponseEntity<List<AddressOrderDTO>> getOrdersSameAddress(@RequestParam boolean deliveryincluded, @RequestParam boolean executed) {
+		List<AddressOrderDTO> totals = orderService.getOrdersSameAddress(deliveryincluded, executed);
+        return ResponseEntity.ok(totals);
+    }
 }
