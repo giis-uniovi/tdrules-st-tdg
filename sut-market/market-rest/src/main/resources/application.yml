@@ -33,10 +33,10 @@ spring:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:5432/market
-    driverClassName: org.postgresql.Driver
+    #url: jdbc:postgresql://${DB_HOST:localhost}:5432/market
+    #driverClassName: org.postgresql.Driver
     # Set the below values to measure coverage with QACover
-    #url: jdbc:p6spy:postgresql://${DB_HOST:localhost}:5432/market
-    #driverClassName: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:postgresql://${DB_HOST:localhost}:5432/market
+    driverClassName: com.p6spy.engine.spy.P6SpyDriver
     username: market
     password: market

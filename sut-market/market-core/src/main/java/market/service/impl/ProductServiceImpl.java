@@ -7,6 +7,8 @@ import market.domain.Region;
 import market.exception.UnknownEntityException;
 import market.service.DistilleryService;
 import market.service.ProductService;
+import market.dto.ProductTotalDTO;
+import market.dto.SalesByRegionDistilleryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -32,8 +34,9 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	@Override
 	public List<Product> findAll() {
+		// testing: change getName to getId, order items by id
 		return productDAO.findAll().stream()
-			.sorted(Comparator.comparing(Product::getName))
+			.sorted(Comparator.comparing(Product::getId))
 			.collect(Collectors.toList());
 	}
 
@@ -126,5 +129,17 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void delete(long product) {
 		productDAO.deleteById(product);
+	}
+	
+	//testing: add to get the total number of sold products
+	@Override
+	public List<ProductTotalDTO> getTotalSoldProducts() {
+		return productDAO.findTotalSoldProducts();
+	}
+	
+	//testing: add to get the total sales by region and distillery
+	@Override
+	public List<SalesByRegionDistilleryDTO> getSalesByRegionDistillery() {
+		return productDAO.findSalesByRegionDistillery();
 	}
 }

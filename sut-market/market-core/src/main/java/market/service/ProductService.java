@@ -4,6 +4,8 @@ import market.domain.Distillery;
 import market.domain.Product;
 import market.domain.Region;
 import market.exception.UnknownEntityException;
+import market.dto.ProductTotalDTO;
+import market.dto.SalesByRegionDistilleryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -70,4 +72,10 @@ public interface ProductService {
 	 * Removes distillery.
 	 */
 	void delete(long product);
+	
+	//testing: add to get the total number of sold products
+	List<ProductTotalDTO> getTotalSoldProducts();
+
+	// testing: add to get the total sales grouped by region and distillery
+	List<SalesByRegionDistilleryDTO> getSalesByRegionDistillery();
 }
