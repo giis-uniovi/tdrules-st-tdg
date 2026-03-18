@@ -31,14 +31,16 @@ public interface OrderDAO extends CrudRepository<Order, Long>, JpaRepository<Ord
 	// testing: add to get the total costs of an user's order
 	@Query("SELECT u.email as email, COUNT(o.id) as count, SUM(o.productsCost) as totalAmount " +
            "FROM Order o JOIN o.userAccount u " +
-           "GROUP BY u.email")
+           "GROUP BY u.email " +
+           "ORDER BY u.email ASC")
     List<UserOrderTotalDTO> findTotalAmountByUser();
 	
 	// testing: add to get the total costs of non executed orders of users
 	@Query("SELECT u.email as email, COUNT(o.id) as count, SUM(o.productsCost) as totalAmount " +
 	       "FROM Order o JOIN o.userAccount u "+ 
 	       "WHERE o.executed = '0' " +
-	       "GROUP BY u.email")
+	       "GROUP BY u.email " +
+	       "ORDER BY u.email ASC")
 	List<UserOrderTotalDTO> findTotalNonExecutedOrdersByUser();
 		
 	
