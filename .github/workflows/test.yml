@@ -69,7 +69,7 @@ jobs:
 
       - name: Rules cache
         id: rules-cache
-        uses: actions/cache@v5.0.4
+        uses: actions/cache@v5.0.5
         with:
           path: .tdrules-cache
           key: cache-${{ matrix.scope }}-v1-${{ github.run_id }}
@@ -203,12 +203,12 @@ jobs:
       # Some files (e.g. junit reports) have 600 permissions.
       # As of upload-pages-artifact@v1.0.9, permissions must be set explicitly
       # to 0755 (as indicated in warnings produced by v1.0.8)
-      - name: Fix permissions to actions/upload-pages-artifact@v4.0.0
+      - name: Fix permissions to actions/upload-pages-artifact@v5.0.0
         if: always()
         run: sudo chmod -c -R 0755 reports
       - name: Upload artifact
         if: always()
-        uses: actions/upload-pages-artifact@v4.0.0
+        uses: actions/upload-pages-artifact@v5.0.0
         with:
           path: "."
       - name: Deploy to GitHub Pages

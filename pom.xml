@@ -22,7 +22,7 @@
 		
 		<tdrules.version>4.6.2</tdrules.version>
 		
-		<qagrow.version>1.4.310</qagrow.version>
+		<qagrow.version>1.4.311</qagrow.version>
 		
 		<qacover.version>2.1.0</qacover.version>
 	</properties>
@@ -149,7 +149,7 @@
 						<dependency>
 							<groupId>org.apache.ant</groupId>
 							<artifactId>ant-junit</artifactId>
-							<version>1.10.16</version>
+							<version>1.10.17</version>
 						</dependency>
 						<dependency>
 							<groupId>org.apache.ant</groupId>
