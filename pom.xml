@@ -24,7 +24,7 @@
 		
 		<qagrow.version>1.4.311</qagrow.version>
 		
-		<qacover.version>2.1.0</qacover.version>
+		<qacover.version>2.2.0</qacover.version>
 	</properties>
 
 	<modules>
