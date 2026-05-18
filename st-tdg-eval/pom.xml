@@ -17,9 +17,9 @@
 	</organization>
 	
 	<properties>
-		<!-- java 11 required by pitest -->
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<!-- java 11 required by pitest, java 17 required by choco solver -->
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 	
 	<dependencies>
