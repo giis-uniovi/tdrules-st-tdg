@@ -18,11 +18,11 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<surefire.version>3.5.5</surefire.version>
+		<surefire.version>3.5.6</surefire.version>
 		
 		<tdrules.version>4.6.2</tdrules.version>
 		
-		<qagrow.version>1.4.313</qagrow.version>
+		<qagrow.version>1.4.314</qagrow.version>
 		
 		<qacover.version>2.2.0</qacover.version>
 	</properties>
