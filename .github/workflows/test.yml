@@ -164,7 +164,7 @@ jobs:
       # Includes the options to add links to Visual Assert diff files
       - name: Aggregated junit html report
         if: always()
-        uses: javiertuya/junit-report-action@v1.3.0
+        uses: javiertuya/junit-report-action@v1.4.0
         with:
           surefire-files: "**/target/surefire-reports/TEST-*.xml"
           report-dir: reports
