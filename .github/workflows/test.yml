@@ -23,7 +23,7 @@ jobs:
       
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v5.6.0
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -164,7 +164,7 @@ jobs:
       # Includes the options to add links to Visual Assert diff files
       - name: Aggregated junit html report
         if: always()
-        uses: javiertuya/junit-report-action@v1.4.0
+        uses: javiertuya/junit-report-action@v1.5.0
         with:
           surefire-files: "**/target/surefire-reports/TEST-*.xml"
           report-dir: reports
