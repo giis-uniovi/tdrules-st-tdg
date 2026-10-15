@@ -495,7 +495,7 @@
     "checks" : [ {
       "attribute" : "age",
       "name" : "chkmax_ProductDTOReq_age",
-      "constraint" : "age<=2E+3"
+      "constraint" : "age<=2000"
     }, {
       "attribute" : "alcohol",
       "name" : "chkmin_ProductDTOReq_alcohol",
@@ -555,7 +555,7 @@
     "checks" : [ {
       "attribute" : "age",
       "name" : "chkmax_ProductDTORes_age",
-      "constraint" : "age<=2E+3"
+      "constraint" : "age<=2000"
     }, {
       "attribute" : "alcohol",
       "name" : "chkmin_ProductDTORes_alcohol",
