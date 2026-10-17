@@ -1,7 +1,13 @@
 version: 2
+registries:
+  xlib:
+    type: maven-repository
+    url: https://in2test.lsi.uniovi.es/xlib/maven
 updates:
   - package-ecosystem: maven
     directory: "/"
+    registries:
+      - xlib
     schedule:
       interval: weekly
       day: "friday"
