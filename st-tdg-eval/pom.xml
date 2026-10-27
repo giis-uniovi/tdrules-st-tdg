@@ -133,6 +133,13 @@
 				<configuration>
 				<!-- java 11 required by pitest -->
 					<release>11</release>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.48</version>
+						</path>
+					</annotationProcessorPaths>
 					<excludes>
 						<exclude>**/io/swagger/petstore/controller/**</exclude>
 						<exclude>**/io/swagger/petstore/exception/**</exclude>

@@ -1,6 +1,7 @@
 package test4giis.tdrules.tdg.st.eval.petstore;
 
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +77,6 @@ public class MockController extends ApiWriter {
 			return new ApiResponse(404, "Not Found", "No controller for " + url);
 	}
 
-	@SneakyThrows
 	private String parseUrl(String urlAndParams, Map<String, String> parameters) {
 		String[] urlSplit = urlAndParams.split("\\?");
 		if (urlSplit.length < 2)
@@ -84,8 +84,8 @@ public class MockController extends ApiWriter {
 		String[] pairs = urlSplit[1].split("&");
 		for (String pair : pairs) {
 			int idx = pair.indexOf("=");
-			parameters.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
-					URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+			parameters.put(URLDecoder.decode(pair.substring(0, idx), StandardCharsets.UTF_8),
+					URLDecoder.decode(pair.substring(idx + 1), StandardCharsets.UTF_8));
 		}
 		return urlSplit[0];
 	}
