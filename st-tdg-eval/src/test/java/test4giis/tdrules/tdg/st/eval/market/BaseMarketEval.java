@@ -18,7 +18,7 @@ import giis.tdrules.store.loader.oa.ApiWriter;
 import giis.visualassert.Framework;
 import giis.visualassert.SoftVisualAssert;
 import giis.visualassert.portable.FileUtil;
-import in2test.application.qagrow.QAGrowApiProcess;
+import giis.application.qagrow.QAGrowApiProcess;
 import test4giis.tdrules.tdg.st.test.market.BaseMarket;
 
 public class BaseMarketEval extends BaseMarket {

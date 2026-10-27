@@ -27,7 +27,7 @@ import giis.tdrules.store.loader.oa.OaLocalAdapter;
 import giis.tdrules.store.loader.oa.Reserializer;
 import giis.visualassert.Framework;
 import giis.visualassert.VisualAssert;
-import in2test.application.qagrow.QAGrowApiProcess;
+import giis.application.qagrow.QAGrowApiProcess;
 
 /**
  * This is the base class for all system and integration tests to

@@ -12,7 +12,7 @@ import giis.visualassert.Framework;
 import giis.visualassert.SoftVisualAssert;
 import giis.visualassert.VisualAssert;
 import giis.visualassert.portable.FileUtil;
-import in2test.application.qagrow.QAGrowApiProcess;
+import giis.application.qagrow.QAGrowApiProcess;
 import lombok.extern.slf4j.Slf4j;
 import test4giis.tdrules.tdg.st.test.petstore.BasePetstore;
 
